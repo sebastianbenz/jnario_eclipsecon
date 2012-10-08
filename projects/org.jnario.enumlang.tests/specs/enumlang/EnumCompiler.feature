@@ -25,7 +25,7 @@ Feature: Compiling Enumerations
 			val action = new CompileAction
 			action.selectionChanged(null, new StructuredSelection(selection))
 			action.run(null)
-			
+
 		Then I get a file "example/Colors.java" with
 		'''
 			package enums;

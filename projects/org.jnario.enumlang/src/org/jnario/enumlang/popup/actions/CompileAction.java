@@ -1,44 +1,42 @@
 package org.jnario.enumlang.popup.actions;
 
+import static com.google.common.collect.Iterables.filter;
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 public class CompileAction implements IObjectActionDelegate {
 
-	private Shell shell;
+	private List<IFile> selectedFiles;
+	private EnumCompiler compiler;
 	
-	/**
-	 * Constructor for Action1.
-	 */
 	public CompileAction() {
-		super();
+		this(new EnumCompiler());
 	}
-
-	/**
-	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
-	 */
+	
+	public CompileAction(EnumCompiler compiler) {
+		this.compiler = compiler;
+	}
+	
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
-		shell = targetPart.getSite().getShell();
 	}
 
-	/**
-	 * @see IActionDelegate#run(IAction)
-	 */
 	public void run(IAction action) {
-		MessageDialog.openInformation(
-			shell,
-			"Enum Lang",
-			"Compile was executed.");
+		compiler.compile(selectedFiles);
 	}
 
-	/**
-	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
-	 */
 	public void selectionChanged(IAction action, ISelection selection) {
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			selectedFiles = newArrayList(filter(structuredSelection.toList(), IFile.class));
+		}
 	}
 
 }
