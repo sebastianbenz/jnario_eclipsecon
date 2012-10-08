@@ -21,9 +21,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(FeatureRunner.class)
-@Named("Scenario: Compiling a single file")
+@Named("Scenario: Compiling multiple files")
 @SuppressWarnings("all")
-public class CompilingEnumerationsFeatureCompilingASingleFile {
+public class CompilingEnumerationsFeatureCompilingMultipleFiles {
   @Test
   @Order(0)
   @Named("Given a selected file \"example/Colors.enum\" with")
@@ -38,6 +38,18 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   
   @Test
   @Order(1)
+  @Named("And a selected file \"example/Animals.enum\" with")
+  public void andASelectedFileExampleAnimalsEnumWith() {
+    StepArguments _stepArguments = new StepArguments("example/Animals.enum", "\n\t\t\tAnimals : DOG, CAT, HORSE\n\t\t");
+    final StepArguments args = _stepArguments;
+    String _first = JnarioIterableExtensions.<String>first(args);
+    String _second = JnarioIterableExtensions.<String>second(args);
+    final IFile file = this._workspaceHelper.createFile(_first, _second);
+    this.selection.add(file);
+  }
+  
+  @Test
+  @Order(2)
   @Named("When I compile the selected file[s]")
   public void whenICompileTheSelectedFileS() {
     CompileAction _compileAction = new CompileAction();
@@ -48,7 +60,7 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   }
   
   @Test
-  @Order(2)
+  @Order(3)
   @Named("Then I get a file \"example/Colors.java\" with")
   public void thenIGetAFileExampleColorsJavaWith() {
     StepArguments _stepArguments = new StepArguments("example/Colors.java", "\n\t\t\tpackage enums;\n\t\t\tpublic class Colors{\n\t\t\t\tBLUE, RED, GREEN;\n\t\t\t}\n\t\t");
@@ -57,12 +69,23 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
     String _fileContents = this._workspaceHelper.getFileContents(_first);
     String _second = JnarioIterableExtensions.<String>second(args);
     boolean _doubleArrow = Should.operator_doubleArrow(_fileContents, _second);
-    Assert.assertTrue("\nExpected getFileContents(args.first) => args.second but"
-     + "\n     getFileContents(args.first) is " + new StringDescription().appendValue(_fileContents).toString()
-     + "\n      is " + new StringDescription().appendValue(this._workspaceHelper).toString()
-     + "\n     args.first is " + new StringDescription().appendValue(_first).toString()
-     + "\n     args is " + new StringDescription().appendValue(args).toString()
-     + "\n     args.second is " + new StringDescription().appendValue(_second).toString() + "\n", _doubleArrow);
+    Assert.assertTrue("\nExpected  but"
+     + "\n      is " + new StringDescription().appendValue(_fileContents).toString() + "\n", _doubleArrow);
+    
+  }
+  
+  @Test
+  @Order(4)
+  @Named("And I get a file \"example/Animals.java\" with")
+  public void andIGetAFileExampleAnimalsJavaWith() {
+    StepArguments _stepArguments = new StepArguments("example/Animals.java", "\n\t\t\tpackage enums;\n\t\t\tpublic class Colors{\n\t\t\t\tDOG, CAT, HORSE;\n\t\t\t}\n\t\t");
+    final StepArguments args = _stepArguments;
+    String _first = JnarioIterableExtensions.<String>first(args);
+    String _fileContents = this._workspaceHelper.getFileContents(_first);
+    String _second = JnarioIterableExtensions.<String>second(args);
+    boolean _doubleArrow = Should.operator_doubleArrow(_fileContents, _second);
+    Assert.assertTrue("\nExpected  but"
+     + "\n      is " + new StringDescription().appendValue(_fileContents).toString() + "\n", _doubleArrow);
     
   }
   

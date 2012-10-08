@@ -16,6 +16,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.junit.Before;
 
 @SuppressWarnings("all")
 public class WorkspaceHelper {
@@ -26,6 +27,22 @@ public class WorkspaceHelper {
       return _root;
     }
   }.apply();
+  
+  @Before
+  public void clearWorkspace() {
+    IProject[] _projects = this.root.getProjects();
+    final Procedure1<IProject> _function = new Procedure1<IProject>() {
+        public void apply(final IProject it) {
+          try {
+            NullProgressMonitor _monitor = WorkspaceHelper.this.monitor();
+            it.delete(true, _monitor);
+          } catch (Exception _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        }
+      };
+    IterableExtensions.<IProject>forEach(((Iterable<IProject>)Conversions.doWrapArray(_projects)), _function);
+  }
   
   public IFile createFile(final String path, final String content) {
     IFile _xblockexpression = null;
@@ -84,8 +101,14 @@ public class WorkspaceHelper {
   public void project(final String name, final Procedure1<IProject> projectInitializer) {
     try {
       final IProject project = this.root.getProject(name);
-      NullProgressMonitor _monitor = this.monitor();
-      project.create(_monitor);
+      boolean _exists = project.exists();
+      boolean _not = (!_exists);
+      if (_not) {
+        NullProgressMonitor _monitor = this.monitor();
+        project.create(_monitor);
+        NullProgressMonitor _monitor_1 = this.monitor();
+        project.open(_monitor_1);
+      }
       projectInitializer.apply(project);
     } catch (Exception _e) {
       throw Exceptions.sneakyThrow(_e);

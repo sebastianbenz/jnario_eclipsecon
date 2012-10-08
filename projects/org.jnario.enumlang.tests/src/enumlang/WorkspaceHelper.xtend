@@ -6,10 +6,18 @@ import org.eclipse.xtext.xbase.lib.Procedures$Procedure1
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Path
 import java.io.InputStream
+import org.junit.Before
 
 class WorkspaceHelper {
 	
 	val root = ResourcesPlugin::workspace.root
+	
+	@Before
+	def clearWorkspace(){
+		root.projects.forEach[
+			delete(true, monitor)
+		]
+	}	
 	
 	def createFile(String path, String content){
 		val segments = path.split("/")
@@ -38,7 +46,10 @@ class WorkspaceHelper {
 	
 	def project(String name, Procedures$Procedure1<IProject> projectInitializer){
 		val project = root.getProject(name)
-		project.create(monitor)
+		if(!project.exists){
+			project.create(monitor)
+			project.open(monitor)
+		}	
 		projectInitializer.apply(project)
 	}
 

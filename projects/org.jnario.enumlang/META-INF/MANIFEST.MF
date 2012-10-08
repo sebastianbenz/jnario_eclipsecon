@@ -3,11 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Enum Lang
 Bundle-SymbolicName: org.jnario.enumlang;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.jnario.enumlang.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.jnario.enumlang,
- org.jnario.enumlang.popup.actions
+Export-Package: org.jnario.enumlang.popup.actions
