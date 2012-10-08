@@ -1,0 +1,17 @@
+SMAP
+CompilingEnumerationsFeatureCompilingASingleFile.java
+Feature
+*S Feature
+*F
++ 0 EnumCompiler.feature
+specs/enumlang/EnumCompiler.feature
+*L
+16:31,5
+17:36
+20:43,4
+21:47,2
+22:49
+31:56,13
+9:72,6
+10:79,6
+*E
