@@ -3,6 +3,7 @@ package enumlang;
 import enumlang.WorkspaceHelper;
 import java.util.List;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
@@ -26,14 +27,14 @@ import org.junit.runner.RunWith;
 public class CompilingEnumerationsFeatureCompilingASingleFile {
   @Test
   @Order(0)
-  @Named("Given a selected file \"example/Colors.enum\" with")
+  @Named("Given a selected file \\\"example/Colors.enum\\\" with")
   public void givenASelectedFileExampleColorsEnumWith() {
     StepArguments _stepArguments = new StepArguments("example/Colors.enum", "\n\t\t\tColors : BLUE, RED, GREEN\n\t\t");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _second = JnarioIterableExtensions.<String>second(args);
-    final IFile file = this._workspaceHelper.createFile(_first, _second);
-    this.selection.add(file);
+    IFile _createFile = this._workspaceHelper.createFile(_first, _second);
+    this.selection.add(_createFile);
   }
   
   @Test
@@ -42,14 +43,16 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   public void whenICompileTheSelectedFileS() {
     CompileAction _compileAction = new CompileAction();
     final CompileAction action = _compileAction;
+    IAction __ = Should.<IAction>_();
     StructuredSelection _structuredSelection = new StructuredSelection(((Object[])Conversions.unwrapArray(this.selection, Object.class)));
-    action.selectionChanged(null, _structuredSelection);
-    action.run(null);
+    action.selectionChanged(__, _structuredSelection);
+    IAction ___1 = Should.<IAction>_();
+    action.run(___1);
   }
   
   @Test
   @Order(2)
-  @Named("Then I get a file \"example/Colors.java\" with")
+  @Named("Then I get a file \\\"example/Colors.java\\\" with")
   public void thenIGetAFileExampleColorsJavaWith() {
     StepArguments _stepArguments = new StepArguments("example/Colors.java", "\n\t\t\tpackage enums;\n\t\t\tpublic class Colors{\n\t\t\t\tBLUE, RED, GREEN;\n\t\t\t}\n\t\t");
     final StepArguments args = _stepArguments;

@@ -8,18 +8,18 @@ import org.eclipse.jface.viewers.StructuredSelection
 
 describe CompileAction {
 	
-	val compiler = mock(typeof(EnumCompiler))
-	
+	val compiler = mock(EnumCompiler)
 	before subject = new CompileAction(compiler)
 		
 	fact "passes selected files to compiler"{
-		val selectedFiles = list(mock(typeof(IFile)), mock(typeof(IFile)))
+		val selectedFiles = list(mock(IFile), mock(IFile))
 		val selection = new StructuredSelection(selectedFiles)
 		
-		subject.selectionChanged(null, selection)
-		subject.run(null)
+		subject.selectionChanged(_, selection)
+		subject.run(_)
 		
-		verify(compiler).compile(selectedFiles)
+		verify(compiler) => [
+			compile(selectedFiles)
+		]
 	}
-
-}
+}   

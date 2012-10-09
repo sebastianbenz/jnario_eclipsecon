@@ -2,11 +2,14 @@ package enumlang;
 
 import java.util.List;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.xtext.xbase.lib.Functions.Function0;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.jnario.enumlang.popup.actions.CompileAction;
 import org.jnario.enumlang.popup.actions.EnumCompiler;
 import org.jnario.lib.JnarioCollectionLiterals;
+import org.jnario.lib.Should;
 import org.jnario.runner.ExampleGroupRunner;
 import org.jnario.runner.Named;
 import org.jnario.runner.Order;
@@ -21,12 +24,7 @@ import org.mockito.Mockito;
 public class CompileActionSpec {
   public CompileAction subject;
   
-  final EnumCompiler compiler = new Function0<EnumCompiler>() {
-    public EnumCompiler apply() {
-      EnumCompiler _mock = Mockito.<EnumCompiler>mock(EnumCompiler.class);
-      return _mock;
-    }
-  }.apply();
+  final EnumCompiler compiler = Mockito.mock(EnumCompiler.class);
   
   @Before
   public void before() throws Exception {
@@ -38,14 +36,19 @@ public class CompileActionSpec {
   @Named("passes selected files to compiler")
   @Order(99)
   public void _passesSelectedFilesToCompiler() throws Exception {
-    IFile _mock = Mockito.<IFile>mock(IFile.class);
-    IFile _mock_1 = Mockito.<IFile>mock(IFile.class);
-    final List<IFile> selectedFiles = JnarioCollectionLiterals.<IFile>list(_mock, _mock_1);
+    final List<IFile> selectedFiles = JnarioCollectionLiterals.<IFile>list(Mockito.mock(IFile.class), Mockito.mock(IFile.class));
     StructuredSelection _structuredSelection = new StructuredSelection(selectedFiles);
     final StructuredSelection selection = _structuredSelection;
-    this.subject.selectionChanged(null, selection);
-    this.subject.run(null);
+    IAction __ = Should.<IAction>_();
+    this.subject.selectionChanged(__, selection);
+    IAction ___1 = Should.<IAction>_();
+    this.subject.run(___1);
     EnumCompiler _verify = Mockito.<EnumCompiler>verify(this.compiler);
-    _verify.compile(selectedFiles);
+    final Procedure1<EnumCompiler> _function = new Procedure1<EnumCompiler>() {
+        public void apply(final EnumCompiler it) {
+          it.compile(selectedFiles);
+        }
+      };
+    ObjectExtensions.<EnumCompiler>operator_doubleArrow(_verify, _function);
   }
 }

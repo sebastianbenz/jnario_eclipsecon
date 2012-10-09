@@ -20,7 +20,7 @@ import org.junit.Before;
 
 @SuppressWarnings("all")
 public class WorkspaceHelper {
-  private final IWorkspaceRoot root = new Function0<IWorkspaceRoot>() {
+  private final IWorkspaceRoot workspaceRoot = new Function0<IWorkspaceRoot>() {
     public IWorkspaceRoot apply() {
       IWorkspace _workspace = ResourcesPlugin.getWorkspace();
       IWorkspaceRoot _root = _workspace.getRoot();
@@ -30,7 +30,7 @@ public class WorkspaceHelper {
   
   @Before
   public void clearWorkspace() {
-    IProject[] _projects = this.root.getProjects();
+    IProject[] _projects = this.workspaceRoot.getProjects();
     final Procedure1<IProject> _function = new Procedure1<IProject>() {
         public void apply(final IProject it) {
           try {
@@ -64,7 +64,7 @@ public class WorkspaceHelper {
   
   public IFile getFile(final String path) {
     Path _path = new Path(path);
-    IFile _file = this.root.getFile(_path);
+    IFile _file = this.workspaceRoot.getFile(_path);
     return _file;
   }
   
@@ -100,7 +100,7 @@ public class WorkspaceHelper {
   
   public void project(final String name, final Procedure1<IProject> projectInitializer) {
     try {
-      final IProject project = this.root.getProject(name);
+      final IProject project = this.workspaceRoot.getProject(name);
       boolean _exists = project.exists();
       boolean _not = (!_exists);
       if (_not) {

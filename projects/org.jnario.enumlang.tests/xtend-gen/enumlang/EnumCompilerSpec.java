@@ -13,9 +13,9 @@ import org.junit.runner.RunWith;
 public class EnumCompilerSpec {
   @Test
   @Ignore
-  @Named("compiles string to  [PENDING]")
+  @Named("compiles file to  [PENDING]")
   @Order(99)
-  public void _compilesStringTo() throws Exception {
-    throw new UnsupportedOperationException("_compilesStringTois not implemented");
+  public void _compilesFileTo() throws Exception {
+    throw new UnsupportedOperationException("_compilesFileTois not implemented");
   }
 }

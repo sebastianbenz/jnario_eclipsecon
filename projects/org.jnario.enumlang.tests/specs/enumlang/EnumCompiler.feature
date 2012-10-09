@@ -18,14 +18,11 @@ Feature: Compiling Enumerations
 		'''
 			Colors : BLUE, RED, GREEN
 		'''
-			val file = createFile(args.first, args.second)
-			selection += file
-			
+			selection += createFile(args.first, args.second)
 		When I compile the selected file(s)
 			val action = new CompileAction
-			action.selectionChanged(null, new StructuredSelection(selection))
-			action.run(null)
-
+			action.selectionChanged(_, new StructuredSelection(selection))
+			action.run(_)
 		Then I get a file "example/Colors.java" with
 		'''
 			package enums;

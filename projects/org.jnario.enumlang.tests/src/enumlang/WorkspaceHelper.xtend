@@ -10,13 +10,11 @@ import org.junit.Before
 
 class WorkspaceHelper {
 	
-	val root = ResourcesPlugin::workspace.root
+	val workspaceRoot = ResourcesPlugin::workspace.root
 	
 	@Before
 	def clearWorkspace(){
-		root.projects.forEach[
-			delete(true, monitor)
-		]
+		workspaceRoot.projects.forEach[delete(true, monitor)]
 	}	
 	
 	def createFile(String path, String content){
@@ -28,7 +26,7 @@ class WorkspaceHelper {
 	}
 	
 	def getFile(String path){
-		root.getFile(new Path(path))
+		workspaceRoot.getFile(new Path(path))
 	}
 	
 	def getFileContents(String path){
@@ -45,7 +43,7 @@ class WorkspaceHelper {
 	}
 	
 	def project(String name, Procedures$Procedure1<IProject> projectInitializer){
-		val project = root.getProject(name)
+		val project = workspaceRoot.getProject(name)
 		if(!project.exists){
 			project.create(monitor)
 			project.open(monitor)
