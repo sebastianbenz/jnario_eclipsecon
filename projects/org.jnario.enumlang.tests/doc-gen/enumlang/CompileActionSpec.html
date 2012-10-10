@@ -35,17 +35,31 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<ul><li><p id="passes_selected_files_to_compiler"><strong>passes selected files to compiler</strong></p>
+<ul><li><p id="passes_selected_file_to_compiler"><strong>passes selected file to compiler</strong></p>
 <pre class="prettyprint lang-spec linenums">
-val selectedFiles = list(mock(IFile), mock(IFile))
-val selection = new StructuredSelection(selectedFiles)
+var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
 
-subject.selectionChanged(_, selection)
-subject.run(_)
+inputFile.executeCompileAction
 
-verify(compiler) =&gt; [
-  compile(selectedFiles)
-]</pre>
+verify(enumCompiler).compile(&quot;contents&quot;)</pre>
+</li><li><p id="rethrows_core_exceptions_in_runtime_exception"><strong>rethrows core exceptions in runtime exception</strong></p>
+<pre class="prettyprint lang-spec linenums">
+val invalidFile = stub(IFile) =&gt; [
+  try{
+    when(contents).thenThrow(new CoreException(Status::OK_STATUS))
+  }catch(CoreException e){}
+]
+
+invalidFile.executeCompileAction throws RuntimeException</pre>
+</li><li><p id="writes_compilation_result_to_java_file_with_same_name_as_input"><strong>writes compilation result to java file with same name as input</strong></p>
+<pre class="prettyprint lang-spec linenums">
+var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
+
+when(enumCompiler.compile(anyString)).thenReturn(&quot;result string&quot;)
+
+inputFile.executeCompileAction
+
+&quot;example/Colors.java&quot;.fileContents =&gt; &quot;result string&quot;</pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -54,27 +68,62 @@ verify(compiler) =&gt; [
 <pre class="prettyprint lang-spec linenums">
 package enumlang
 
-import org.jnario.enumlang.popup.actions.CompileAction
-import static org.mockito.Mockito.*
-import org.jnario.enumlang.popup.actions.EnumCompiler
+import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.Status
 import org.eclipse.jface.viewers.StructuredSelection
+import org.jnario.enumlang.popup.actions.CompileAction
+import org.jnario.enumlang.popup.actions.EnumCompiler
+
+import static org.mockito.Matchers.*
+import static org.mockito.Mockito.*
+
+import static extension org.jnario.lib.Should.*
 
 describe CompileAction {
   
-  val compiler = mock(EnumCompiler)
-  before subject = new CompileAction(compiler)
+  extension WorkspaceHelper = new WorkspaceHelper
+  
+  var enumCompiler = mock(EnumCompiler) 
+  
+  val compileAction = new CompileAction(enumCompiler)
+  
+  fact &quot;passes selected file to compiler&quot;{
+    var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
     
-  fact &quot;passes selected files to compiler&quot;{
-    val selectedFiles = list(mock(IFile), mock(IFile))
-    val selection = new StructuredSelection(selectedFiles)
+    inputFile.executeCompileAction
     
-    subject.selectionChanged(_, selection)
-    subject.run(_)
-    
-    verify(compiler) =&gt; [
-      compile(selectedFiles)
+    verify(enumCompiler).compile(&quot;contents&quot;)
+  }
+  
+  fact &quot;rethrows core exceptions in runtime exception&quot;{
+    val invalidFile = stub(IFile) =&gt; [
+      try{
+        when(contents).thenThrow(new CoreException(Status::OK_STATUS))
+      }catch(CoreException e){}
     ]
+    
+    invalidFile.executeCompileAction throws RuntimeException
+  }
+  
+  fact &quot;writes compilation result to java file with same name as input&quot;{
+    var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
+
+    when(enumCompiler.compile(anyString)).thenReturn(&quot;result string&quot;)
+    
+    inputFile.executeCompileAction
+    
+    &quot;example/Colors.java&quot;.fileContents =&gt; &quot;result string&quot;
+  }
+  
+  def executeCompileAction(IFile inputFile){
+    compileAction.selectionChanged(_, new StructuredSelection(inputFile))
+    compileAction.run(_)
+  }
+  
+  def toInputStream(String s){
+    new ByteArrayInputStream(s.getBytes())
   }
 }
 </pre>

@@ -39,8 +39,8 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   
   @Test
   @Order(1)
-  @Named("When I compile the selected file[s]")
-  public void whenICompileTheSelectedFileS() {
+  @Named("When I execute the compile action")
+  public void whenIExecuteTheCompileAction() {
     CompileAction _compileAction = new CompileAction();
     final CompileAction action = _compileAction;
     IAction __ = Should.<IAction>_();

@@ -35,7 +35,7 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<p></p>
+<p><p>In order to develop faster As a Java programmer I want a concise syntax for enumerations</p></p>
 <h3  id="Scenario_Compiling_a_single_file">Scenario: Compiling a single file
 </h3>
 <ul>
@@ -43,7 +43,7 @@
 <ul>
 </ul>
 </li>
-<li><p><strong>When</strong> I compile the selected file[s]</p>
+<li><p><strong>When</strong> I execute the compile action</p>
 <ul>
 </ul>
 </li>
@@ -66,7 +66,7 @@ public class Colors{
 </li>
 </ul>
 </li>
-<li><p><strong>When</strong> I compile the selected file[s]</p>
+<li><p><strong>When</strong> I execute the compile action</p>
 <ul>
 </ul>
 </li>
@@ -102,6 +102,10 @@ import static extension org.jnario.lib.Should.*
 
 Feature: Compiling Enumerations
 
+  In order to develop faster 
+  As a Java programmer
+  I want a concise syntax for enumerations
+
   Scenario: Compiling a single file
     extension WorkspaceHelper = new WorkspaceHelper
     val selection = list()
@@ -111,7 +115,7 @@ Feature: Compiling Enumerations
       Colors : BLUE, RED, GREEN
     '''
       selection += createFile(args.first, args.second)
-    When I compile the selected file(s)
+    When I execute the compile action
       val action = new CompileAction
       action.selectionChanged(_, new StructuredSelection(selection))
       action.run(_)
@@ -134,7 +138,7 @@ Feature: Compiling Enumerations
     '''
       Animals : DOG, CAT, HORSE
     '''
-    When I compile the selected file(s)
+    When I execute the compile action
     Then I get a file &quot;example/Colors.java&quot; with
     '''
       package enums;

@@ -10,6 +10,10 @@ import static extension org.jnario.lib.Should.*
 
 Feature: Compiling Enumerations
 
+	In order to develop faster 
+	As a Java programmer
+	I want a concise syntax for enumerations
+
 	Scenario: Compiling a single file
 		extension WorkspaceHelper = new WorkspaceHelper
 		val selection = list()
@@ -19,7 +23,7 @@ Feature: Compiling Enumerations
 			Colors : BLUE, RED, GREEN
 		'''
 			selection += createFile(args.first, args.second)
-		When I compile the selected file(s)
+		When I execute the compile action
 			val action = new CompileAction
 			action.selectionChanged(_, new StructuredSelection(selection))
 			action.run(_)
@@ -42,7 +46,7 @@ Feature: Compiling Enumerations
 		'''
 			Animals : DOG, CAT, HORSE
 		'''
-		When I compile the selected file(s)
+		When I execute the compile action
 		Then I get a file "example/Colors.java" with
 		'''
 			package enums;

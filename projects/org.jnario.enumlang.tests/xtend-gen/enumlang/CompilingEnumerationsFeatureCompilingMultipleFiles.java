@@ -51,8 +51,8 @@ public class CompilingEnumerationsFeatureCompilingMultipleFiles {
   
   @Test
   @Order(2)
-  @Named("When I compile the selected file[s]")
-  public void whenICompileTheSelectedFileS() {
+  @Named("When I execute the compile action")
+  public void whenIExecuteTheCompileAction() {
     CompileAction _compileAction = new CompileAction();
     final CompileAction action = _compileAction;
     IAction __ = Should.<IAction>_();
