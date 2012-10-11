@@ -7,11 +7,12 @@ import static org.jnario.lib.JnarioCollectionLiterals.*
 
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
+import static org.junit.Assert.*
 
 Feature: Compiling Enumerations
 
 	In order to develop faster 
-	As a Java programmer
+	as a Java programmer
 	I want a concise syntax for enumerations
 
 	Scenario: Compiling a single file
@@ -30,12 +31,13 @@ Feature: Compiling Enumerations
 		Then I get a file "example/Colors.java" with
 		'''
 			package enums;
-			public class Colors{
-				BLUE, RED, GREEN;
+			
+			public enum Colors {
+				BLUE, RED, GREEN
 			}
 		'''
 			getFileContents(args.first) => args.second
-			
+
 	Scenario: Compiling multiple files
 		
 		Given a selected file "example/Colors.enum" with
@@ -50,14 +52,16 @@ Feature: Compiling Enumerations
 		Then I get a file "example/Colors.java" with
 		'''
 			package enums;
-			public class Colors{
-				BLUE, RED, GREEN;
+			
+			public enum Colors {
+				BLUE, RED, GREEN
 			}
 		'''
 		And I get a file "example/Animals.java" with
 		'''
 			package enums;
-			public class Colors{
-				DOG, CAT, HORSE;
+			
+			public enum Animals {
+				DOG, CAT, HORSE
 			}
 		'''

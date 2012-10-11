@@ -1,0 +1,12 @@
+package enumlang
+
+#Enum Compilation
+
+##Feature
+
+- "Compiling Enumerations"
+
+##Implementation
+
+- "CompileAction"
+- "EnumCompiler"

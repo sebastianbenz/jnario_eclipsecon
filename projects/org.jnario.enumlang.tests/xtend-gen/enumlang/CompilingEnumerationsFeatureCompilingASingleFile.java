@@ -29,7 +29,7 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   @Order(0)
   @Named("Given a selected file \\\"example/Colors.enum\\\" with")
   public void givenASelectedFileExampleColorsEnumWith() {
-    StepArguments _stepArguments = new StepArguments("example/Colors.enum", "\n\t\t\tColors : BLUE, RED, GREEN\n\t\t");
+    StepArguments _stepArguments = new StepArguments("example/Colors.enum", "Colors : BLUE, RED, GREEN");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _second = JnarioIterableExtensions.<String>second(args);
@@ -54,7 +54,7 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   @Order(2)
   @Named("Then I get a file \\\"example/Colors.java\\\" with")
   public void thenIGetAFileExampleColorsJavaWith() {
-    StepArguments _stepArguments = new StepArguments("example/Colors.java", "\n\t\t\tpackage enums;\n\t\t\tpublic class Colors{\n\t\t\t\tBLUE, RED, GREEN;\n\t\t\t}\n\t\t");
+    StepArguments _stepArguments = new StepArguments("example/Colors.java", "package enums;\n\npublic enum Colors {\n\tBLUE, RED, GREEN\n}");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _fileContents = this._workspaceHelper.getFileContents(_first);

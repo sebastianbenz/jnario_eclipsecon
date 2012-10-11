@@ -13,12 +13,12 @@ public class Strings {
 	    }
 	}
 
-	public static InputStream toInputStream(String s) {
+	public static InputStream toInputStream(CharSequence s) {
 		byte[] bytes;
 		if(s == null){
 			bytes = new byte[0];
 		}else{
-			bytes = s.getBytes();
+			bytes = s.toString().getBytes();
 		}
 		return new ByteArrayInputStream(bytes);
 	}

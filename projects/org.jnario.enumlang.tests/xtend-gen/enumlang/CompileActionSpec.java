@@ -94,8 +94,8 @@ public class CompileActionSpec {
   public void _writesCompilationResultToJavaFileWithSameNameAsInput() throws Exception {
     IFile inputFile = this._workspaceHelper.createFile("example/Colors.enum", "contents");
     String _anyString = Matchers.anyString();
-    String _compile = this.enumCompiler.compile(_anyString);
-    OngoingStubbing<String> _when = Mockito.<String>when(_compile);
+    CharSequence _compile = this.enumCompiler.compile(_anyString);
+    OngoingStubbing<CharSequence> _when = Mockito.<CharSequence>when(_compile);
     _when.thenReturn("result string");
     this.executeCompileAction(inputFile);
     String _fileContents = this._workspaceHelper.getFileContents("example/Colors.java");

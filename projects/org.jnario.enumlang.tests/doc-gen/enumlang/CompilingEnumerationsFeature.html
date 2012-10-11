@@ -35,7 +35,7 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<p><p>In order to develop faster As a Java programmer I want a concise syntax for enumerations</p></p>
+<p><p>In order to develop faster as a Java programmer I want a concise syntax for enumerations</p></p>
 <h3  id="Scenario_Compiling_a_single_file">Scenario: Compiling a single file
 </h3>
 <ul>
@@ -48,8 +48,9 @@
 </ul>
 </li>
 <li><p><strong>Then</strong> I get a file <code>"example/Colors.java"</code> with</p><pre>package enums;
-public class Colors{
-  BLUE, RED, GREEN;
+
+public enum Colors {
+  BLUE, RED, GREEN
 }</pre>
 <ul>
 </ul>
@@ -71,13 +72,15 @@ public class Colors{
 </ul>
 </li>
 <li><p><strong>Then</strong> I get a file <code>"example/Colors.java"</code> with</p><pre>package enums;
-public class Colors{
-  BLUE, RED, GREEN;
+
+public enum Colors {
+  BLUE, RED, GREEN
 }</pre>
 <ul>
 <li><p><strong>And</strong> I get a file <code>"example/Animals.java"</code> with</p><pre>package enums;
-public class Colors{
-  DOG, CAT, HORSE;
+
+public enum Animals {
+  DOG, CAT, HORSE
 }</pre>
 <ul>
 </ul>
@@ -99,11 +102,12 @@ import static org.jnario.lib.JnarioCollectionLiterals.*
 
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
+import static org.junit.Assert.*
 
 Feature: Compiling Enumerations
 
   In order to develop faster 
-  As a Java programmer
+  as a Java programmer
   I want a concise syntax for enumerations
 
   Scenario: Compiling a single file
@@ -122,12 +126,13 @@ Feature: Compiling Enumerations
     Then I get a file &quot;example/Colors.java&quot; with
     '''
       package enums;
-      public class Colors{
-        BLUE, RED, GREEN;
+      
+      public enum Colors {
+        BLUE, RED, GREEN
       }
     '''
       getFileContents(args.first) =&gt; args.second
-      
+
   Scenario: Compiling multiple files
     
     Given a selected file &quot;example/Colors.enum&quot; with
@@ -142,15 +147,17 @@ Feature: Compiling Enumerations
     Then I get a file &quot;example/Colors.java&quot; with
     '''
       package enums;
-      public class Colors{
-        BLUE, RED, GREEN;
+      
+      public enum Colors {
+        BLUE, RED, GREEN
       }
     '''
     And I get a file &quot;example/Animals.java&quot; with
     '''
       package enums;
-      public class Colors{
-        DOG, CAT, HORSE;
+      
+      public enum Animals {
+        DOG, CAT, HORSE
       }
     '''
 </pre>

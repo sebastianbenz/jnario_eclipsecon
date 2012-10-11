@@ -35,7 +35,41 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<ul><li><p id="compiles_file_to"><strong>compiles file to  [PENDING]</strong></p>
+<h3 id="generates_valid_Java_enums_for">Generates valid Java enums for...</h3>
+<ul><li><p id="for_empty_enums"><strong>for empty enums</strong></p>
+<pre class="prettyprint lang-spec linenums">
+compile(&quot;EmptyEnum:&quot;).is('''
+  package enums;
+
+  public enum EmptyEnum {
+  }''')
+     
+     compile(&quot;AnotherEmptyEnum:&quot;).is('''
+  package enums;
+
+  public enum AnotherEmptyEnum {
+  }''')</pre>
+</li><li><p id="enums_with_single_value_literal"><strong>enums with single value literal</strong></p>
+<pre class="prettyprint lang-spec linenums">
+compile(&quot;SingleLiteral: VALUE&quot;).is('''
+        package enums;
+        
+        public enum SingleLiteral {
+          VALUE
+        }''')</pre>
+</li><li><p id="enums_with_multiple_values"><strong>enums with multiple values</strong></p>
+<pre class="prettyprint lang-spec linenums">
+compile(&quot;MultipleLiterals: VALUE1,VALUE2&quot;).is('''
+        package enums;
+
+        public enum MultipleLiterals {
+          VALUE1, VALUE2
+        }''')</pre>
+</li></ul>
+<h3 id="invalid_inputs">Invalid inputs</h3>
+<ul><li><p id="compile_null_throws_IllegalArgumentException"><strong>compile[null] throws IllegalArgumentException</strong></p>
+</li><li><p id="compile_throws_IllegalArgumentException"><strong>compile[""] throws IllegalArgumentException</strong></p>
+</li><li><p id="compile_Colors_MISSING_COLON_throws_IllegalArgumentException"><strong>compile["Colors MISSING COLON"] throws IllegalArgumentException</strong></p>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -45,10 +79,56 @@
 package enumlang
 
 import org.jnario.enumlang.popup.actions.EnumCompiler
+import org.junit.Assert
 
 describe EnumCompiler {
   
-  fact &quot;compiles file to &quot;
+  context &quot;generates valid Java enums for...&quot;{
+    fact &quot;for empty enums&quot;{
+    compile(&quot;EmptyEnum:&quot;).is('''
+      package enums;
+
+      public enum EmptyEnum {
+      }''')
+     
+     compile(&quot;AnotherEmptyEnum:&quot;).is('''
+      package enums;
+
+      public enum AnotherEmptyEnum {
+      }''')
+     }
+     fact &quot;enums with single value literal&quot;{
+       compile(&quot;SingleLiteral: VALUE&quot;).is('''
+        package enums;
+        
+        public enum SingleLiteral {
+          VALUE
+        }''')
+     }
+     fact &quot;enums with multiple values&quot;{
+       compile(&quot;MultipleLiterals: VALUE1,VALUE2&quot;).is('''
+        package enums;
+
+        public enum MultipleLiterals {
+          VALUE1, VALUE2
+        }''')        
+    }
+  }
+  
+  context &quot;invalid inputs&quot;{
+    fact compile(null) throws IllegalArgumentException
+    fact compile(&quot;&quot;) throws IllegalArgumentException
+    fact compile(&quot;Colors MISSING COLON&quot;) throws IllegalArgumentException
+  }
+    
+  def CharSequence compile(String s){
+    subject.compile(s)
+  }
+  
+  def is(Object actual, Object expected){
+    Assert::assertEquals(expected.toString, actual.toString)
+    true
+  }
 
 }
 </pre>
