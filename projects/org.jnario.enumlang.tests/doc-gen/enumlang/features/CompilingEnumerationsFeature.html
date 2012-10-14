@@ -10,14 +10,14 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/bootstrap-responsive.min.css">
-<link rel="stylesheet" href="../css/custom.css">
-<link rel="stylesheet" href="../css/prettify.css">
-<script type="text/javascript" src="../js/prettify.js"></script>
-<script type="text/javascript" src="../js/lang-jnario.js"></script>
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script type="text/javascript" src="../js/bootstrap-tab.js"></script>
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="../../css/custom.css">
+<link rel="stylesheet" href="../../css/prettify.css">
+<script type="text/javascript" src="../../js/prettify.js"></script>
+<script type="text/javascript" src="../../js/lang-jnario.js"></script>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-tab.js"></script>
 </head>
 
 <body onload="prettyPrint()">
@@ -39,7 +39,7 @@
 <h3  id="Scenario_Compiling_a_single_file">Scenario: Compiling a single file
 </h3>
 <ul>
-<li><p><strong>Given</strong> a selected file <code>"example/Colors.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN</pre>
+<li><p><strong>Given</strong> a selected file <code>"example/MyEnums.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN</pre>
 <ul>
 </ul>
 </li>
@@ -56,15 +56,12 @@ public enum Colors {
 </ul>
 </li>
 </ul>
-<h3  id="Scenario_Compiling_multiple_files">Scenario: Compiling multiple files
+<h3  id="Scenario_Compiling_multiple_enumerations">Scenario: Compiling multiple enumerations 
 </h3>
 <ul>
-<li><p><strong>Given</strong> a selected file <code>"example/Colors.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN</pre>
+<li><p><strong>Given</strong> a selected file <code>"example/MyEnums.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN
+Animals : DOG, CAT, HORSE</pre>
 <ul>
-<li><p><strong>And</strong> a selected file <code>"example/Animals.enum"</code> with</p><pre>Animals : DOG, CAT, HORSE</pre>
-<ul>
-</ul>
-</li>
 </ul>
 </li>
 <li><p><strong>When</strong> I execute the compile action</p>
@@ -93,7 +90,7 @@ public enum Animals {
 						    	<h3>EnumCompiler.feature</h3>
 						    	<p>
 <pre class="prettyprint lang-feature linenums">
-package enumlang
+package enumlang.features
 
 import org.eclipse.jface.viewers.StructuredSelection
 import org.jnario.enumlang.popup.actions.CompileAction
@@ -103,6 +100,7 @@ import static org.jnario.lib.JnarioCollectionLiterals.*
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 import static org.junit.Assert.*
+import enumlang.WorkspaceHelper
 
 Feature: Compiling Enumerations
 
@@ -114,7 +112,7 @@ Feature: Compiling Enumerations
     extension WorkspaceHelper = new WorkspaceHelper
     val selection = list()
         
-    Given a selected file &quot;example/Colors.enum&quot; with
+    Given a selected file &quot;example/MyEnums.enum&quot; with
     '''
       Colors : BLUE, RED, GREEN
     '''
@@ -133,14 +131,11 @@ Feature: Compiling Enumerations
     '''
       getFileContents(args.first) =&gt; args.second
 
-  Scenario: Compiling multiple files
+  Scenario: Compiling multiple enumerations 
     
-    Given a selected file &quot;example/Colors.enum&quot; with
+    Given a selected file &quot;example/MyEnums.enum&quot; with
     '''
       Colors : BLUE, RED, GREEN
-    '''
-    And a selected file &quot;example/Animals.enum&quot; with
-    '''
       Animals : DOG, CAT, HORSE
     '''
     When I execute the compile action

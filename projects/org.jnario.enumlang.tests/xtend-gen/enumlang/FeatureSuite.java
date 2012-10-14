@@ -1,6 +1,6 @@
 package enumlang;
 
-import enumlang.CompilingEnumerationsFeature;
+import enumlang.features.CompilingEnumerationsFeature;
 import org.jnario.runner.Contains;
 import org.jnario.runner.ExampleGroupRunner;
 import org.jnario.runner.Named;

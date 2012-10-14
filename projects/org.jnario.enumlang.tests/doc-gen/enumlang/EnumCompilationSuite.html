@@ -37,12 +37,12 @@
 							  	<div class="tab-pane active" id="spec">
 <span id="Feature"><h2>Feature</h2></span>
 <ul>
-	<li><a href="../enumlang/CompilingEnumerationsFeature.html">Compiling Enumerations</a></li>
+	<li><a href="../enumlang/features/CompilingEnumerationsFeature.html">Compiling Enumerations</a></li>
 </ul>
 <span id="Implementation"><h2>Implementation</h2></span>
 <ul>
-	<li><a href="../enumlang/CompileActionSpec.html">CompileAction</a></li>
-	<li><a href="../enumlang/EnumCompilerSpec.html">EnumCompiler</a></li>
+	<li><a href="../enumlang/specs/CompileActionSpec.html">CompileAction</a></li>
+	<li><a href="../enumlang/specs/EnumCompilerSpec.html">EnumCompiler</a></li>
 </ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -50,6 +50,8 @@
 						    	<p>
 <pre class="prettyprint lang-suite linenums">
 package enumlang
+
+import enumlang.features.*
 
 #Enum Compilation
 
@@ -59,8 +61,7 @@ package enumlang
 
 ##Implementation
 
-- &quot;CompileAction&quot;
-- &quot;EnumCompiler&quot;
+- \.*specs.*\
 </pre>
 						    </p></div>
 						  </div>

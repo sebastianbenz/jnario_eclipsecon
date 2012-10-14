@@ -1,14 +1,15 @@
-package enumlang;
+package enumlang.specs;
 
 import enumlang.WorkspaceHelper;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
@@ -48,41 +49,42 @@ public class CompileActionSpec {
     }
   }.apply();
   
+  IFile inputFile = new Function0<IFile>() {
+    public IFile apply() {
+      final Procedure1<IFile> _function = new Procedure1<IFile>() {
+          public void apply(final IFile it) {
+            IPath _fullPath = it.getFullPath();
+            OngoingStubbing<IPath> _when = Mockito.<IPath>when(_fullPath);
+            Path _path = new Path("example/MyEnum.enum");
+            _when.thenReturn(_path);
+          }
+        };
+      IFile _doubleArrow = ObjectExtensions.<IFile>operator_doubleArrow(Mockito.mock(IFile.class), _function);
+      return _doubleArrow;
+    }
+  }.apply();
+  
   @Test
-  @Named("passes selected file to compiler")
-  @Order(99)
-  public void _passesSelectedFileToCompiler() throws Exception {
-    IFile inputFile = this._workspaceHelper.createFile("example/Colors.enum", "contents");
-    this.executeCompileAction(inputFile);
+  @Named("passes selected file\\\'s contents to compiler")
+  @Order(0)
+  public void _passesSelectedFileSContentsToCompiler() throws Exception {
+    this.executeCompileAction(this.inputFile);
     EnumCompiler _verify = Mockito.<EnumCompiler>verify(this.enumCompiler);
     _verify.compile("contents");
   }
   
   @Test
-  @Named("rethrows core exceptions in runtime exception")
-  @Order(99)
-  public void _rethrowsCoreExceptionsInRuntimeException() throws Exception {
-    final Procedure1<IFile> _function = new Procedure1<IFile>() {
-        public void apply(final IFile it) {
-          try {
-            InputStream _contents = it.getContents();
-            OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
-            CoreException _coreException = new CoreException(Status.OK_STATUS);
-            _when.thenThrow(_coreException);
-          } catch (final Throwable _t) {
-            if (_t instanceof CoreException) {
-              final CoreException e = (CoreException)_t;
-            } else {
-              throw Exceptions.sneakyThrow(_t);
-            }
-          }
-        }
-      };
-    final IFile invalidFile = ObjectExtensions.<IFile>operator_doubleArrow(Mockito.mock(IFile.class), _function);
+  @Named("wraps core exceptions in runtime exception")
+  @Order(1)
+  public void _wrapsCoreExceptionsInRuntimeException() throws Exception {
+    InputStream _contents = this.inputFile.getContents();
+    OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
+    CoreException _coreException = new CoreException(Status.OK_STATUS);
+    _when.thenThrow(_coreException);
     try{
-      this.executeCompileAction(invalidFile);
-      Assert.fail("Expected " + RuntimeException.class.getName() + " in \n     invalidFile.executeCompileAction\n with:"
-       + "\n     invalidFile is " + new StringDescription().appendValue(invalidFile).toString());
+      this.executeCompileAction(this.inputFile);
+      Assert.fail("Expected " + RuntimeException.class.getName() + " in \n     inputFile.executeCompileAction\n with:"
+       + "\n     inputFile is " + new StringDescription().appendValue(this.inputFile).toString());
     }catch(RuntimeException e){
       // expected
     }
@@ -90,14 +92,13 @@ public class CompileActionSpec {
   
   @Test
   @Named("writes compilation result to java file with same name as input")
-  @Order(99)
+  @Order(2)
   public void _writesCompilationResultToJavaFileWithSameNameAsInput() throws Exception {
-    IFile inputFile = this._workspaceHelper.createFile("example/Colors.enum", "contents");
     String _anyString = Matchers.anyString();
     CharSequence _compile = this.enumCompiler.compile(_anyString);
     OngoingStubbing<CharSequence> _when = Mockito.<CharSequence>when(_compile);
     _when.thenReturn("result string");
-    this.executeCompileAction(inputFile);
+    this.executeCompileAction(this.inputFile);
     String _fileContents = this._workspaceHelper.getFileContents("example/Colors.java");
     boolean _doubleArrow = Should.operator_doubleArrow(_fileContents, "result string");
     Assert.assertTrue("\nExpected \"example/Colors.java\".fileContents => \"result string\" but"

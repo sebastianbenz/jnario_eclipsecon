@@ -5,8 +5,12 @@ import java.io.InputStream;
 
 public class Strings {
 
-	public static String toString(java.io.InputStream is) {
+	public static String convertToString(InputStream is) {
 	    try {
+	    	if(is == null){
+	    		return "";
+	    	}
+	    		
 	        return new java.util.Scanner(is).useDelimiter("\\A").next();
 	    } catch (java.util.NoSuchElementException e) {
 	        return "";

@@ -2,8 +2,6 @@ package enumlang;
 
 import enumlang.StringInputStream;
 import java.io.InputStream;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -16,6 +14,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.jnario.enumlang.utils.Strings;
 import org.junit.Before;
 
 @SuppressWarnings("all")
@@ -74,27 +73,12 @@ public class WorkspaceHelper {
       {
         final IFile file = this.getFile(path);
         InputStream _contents = file.getContents();
-        String _convertToString = this.convertToString(_contents);
+        String _convertToString = Strings.convertToString(_contents);
         _xblockexpression = (_convertToString);
       }
       return _xblockexpression;
     } catch (Exception _e) {
       throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  public String convertToString(final InputStream is) {
-    try {
-      Scanner _scanner = new Scanner(is);
-      Scanner _useDelimiter = _scanner.useDelimiter("\\A");
-      return _useDelimiter.next();
-    } catch (final Throwable _t) {
-      if (_t instanceof NoSuchElementException) {
-        final NoSuchElementException e = (NoSuchElementException)_t;
-        return "";
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
     }
   }
   

@@ -1,7 +1,7 @@
 package enumlang;
 
-import enumlang.CompileActionSpec;
-import enumlang.EnumCompilerSpec;
+import enumlang.specs.CompileActionSpec;
+import enumlang.specs.EnumCompilerSpec;
 import org.jnario.runner.Contains;
 import org.jnario.runner.ExampleGroupRunner;
 import org.jnario.runner.Named;

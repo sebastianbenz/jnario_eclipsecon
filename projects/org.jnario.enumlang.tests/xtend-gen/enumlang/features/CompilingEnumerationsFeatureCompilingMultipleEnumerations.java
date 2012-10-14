@@ -1,4 +1,4 @@
-package enumlang;
+package enumlang.features;
 
 import enumlang.WorkspaceHelper;
 import java.util.List;
@@ -22,14 +22,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(FeatureRunner.class)
-@Named("Scenario: Compiling multiple files")
+@Named("Scenario: Compiling multiple enumerations")
 @SuppressWarnings("all")
-public class CompilingEnumerationsFeatureCompilingMultipleFiles {
+public class CompilingEnumerationsFeatureCompilingMultipleEnumerations {
   @Test
   @Order(0)
-  @Named("Given a selected file \\\"example/Colors.enum\\\" with")
-  public void givenASelectedFileExampleColorsEnumWith() {
-    StepArguments _stepArguments = new StepArguments("example/Colors.enum", "Colors : BLUE, RED, GREEN");
+  @Named("Given a selected file \\\"example/MyEnums.enum\\\" with")
+  public void givenASelectedFileExampleMyEnumsEnumWith() {
+    StepArguments _stepArguments = new StepArguments("example/MyEnums.enum", "Colors : BLUE, RED, GREEN\nAnimals : DOG, CAT, HORSE");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _second = JnarioIterableExtensions.<String>second(args);
@@ -39,18 +39,6 @@ public class CompilingEnumerationsFeatureCompilingMultipleFiles {
   
   @Test
   @Order(1)
-  @Named("And a selected file \\\"example/Animals.enum\\\" with")
-  public void andASelectedFileExampleAnimalsEnumWith() {
-    StepArguments _stepArguments = new StepArguments("example/Animals.enum", "Animals : DOG, CAT, HORSE");
-    final StepArguments args = _stepArguments;
-    String _first = JnarioIterableExtensions.<String>first(args);
-    String _second = JnarioIterableExtensions.<String>second(args);
-    IFile _createFile = this._workspaceHelper.createFile(_first, _second);
-    this.selection.add(_createFile);
-  }
-  
-  @Test
-  @Order(2)
   @Named("When I execute the compile action")
   public void whenIExecuteTheCompileAction() {
     CompileAction _compileAction = new CompileAction();
@@ -63,7 +51,7 @@ public class CompilingEnumerationsFeatureCompilingMultipleFiles {
   }
   
   @Test
-  @Order(3)
+  @Order(2)
   @Named("Then I get a file \\\"example/Colors.java\\\" with")
   public void thenIGetAFileExampleColorsJavaWith() {
     StepArguments _stepArguments = new StepArguments("example/Colors.java", "package enums;\n\npublic enum Colors {\n\tBLUE, RED, GREEN\n}");
@@ -78,7 +66,7 @@ public class CompilingEnumerationsFeatureCompilingMultipleFiles {
   }
   
   @Test
-  @Order(4)
+  @Order(3)
   @Named("And I get a file \\\"example/Animals.java\\\" with")
   public void andIGetAFileExampleAnimalsJavaWith() {
     StepArguments _stepArguments = new StepArguments("example/Animals.java", "package enums;\n\npublic enum Animals {\n\tDOG, CAT, HORSE\n}");

@@ -1,6 +1,6 @@
-package enumlang;
+package enumlang.specs;
 
-import enumlang.EnumCompilerSpec;
+import enumlang.specs.EnumCompilerSpec;
 import org.hamcrest.StringDescription;
 import org.jnario.runner.ExampleGroupRunner;
 import org.jnario.runner.Named;
@@ -11,12 +11,12 @@ import org.junit.runner.RunWith;
 
 @SuppressWarnings("all")
 @RunWith(ExampleGroupRunner.class)
-@Named("invalid inputs")
+@Named("Invalid inputs")
 public class EnumCompilerInvalidInputsSpec extends EnumCompilerSpec {
   @Test
-  @Named("compile[null] throws IllegalArgumentException")
-  @Order(99)
-  public void _compileNullThrowsIllegalArgumentException() throws Exception {
+  @Named("compile[null] should throw IllegalArgumentException")
+  @Order(3)
+  public void _compileNullShouldThrowIllegalArgumentException() throws Exception {
     try{
       this.compile(null);
       Assert.fail("Expected " + IllegalArgumentException.class.getName() + " in \n     compile(null)\n with:"
@@ -27,9 +27,9 @@ public class EnumCompilerInvalidInputsSpec extends EnumCompilerSpec {
   }
   
   @Test
-  @Named("compile[\\\"\\\"] throws IllegalArgumentException")
-  @Order(99)
-  public void _compileThrowsIllegalArgumentException() throws Exception {
+  @Named("compile[\\\"\\\"] should throw IllegalArgumentException")
+  @Order(4)
+  public void _compileShouldThrowIllegalArgumentException() throws Exception {
     try{
       this.compile("");
       Assert.fail("Expected " + IllegalArgumentException.class.getName() + " in \n     compile(\"\")\n with:"
@@ -40,9 +40,9 @@ public class EnumCompilerInvalidInputsSpec extends EnumCompilerSpec {
   }
   
   @Test
-  @Named("compile[\\\"Colors MISSING COLON\\\"] throws IllegalArgumentException")
-  @Order(99)
-  public void _compileColorsMISSINGCOLONThrowsIllegalArgumentException() throws Exception {
+  @Named("compile[\\\"Colors MISSING COLON\\\"] should throw IllegalArgumentException")
+  @Order(5)
+  public void _compileColorsMISSINGCOLONShouldThrowIllegalArgumentException() throws Exception {
     try{
       this.compile("Colors MISSING COLON");
       Assert.fail("Expected " + IllegalArgumentException.class.getName() + " in \n     compile(\"Colors MISSING COLON\")\n with:"

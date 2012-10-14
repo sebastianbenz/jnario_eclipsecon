@@ -1,4 +1,4 @@
-package enumlang
+package enumlang.specs
 
 import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.IFile
@@ -12,36 +12,30 @@ import static org.mockito.Matchers.*
 import static org.mockito.Mockito.*
 
 import static extension org.jnario.lib.Should.*
+import enumlang.WorkspaceHelper
+import org.eclipse.core.runtime.Path
 
 describe CompileAction {
 	
 	extension WorkspaceHelper = new WorkspaceHelper
-	
 	var enumCompiler = mock(EnumCompiler) 
-	
 	val compileAction = new CompileAction(enumCompiler)
+	var inputFile = stub(IFile) => [
+		when(fullPath).thenReturn(new Path("example/MyEnum.enum"))
+	]
 	
-	fact "passes selected file to compiler"{
-		var inputFile = createFile("example/Colors.enum", "contents")
-		
+	fact "passes selected file's contents to compiler"{
 		inputFile.executeCompileAction
-		
 		verify(enumCompiler).compile("contents")
 	}
 	
-	fact "rethrows core exceptions in runtime exception"{
-		val invalidFile = stub(IFile) => [
-			try{
-				when(contents).thenThrow(new CoreException(Status::OK_STATUS))
-			}catch(CoreException e){}
-		]
+	fact "wraps core exceptions in runtime exception"{
+		when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
 		
-		invalidFile.executeCompileAction throws RuntimeException
+		inputFile.executeCompileAction throws RuntimeException
 	}
 	
 	fact "writes compilation result to java file with same name as input"{
-		var inputFile = createFile("example/Colors.enum", "contents")
-
 		when(enumCompiler.compile(anyString)).thenReturn("result string")
 		
 		inputFile.executeCompileAction

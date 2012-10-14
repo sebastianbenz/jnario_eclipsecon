@@ -1,5 +1,7 @@
 package enumlang
 
+import enumlang.features.*
+
 #Enum Compilation
 
 ##Feature
@@ -8,5 +10,5 @@ package enumlang
 
 ##Implementation
 
-- "CompileAction"
-- "EnumCompiler"
+- \.*specs.*\
+

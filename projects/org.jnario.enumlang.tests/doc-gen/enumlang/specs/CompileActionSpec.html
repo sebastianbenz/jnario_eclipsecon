@@ -10,14 +10,14 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/bootstrap-responsive.min.css">
-<link rel="stylesheet" href="../css/custom.css">
-<link rel="stylesheet" href="../css/prettify.css">
-<script type="text/javascript" src="../js/prettify.js"></script>
-<script type="text/javascript" src="../js/lang-jnario.js"></script>
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script type="text/javascript" src="../js/bootstrap-tab.js"></script>
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="../../css/custom.css">
+<link rel="stylesheet" href="../../css/prettify.css">
+<script type="text/javascript" src="../../js/prettify.js"></script>
+<script type="text/javascript" src="../../js/lang-jnario.js"></script>
+<script type="text/javascript" src="../../js/jquery.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-tab.js"></script>
 </head>
 
 <body onload="prettyPrint()">
@@ -35,26 +35,17 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<ul><li><p id="passes_selected_file_to_compiler"><strong>passes selected file to compiler</strong></p>
+<ul><li><p id="passes_selected_file_s_contents_to_compiler"><strong>passes selected file's contents to compiler</strong></p>
 <pre class="prettyprint lang-spec linenums">
-var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
-
 inputFile.executeCompileAction
-
 verify(enumCompiler).compile(&quot;contents&quot;)</pre>
-</li><li><p id="rethrows_core_exceptions_in_runtime_exception"><strong>rethrows core exceptions in runtime exception</strong></p>
+</li><li><p id="wraps_core_exceptions_in_runtime_exception"><strong>wraps core exceptions in runtime exception</strong></p>
 <pre class="prettyprint lang-spec linenums">
-val invalidFile = stub(IFile) =&gt; [
-  try{
-    when(contents).thenThrow(new CoreException(Status::OK_STATUS))
-  }catch(CoreException e){}
-]
+when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
 
-invalidFile.executeCompileAction throws RuntimeException</pre>
+inputFile.executeCompileAction throws RuntimeException</pre>
 </li><li><p id="writes_compilation_result_to_java_file_with_same_name_as_input"><strong>writes compilation result to java file with same name as input</strong></p>
 <pre class="prettyprint lang-spec linenums">
-var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
-
 when(enumCompiler.compile(anyString)).thenReturn(&quot;result string&quot;)
 
 inputFile.executeCompileAction
@@ -66,7 +57,7 @@ inputFile.executeCompileAction
 						    	<h3>CompileAction.spec</h3>
 						    	<p>
 <pre class="prettyprint lang-spec linenums">
-package enumlang
+package enumlang.specs
 
 import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.IFile
@@ -80,36 +71,30 @@ import static org.mockito.Matchers.*
 import static org.mockito.Mockito.*
 
 import static extension org.jnario.lib.Should.*
+import enumlang.WorkspaceHelper
+import org.eclipse.core.runtime.Path
 
 describe CompileAction {
   
   extension WorkspaceHelper = new WorkspaceHelper
-  
   var enumCompiler = mock(EnumCompiler) 
-  
   val compileAction = new CompileAction(enumCompiler)
+  var inputFile = stub(IFile) =&gt; [
+    when(fullPath).thenReturn(new Path(&quot;example/MyEnum.enum&quot;))
+  ]
   
-  fact &quot;passes selected file to compiler&quot;{
-    var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
-    
+  fact &quot;passes selected file's contents to compiler&quot;{
     inputFile.executeCompileAction
-    
     verify(enumCompiler).compile(&quot;contents&quot;)
   }
   
-  fact &quot;rethrows core exceptions in runtime exception&quot;{
-    val invalidFile = stub(IFile) =&gt; [
-      try{
-        when(contents).thenThrow(new CoreException(Status::OK_STATUS))
-      }catch(CoreException e){}
-    ]
+  fact &quot;wraps core exceptions in runtime exception&quot;{
+    when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
     
-    invalidFile.executeCompileAction throws RuntimeException
+    inputFile.executeCompileAction throws RuntimeException
   }
   
   fact &quot;writes compilation result to java file with same name as input&quot;{
-    var inputFile = createFile(&quot;example/Colors.enum&quot;, &quot;contents&quot;)
-
     when(enumCompiler.compile(anyString)).thenReturn(&quot;result string&quot;)
     
     inputFile.executeCompileAction

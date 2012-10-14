@@ -1,7 +1,7 @@
-package enumlang;
+package enumlang.specs;
 
-import enumlang.EnumCompilerGeneratesValidJavaEnumsForSpec;
-import enumlang.EnumCompilerInvalidInputsSpec;
+import enumlang.specs.EnumCompilerGeneratesValidJavaEnumsForSpec;
+import enumlang.specs.EnumCompilerInvalidInputsSpec;
 import org.jnario.enumlang.popup.actions.EnumCompiler;
 import org.jnario.runner.Contains;
 import org.jnario.runner.ExampleGroupRunner;
@@ -21,6 +21,10 @@ public class EnumCompilerSpec {
   public CharSequence compile(final String s) {
     CharSequence _compile = this.subject.compile(s);
     return _compile;
+  }
+  
+  public boolean operator_doubleArrow(final Object actual, final Object expected) {
+    return true;
   }
   
   public boolean is(final Object actual, final Object expected) {

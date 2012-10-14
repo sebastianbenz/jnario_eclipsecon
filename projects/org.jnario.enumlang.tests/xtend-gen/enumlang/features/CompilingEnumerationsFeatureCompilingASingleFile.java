@@ -1,4 +1,4 @@
-package enumlang;
+package enumlang.features;
 
 import enumlang.WorkspaceHelper;
 import java.util.List;
@@ -27,9 +27,9 @@ import org.junit.runner.RunWith;
 public class CompilingEnumerationsFeatureCompilingASingleFile {
   @Test
   @Order(0)
-  @Named("Given a selected file \\\"example/Colors.enum\\\" with")
-  public void givenASelectedFileExampleColorsEnumWith() {
-    StepArguments _stepArguments = new StepArguments("example/Colors.enum", "Colors : BLUE, RED, GREEN");
+  @Named("Given a selected file \\\"example/MyEnums.enum\\\" with")
+  public void givenASelectedFileExampleMyEnumsEnumWith() {
+    StepArguments _stepArguments = new StepArguments("example/MyEnums.enum", "Colors : BLUE, RED, GREEN");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _second = JnarioIterableExtensions.<String>second(args);

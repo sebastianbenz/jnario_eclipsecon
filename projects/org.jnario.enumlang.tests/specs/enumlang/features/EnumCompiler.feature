@@ -1,4 +1,4 @@
-package enumlang
+package enumlang.features
 
 import org.eclipse.jface.viewers.StructuredSelection
 import org.jnario.enumlang.popup.actions.CompileAction
@@ -8,6 +8,7 @@ import static org.jnario.lib.JnarioCollectionLiterals.*
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 import static org.junit.Assert.*
+import enumlang.WorkspaceHelper
 
 Feature: Compiling Enumerations
 
@@ -19,7 +20,7 @@ Feature: Compiling Enumerations
 		extension WorkspaceHelper = new WorkspaceHelper
 		val selection = list()
 				
-		Given a selected file "example/Colors.enum" with
+		Given a selected file "example/MyEnums.enum" with
 		'''
 			Colors : BLUE, RED, GREEN
 		'''
@@ -38,14 +39,11 @@ Feature: Compiling Enumerations
 		'''
 			getFileContents(args.first) => args.second
 
-	Scenario: Compiling multiple files
+	Scenario: Compiling multiple enumerations 
 		
-		Given a selected file "example/Colors.enum" with
+		Given a selected file "example/MyEnums.enum" with
 		'''
 			Colors : BLUE, RED, GREEN
-		'''
-		And a selected file "example/Animals.enum" with
-		'''
 			Animals : DOG, CAT, HORSE
 		'''
 		When I execute the compile action

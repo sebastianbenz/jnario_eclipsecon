@@ -5,8 +5,8 @@ import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.xbase.lib.Procedures$Procedure1
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Path
-import java.io.InputStream
 import org.junit.Before
+import static extension org.jnario.enumlang.utils.Strings.*
 
 class WorkspaceHelper {
 	
@@ -32,14 +32,6 @@ class WorkspaceHelper {
 	def getFileContents(String path){
 		val file = path.getFile
 		file.contents.convertToString
-	}
-	
-	def convertToString(InputStream is){
-	    try {
-	        return new java.util.Scanner(is).useDelimiter("\\A").next();
-	    } catch (java.util.NoSuchElementException e) {
-	        return ""
-		}
 	}
 	
 	def project(String name, Procedures$Procedure1<IProject> projectInitializer){

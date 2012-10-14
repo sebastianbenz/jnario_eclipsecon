@@ -36,7 +36,7 @@ public class CompileAction implements IObjectActionDelegate {
 	public void run(IAction action) {
 		for (IFile inputFile : selectedFiles) {
 			try {
-				CharSequence content = compiler.compile(Strings.toString(inputFile.getContents()));
+				CharSequence content = compiler.compile(Strings.convertToString(inputFile.getContents()));
 				
 				IPath outputFileName = inputFile.getFullPath().removeFileExtension().addFileExtension("java");
 				IFile outputFile = inputFile.getWorkspace().getRoot().getFile(outputFileName);
