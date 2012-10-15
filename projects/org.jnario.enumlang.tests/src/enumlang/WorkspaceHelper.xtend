@@ -1,13 +1,12 @@
 package enumlang
 
+import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.NullProgressMonitor
-import org.eclipse.xtext.xbase.lib.Procedures$Procedure1
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Path
 import org.junit.Before
+
 import static extension org.jnario.enumlang.utils.Strings.*
-import org.eclipse.core.resources.IContainer
 
 class WorkspaceHelper {
 	

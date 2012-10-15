@@ -31,11 +31,11 @@ Feature: Compiling Enumerations
 			action.run(_)
 		Then I get a file "example/Colors.java" with
 		'''
-			package enums;
-			
-			public enum Colors{
-				BLUE, RED, GREEN
-			}
+		package enums;
+		
+		public enum Colors{
+			BLUE, RED, GREEN
+		}
 		'''
 			getFileContents(args.first) => args.second
 
@@ -52,17 +52,17 @@ Feature: Compiling Enumerations
 		When I execute the compile action
 		Then I get a file "example/Colors.java" with
 		'''
-			package enums;
-			
-			public enum Colors{
-				BLUE, RED, GREEN
-			}
+		package enums;
+		
+		public enum Colors{
+			BLUE, RED, GREEN
+		}
 		'''
 		And I get a file "example/Animals.java" with
 		'''
-			package enums;
-			
-			public enum Animals{
-				DOG, CAT, HORSE
-			}
+		package enums;
+		
+		public enum Animals{
+			DOG, CAT, HORSE
+		}
 		'''

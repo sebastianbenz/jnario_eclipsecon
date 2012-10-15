@@ -89,7 +89,9 @@ describe CompileAction {
   val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
 
   val fileContent = &quot;file content&quot;
-  var inputFile = createFile(&quot;examples/src/MyEnum.enum&quot;, fileContent)
+  var IFile inputFile 
+  
+  before inputFile = createFile(&quot;examples/src/MyEnum.enum&quot;, fileContent)
   
   fact &quot;passes selected file's contents to parser&quot;{
     inputFile.executeCompileAction
@@ -98,7 +100,10 @@ describe CompileAction {
   
   fact &quot;wraps core exceptions in runtime exception&quot;{
     inputFile = stub(IFile) =&gt;[
-      when(contents).thenThrow(new CoreException(Status::OK_STATUS))
+      try{
+        when(contents).thenThrow(new CoreException(Status::OK_STATUS))
+      }catch(CoreException e){
+      }
     ]
 
     inputFile.executeCompileAction throws RuntimeException
@@ -133,10 +138,10 @@ describe CompileAction {
 
 describe EnumParser{ 
   def examples {
-    | input          | name     | literals        |
-    | &quot;Color&quot;      | &quot;Color&quot;  | list()        |
-    | &quot;Color:RED&quot;    | &quot;Color&quot;  | list(&quot;RED&quot;)      |
-    | &quot;Color:RED,GREEN&quot; | &quot;Color&quot;  | list(&quot;RED&quot;, &quot;GREEN&quot;)  |
+    | input            | name     | literals        |
+    | &quot;Color&quot;        | &quot;Color&quot;  | list()        |
+    | &quot;Color:RED&quot;      | &quot;Color&quot;  | list(&quot;RED&quot;)      |
+    | &quot;Color:RED,GREEN&quot;   | &quot;Color&quot;  | list(&quot;RED&quot;, &quot;GREEN&quot;)  |
     | &quot;Color : RED , GREEN&quot; | &quot;Color&quot;  | list(&quot;RED&quot;, &quot;GREEN&quot;)  |
   }
 

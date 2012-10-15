@@ -24,6 +24,7 @@ import org.jnario.runner.Extension;
 import org.jnario.runner.Named;
 import org.jnario.runner.Order;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -57,12 +58,13 @@ public class CompileActionSpec {
   
   final String fileContent = "file content";
   
-  IFile inputFile = new Function0<IFile>() {
-    public IFile apply() {
-      IFile _createFile = CompileActionSpec.this._workspaceHelper.createFile("examples/src/MyEnum.enum", CompileActionSpec.this.fileContent);
-      return _createFile;
-    }
-  }.apply();
+  IFile inputFile;
+  
+  @Before
+  public void before() throws Exception {
+    IFile _createFile = this._workspaceHelper.createFile("examples/src/MyEnum.enum", this.fileContent);
+    this.inputFile = _createFile;
+  }
   
   @Test
   @Named("passes selected file\\\'s contents to parser")
@@ -84,8 +86,12 @@ public class CompileActionSpec {
             OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
             CoreException _coreException = new CoreException(Status.OK_STATUS);
             _when.thenThrow(_coreException);
-          } catch (Exception _e) {
-            throw Exceptions.sneakyThrow(_e);
+          } catch (final Throwable _t) {
+            if (_t instanceof CoreException) {
+              final CoreException e = (CoreException)_t;
+            } else {
+              throw Exceptions.sneakyThrow(_t);
+            }
           }
         }
       };
