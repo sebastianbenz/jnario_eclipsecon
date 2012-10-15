@@ -39,7 +39,7 @@
 <h3  id="Scenario_Compiling_a_single_file">Scenario: Compiling a single file
 </h3>
 <ul>
-<li><p><strong>Given</strong> a selected file <code>"example/MyEnums.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN</pre>
+<li><p><strong>Given</strong> a selected file <code>"example/MyEnum.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN</pre>
 <ul>
 </ul>
 </li>
@@ -49,19 +49,22 @@
 </li>
 <li><p><strong>Then</strong> I get a file <code>"example/Colors.java"</code> with</p><pre>package enums;
 
-public enum Colors {
+public enum Colors{
   BLUE, RED, GREEN
 }</pre>
 <ul>
 </ul>
 </li>
 </ul>
-<h3  id="Scenario_Compiling_multiple_enumerations">Scenario: Compiling multiple enumerations 
+<h3  id="Scenario_Compiling_multiple_files">Scenario: Compiling multiple files  
 </h3>
 <ul>
-<li><p><strong>Given</strong> a selected file <code>"example/MyEnums.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN
-Animals : DOG, CAT, HORSE</pre>
+<li><p><strong>Given</strong> a selected file <code>"example/Colors.enum"</code> with</p><pre>Colors : BLUE, RED, GREEN</pre>
 <ul>
+<li><p><strong>And</strong> a selected file <code>"example/Animals.enum"</code> with</p><pre>Animals : DOG, CAT, HORSE</pre>
+<ul>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><strong>When</strong> I execute the compile action</p>
@@ -70,13 +73,13 @@ Animals : DOG, CAT, HORSE</pre>
 </li>
 <li><p><strong>Then</strong> I get a file <code>"example/Colors.java"</code> with</p><pre>package enums;
 
-public enum Colors {
+public enum Colors{
   BLUE, RED, GREEN
 }</pre>
 <ul>
 <li><p><strong>And</strong> I get a file <code>"example/Animals.java"</code> with</p><pre>package enums;
 
-public enum Animals {
+public enum Animals{
   DOG, CAT, HORSE
 }</pre>
 <ul>
@@ -112,7 +115,7 @@ Feature: Compiling Enumerations
     extension WorkspaceHelper = new WorkspaceHelper
     val selection = list()
         
-    Given a selected file &quot;example/MyEnums.enum&quot; with
+    Given a selected file &quot;example/MyEnum.enum&quot; with
     '''
       Colors : BLUE, RED, GREEN
     '''
@@ -125,17 +128,20 @@ Feature: Compiling Enumerations
     '''
       package enums;
       
-      public enum Colors {
+      public enum Colors{
         BLUE, RED, GREEN
       }
     '''
       getFileContents(args.first) =&gt; args.second
 
-  Scenario: Compiling multiple enumerations 
+  Scenario: Compiling multiple files  
     
-    Given a selected file &quot;example/MyEnums.enum&quot; with
+    Given a selected file &quot;example/Colors.enum&quot; with
     '''
       Colors : BLUE, RED, GREEN
+    '''
+    And a selected file &quot;example/Animals.enum&quot; with
+    '''
       Animals : DOG, CAT, HORSE
     '''
     When I execute the compile action
@@ -143,7 +149,7 @@ Feature: Compiling Enumerations
     '''
       package enums;
       
-      public enum Colors {
+      public enum Colors{
         BLUE, RED, GREEN
       }
     '''
@@ -151,7 +157,7 @@ Feature: Compiling Enumerations
     '''
       package enums;
       
-      public enum Animals {
+      public enum Animals{
         DOG, CAT, HORSE
       }
     '''

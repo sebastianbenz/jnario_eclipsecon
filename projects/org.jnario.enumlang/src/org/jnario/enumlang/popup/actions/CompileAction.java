@@ -9,38 +9,43 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+import org.jnario.enumlang.utils.FileSystemAccess;
 import org.jnario.enumlang.utils.Strings;
+import org.jnario.enumlang.utils.WorkspaceAccess;
 
 public class CompileAction implements IObjectActionDelegate {
-
+	
 	private List<IFile> selectedFiles;
 	private EnumCompiler compiler;
+	private EnumParser parser;
+	private FileSystemAccess fileSystemAccess;
 	
 	public CompileAction() {
-		this(new EnumCompiler());
+		this(new EnumCompiler(), new EnumParser(), new WorkspaceAccess());
 	}
-	
-	public CompileAction(EnumCompiler compiler) {
+
+	public CompileAction(EnumCompiler compiler, EnumParser parser, FileSystemAccess fileSystemAccess) {
+		this.parser = parser;
 		this.compiler = compiler;
+		this.fileSystemAccess = fileSystemAccess;
 	}
-	
+
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
 	}
 
 	public void run(IAction action) {
 		for (IFile inputFile : selectedFiles) {
 			try {
-				CharSequence content = compiler.compile(Strings.convertToString(inputFile.getContents()));
-				
-				IPath outputFileName = inputFile.getFullPath().removeFileExtension().addFileExtension("java");
-				IFile outputFile = inputFile.getWorkspace().getRoot().getFile(outputFileName);
-				outputFile.create(Strings.toInputStream(content), true, new NullProgressMonitor());
+				String input = Strings.convertToString(inputFile.getContents());
+				MyEnum myEnum = parser.parse(input);
+				CharSequence content = compiler.compile(myEnum);
+				String path = inputFile.getParent().getFullPath().toString() + "/" + myEnum.getName() + ".java";
+				fileSystemAccess.createFile(path, content.toString());
 			} catch (CoreException e) {
 				throw new RuntimeException(e);
 			}

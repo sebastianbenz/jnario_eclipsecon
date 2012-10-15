@@ -20,7 +20,7 @@ Feature: Compiling Enumerations
 		extension WorkspaceHelper = new WorkspaceHelper
 		val selection = list()
 				
-		Given a selected file "example/MyEnums.enum" with
+		Given a selected file "example/MyEnum.enum" with
 		'''
 			Colors : BLUE, RED, GREEN
 		'''
@@ -33,17 +33,20 @@ Feature: Compiling Enumerations
 		'''
 			package enums;
 			
-			public enum Colors {
+			public enum Colors{
 				BLUE, RED, GREEN
 			}
 		'''
 			getFileContents(args.first) => args.second
 
-	Scenario: Compiling multiple enumerations 
+	Scenario: Compiling multiple files  
 		
-		Given a selected file "example/MyEnums.enum" with
+		Given a selected file "example/Colors.enum" with
 		'''
 			Colors : BLUE, RED, GREEN
+		'''
+		And a selected file "example/Animals.enum" with
+		'''
 			Animals : DOG, CAT, HORSE
 		'''
 		When I execute the compile action
@@ -51,7 +54,7 @@ Feature: Compiling Enumerations
 		'''
 			package enums;
 			
-			public enum Colors {
+			public enum Colors{
 				BLUE, RED, GREEN
 			}
 		'''
@@ -59,7 +62,7 @@ Feature: Compiling Enumerations
 		'''
 			package enums;
 			
-			public enum Animals {
+			public enum Animals{
 				DOG, CAT, HORSE
 			}
 		'''

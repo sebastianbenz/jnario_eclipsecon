@@ -27,9 +27,9 @@ import org.junit.runner.RunWith;
 public class CompilingEnumerationsFeatureCompilingASingleFile {
   @Test
   @Order(0)
-  @Named("Given a selected file \\\"example/MyEnums.enum\\\" with")
-  public void givenASelectedFileExampleMyEnumsEnumWith() {
-    StepArguments _stepArguments = new StepArguments("example/MyEnums.enum", "Colors : BLUE, RED, GREEN");
+  @Named("Given a selected file \\\"example/MyEnum.enum\\\" with")
+  public void givenASelectedFileExampleMyEnumEnumWith() {
+    StepArguments _stepArguments = new StepArguments("example/MyEnum.enum", "Colors : BLUE, RED, GREEN");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _second = JnarioIterableExtensions.<String>second(args);
@@ -54,7 +54,7 @@ public class CompilingEnumerationsFeatureCompilingASingleFile {
   @Order(2)
   @Named("Then I get a file \\\"example/Colors.java\\\" with")
   public void thenIGetAFileExampleColorsJavaWith() {
-    StepArguments _stepArguments = new StepArguments("example/Colors.java", "package enums;\n\npublic enum Colors {\n\tBLUE, RED, GREEN\n}");
+    StepArguments _stepArguments = new StepArguments("example/Colors.java", "package enums;\n\npublic enum Colors{\n\tBLUE, RED, GREEN\n}");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     String _fileContents = this._workspaceHelper.getFileContents(_first);

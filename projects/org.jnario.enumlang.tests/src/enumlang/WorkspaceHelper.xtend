@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.Path
 import org.junit.Before
 import static extension org.jnario.enumlang.utils.Strings.*
+import org.eclipse.core.resources.IContainer
 
 class WorkspaceHelper {
 	
@@ -19,10 +20,15 @@ class WorkspaceHelper {
 	
 	def createFile(String path, String content){
 		val segments = path.split("/")
-		project(segments.head)[
-			file(segments.last, content)
-		]
-		path.getFile
+		var IContainer container
+		for(segment: segments){
+			switch(segment) {
+				case segments.head: container = createProject(segments.head)
+				case segments.last: return container.createFile(segment, content)
+				default: container = container.createFolder(segment)
+			}
+		}
+		return null
 	}
 	
 	def getFile(String path){
@@ -34,21 +40,35 @@ class WorkspaceHelper {
 		file.contents.convertToString
 	}
 	
-	def project(String name, Procedures$Procedure1<IProject> projectInitializer){
+	def createFolder(IContainer container, String name){
+		val folder = container.getFolder(new Path(name))
+		if(folder.exists){
+			return folder
+		}
+		folder.create(true, true, monitor)
+		folder
+	}
+
+	def createFile(IContainer container, String name, String content){
+		val contentStream = new StringInputStream(content)
+		val file = container.getFile(new Path(name))
+		if(file.exists){
+			file.setContents(contentStream, true, false, monitor)
+		}else{
+			file.create(contentStream, true, monitor)
+		}
+		file
+	}
+		
+	def createProject(String name){
 		val project = workspaceRoot.getProject(name)
 		if(!project.exists){
 			project.create(monitor)
 			project.open(monitor)
 		}	
-		projectInitializer.apply(project)
+		project
 	}
 
-
-	def file(IProject project, String name, CharSequence content){
-		val input = new StringInputStream(content.toString)
-		project.getFile(name).create(input, true, monitor)
-	}
-	
 	def monitor() {
 		new NullProgressMonitor
 	}

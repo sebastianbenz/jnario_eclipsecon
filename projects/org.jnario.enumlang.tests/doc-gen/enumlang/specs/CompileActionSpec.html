@@ -35,22 +35,32 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<ul><li><p id="passes_selected_file_s_contents_to_compiler"><strong>passes selected file's contents to compiler</strong></p>
+<ul><li><p id="passes_selected_file_s_contents_to_parser"><strong>passes selected file's contents to parser</strong></p>
 <pre class="prettyprint lang-spec linenums">
 inputFile.executeCompileAction
-verify(enumCompiler).compile(&quot;contents&quot;)</pre>
+verify(enumParser).parse(fileContent)</pre>
 </li><li><p id="wraps_core_exceptions_in_runtime_exception"><strong>wraps core exceptions in runtime exception</strong></p>
 <pre class="prettyprint lang-spec linenums">
-when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
+inputFile = stub(IFile) =&gt;[
+  when(contents).thenThrow(new CoreException(Status::OK_STATUS))
+]
 
 inputFile.executeCompileAction throws RuntimeException</pre>
-</li><li><p id="writes_compilation_result_to_java_file_with_same_name_as_input"><strong>writes compilation result to java file with same name as input</strong></p>
+</li><li><p id="passes_parsed_enum_to_compiler"><strong>passes parsed enum to compiler</strong></p>
 <pre class="prettyprint lang-spec linenums">
-when(enumCompiler.compile(anyString)).thenReturn(&quot;result string&quot;)
-
+val parsedEnum = stub(MyEnum)
+when(enumParser.parse(anyString)).thenReturn(parsedEnum)
 inputFile.executeCompileAction
 
-&quot;example/Colors.java&quot;.fileContents =&gt; &quot;result string&quot;</pre>
+verify(enumCompiler).compile(parsedEnum)</pre>
+</li><li><p id="writes_generated_java_file_to_input_folder"><strong>writes generated java file to input folder</strong></p>
+<pre class="prettyprint lang-spec linenums">
+val myEnum = new MyEnum(&quot;Colors&quot;)
+
+when(enumParser.parse(anyString)).thenReturn(myEnum)
+when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
+inputFile.executeCompileAction
+verify(fileSystemAccess).createFile(&quot;src/enums/Colors.java&quot;,fileContent)</pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -59,6 +69,7 @@ inputFile.executeCompileAction
 <pre class="prettyprint lang-spec linenums">
 package enumlang.specs
 
+import enumlang.WorkspaceHelper
 import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
@@ -66,40 +77,59 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.jface.viewers.StructuredSelection
 import org.jnario.enumlang.popup.actions.CompileAction
 import org.jnario.enumlang.popup.actions.EnumCompiler
-
+import org.jnario.enumlang.popup.actions.EnumParser
+import static org.junit.Assert.*
 import static org.mockito.Matchers.*
 import static org.mockito.Mockito.*
 
 import static extension org.jnario.lib.Should.*
-import enumlang.WorkspaceHelper
+import org.jnario.enumlang.popup.actions.MyEnum
+import static org.jnario.enumlang.popup.actions.MyEnum.*
+import org.eclipse.core.resources.IContainer
+import org.jnario.enumlang.utils.FileSystemAccess
 import org.eclipse.core.runtime.Path
 
 describe CompileAction {
   
   extension WorkspaceHelper = new WorkspaceHelper
-  var enumCompiler = mock(EnumCompiler) 
-  val compileAction = new CompileAction(enumCompiler)
-  var inputFile = stub(IFile) =&gt; [
-    when(fullPath).thenReturn(new Path(&quot;example/MyEnum.enum&quot;))
-  ]
   
-  fact &quot;passes selected file's contents to compiler&quot;{
+  var enumParser = mock(EnumParser)
+  var enumCompiler = mock(EnumCompiler) 
+  var fileSystemAccess = mock(FileSystemAccess)
+  
+  val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
+
+  val fileContent = &quot;file content&quot;
+  var inputFile = createFile(&quot;examples/src/MyEnum.enum&quot;, fileContent)
+  
+  fact &quot;passes selected file's contents to parser&quot;{
     inputFile.executeCompileAction
-    verify(enumCompiler).compile(&quot;contents&quot;)
+    verify(enumParser).parse(fileContent)
   }
   
   fact &quot;wraps core exceptions in runtime exception&quot;{
-    when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
-    
+    inputFile = stub(IFile) =&gt;[
+      when(contents).thenThrow(new CoreException(Status::OK_STATUS))
+    ]
+
     inputFile.executeCompileAction throws RuntimeException
   }
-  
-  fact &quot;writes compilation result to java file with same name as input&quot;{
-    when(enumCompiler.compile(anyString)).thenReturn(&quot;result string&quot;)
     
+  fact &quot;passes parsed enum to compiler&quot;{
+    val parsedEnum = stub(MyEnum)
+    when(enumParser.parse(anyString)).thenReturn(parsedEnum)
     inputFile.executeCompileAction
     
-    &quot;example/Colors.java&quot;.fileContents =&gt; &quot;result string&quot;
+    verify(enumCompiler).compile(parsedEnum)
+  }
+  
+  fact &quot;writes generated java file to input folder&quot;{
+    val myEnum = new MyEnum(&quot;Colors&quot;)
+    
+    when(enumParser.parse(anyString)).thenReturn(myEnum)
+    when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
+    inputFile.executeCompileAction
+    verify(fileSystemAccess).createFile(&quot;src/enums/Colors.java&quot;,fileContent)    
   }
   
   def executeCompileAction(IFile inputFile){
@@ -109,6 +139,50 @@ describe CompileAction {
   
   def toInputStream(String s){
     new ByteArrayInputStream(s.getBytes())
+  }
+}
+
+describe EnumParser{ 
+  def examples {
+    | input          | name     | literals        |
+    | &quot;Color&quot;      | &quot;Color&quot;  | list()        |
+    | &quot;Color:RED&quot;    | &quot;Color&quot;  | list(&quot;RED&quot;)      |
+    | &quot;Color:RED,GREEN&quot; | &quot;Color&quot;  | list(&quot;RED&quot;, &quot;GREEN&quot;)  |
+    | &quot;Color : RED , GREEN&quot; | &quot;Color&quot;  | list(&quot;RED&quot;, &quot;GREEN&quot;)  |
+  }
+
+  fact &quot;parses enums with the following format 'Name:Literal1,Literal2'&quot;{ 
+    examples.forEach[
+      val enum = subject.parse(input)
+      enum.name =&gt; name
+      enum.literals =&gt; literals
+    ]
+  }
+}
+
+describe EnumCompiler{
+  fact &quot;generates Java enum for empty enum&quot;{
+    compile(&quot;Colors&quot;) =&gt; '''
+      package enums;
+      
+      public enum Colors{
+      }
+    '''
+  }
+  
+  fact &quot;generates Java enum for multi literal enum&quot;{
+    compile(&quot;Colors&quot;, &quot;RED&quot;, &quot;BLUE&quot;) =&gt; '''
+      package enums;
+      
+      public enum Colors{
+        RED, BLUE
+      }
+    '''
+  }
+  
+  def compile(String name, String... inputs){
+    val input = new MyEnum(&quot;Colors&quot;, inputs)
+    subject.compile(input)
   }
 }
 </pre>

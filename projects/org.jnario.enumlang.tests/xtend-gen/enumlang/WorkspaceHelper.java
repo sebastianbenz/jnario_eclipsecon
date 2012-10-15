@@ -1,8 +1,11 @@
 package enumlang;
 
+import com.google.common.base.Objects;
 import enumlang.StringInputStream;
 import java.io.InputStream;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -44,21 +47,32 @@ public class WorkspaceHelper {
   }
   
   public IFile createFile(final String path, final String content) {
-    IFile _xblockexpression = null;
-    {
-      final String[] segments = path.split("/");
-      String _head = IterableExtensions.<String>head(((Iterable<String>)Conversions.doWrapArray(segments)));
-      final Procedure1<IProject> _function = new Procedure1<IProject>() {
-          public void apply(final IProject it) {
-            String _last = IterableExtensions.<String>last(((Iterable<String>)Conversions.doWrapArray(segments)));
-            WorkspaceHelper.this.file(it, _last, content);
-          }
-        };
-      this.project(_head, _function);
-      IFile _file = this.getFile(path);
-      _xblockexpression = (_file);
+    final String[] segments = path.split("/");
+    IContainer container = null;
+    for (final String segment : segments) {
+      boolean _matched = false;
+      if (!_matched) {
+        String _head = IterableExtensions.<String>head(((Iterable<String>)Conversions.doWrapArray(segments)));
+        if (Objects.equal(segment,_head)) {
+          _matched=true;
+          String _head_1 = IterableExtensions.<String>head(((Iterable<String>)Conversions.doWrapArray(segments)));
+          IProject _createProject = this.createProject(_head_1);
+          container = _createProject;
+        }
+      }
+      if (!_matched) {
+        String _last = IterableExtensions.<String>last(((Iterable<String>)Conversions.doWrapArray(segments)));
+        if (Objects.equal(segment,_last)) {
+          _matched=true;
+          return this.createFile(container, segment, content);
+        }
+      }
+      if (!_matched) {
+        IFolder _createFolder = this.createFolder(container, segment);
+        container = _createFolder;
+      }
     }
-    return _xblockexpression;
+    return null;
   }
   
   public IFile getFile(final String path) {
@@ -82,31 +96,66 @@ public class WorkspaceHelper {
     }
   }
   
-  public void project(final String name, final Procedure1<IProject> projectInitializer) {
+  public IFolder createFolder(final IContainer container, final String name) {
     try {
-      final IProject project = this.workspaceRoot.getProject(name);
-      boolean _exists = project.exists();
-      boolean _not = (!_exists);
-      if (_not) {
+      IFolder _xblockexpression = null;
+      {
+        Path _path = new Path(name);
+        final IFolder folder = container.getFolder(_path);
+        boolean _exists = folder.exists();
+        if (_exists) {
+          return folder;
+        }
         NullProgressMonitor _monitor = this.monitor();
-        project.create(_monitor);
-        NullProgressMonitor _monitor_1 = this.monitor();
-        project.open(_monitor_1);
+        folder.create(true, true, _monitor);
+        _xblockexpression = (folder);
       }
-      projectInitializer.apply(project);
+      return _xblockexpression;
     } catch (Exception _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void file(final IProject project, final String name, final CharSequence content) {
+  public IFile createFile(final IContainer container, final String name, final String content) {
     try {
-      String _string = content.toString();
-      StringInputStream _stringInputStream = new StringInputStream(_string);
-      final StringInputStream input = _stringInputStream;
-      IFile _file = project.getFile(name);
-      NullProgressMonitor _monitor = this.monitor();
-      _file.create(input, true, _monitor);
+      IFile _xblockexpression = null;
+      {
+        StringInputStream _stringInputStream = new StringInputStream(content);
+        final StringInputStream contentStream = _stringInputStream;
+        Path _path = new Path(name);
+        final IFile file = container.getFile(_path);
+        boolean _exists = file.exists();
+        if (_exists) {
+          NullProgressMonitor _monitor = this.monitor();
+          file.setContents(contentStream, true, false, _monitor);
+        } else {
+          NullProgressMonitor _monitor_1 = this.monitor();
+          file.create(contentStream, true, _monitor_1);
+        }
+        _xblockexpression = (file);
+      }
+      return _xblockexpression;
+    } catch (Exception _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public IProject createProject(final String name) {
+    try {
+      IProject _xblockexpression = null;
+      {
+        final IProject project = this.workspaceRoot.getProject(name);
+        boolean _exists = project.exists();
+        boolean _not = (!_exists);
+        if (_not) {
+          NullProgressMonitor _monitor = this.monitor();
+          project.create(_monitor);
+          NullProgressMonitor _monitor_1 = this.monitor();
+          project.open(_monitor_1);
+        }
+        _xblockexpression = (project);
+      }
+      return _xblockexpression;
     } catch (Exception _e) {
       throw Exceptions.sneakyThrow(_e);
     }

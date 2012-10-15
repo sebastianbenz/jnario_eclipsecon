@@ -1,44 +1,29 @@
 package org.jnario.enumlang.popup.actions
 
-import java.util.List
+import org.jnario.enumlang.popup.actions.MyEnum
+
+class EnumParser {
+	
+	def MyEnum parse(String content){
+		val segments = content.split(":")
+		val name = segments.get(0).trim
+		var literals = <String>emptyList
+		if(segments.size > 1){
+			literals = segments.get(1).split(",").map[trim]
+		}
+		new MyEnum(name, literals)
+	}
+	
+} 
 
 class EnumCompiler {
 	
-	def compile(String input){
-		if(input == null || input.empty){
-			throw new IllegalArgumentException
-		}
-		val segments = input.split(":")
-		
-		'''
+	def compile(MyEnum input)'''
 		package enums;
-
-		public enum Çsegments.nameÈ {
-			Çsegments.valueStringÈ
-		}'''
-	}
-	
-	def name(List<String> segments){
-		segments.head.trim.checkForWhitespaces
-	}
-	
-	def checkForWhitespaces(String name) {
-		val whitespace = " \t\n\r"
-		whitespace.toCharArray.forEach[
-			if(name.contains(it.toString)){
-				throw new IllegalArgumentException
-			}			
-		]
-		name
-	}
-	
-	def valueString(List<String> segments){
-		var valueString = ""
-		if(segments.size > 1){
-			var values = segments.last.split(",")
-			valueString = values.map[trim].join(", ")
+		
+		public enum Â«input.nameÂ»{
+			Â«input.literals.join(", ")Â»
 		}
-		valueString
-	} 
-	
-}
+	'''
+} 
+
