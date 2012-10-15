@@ -118,8 +118,7 @@ public class CompileActionSpec {
   @Named("writes generated java file to input folder")
   @Order(3)
   public void _writesGeneratedJavaFileToInputFolder() throws Exception {
-    MyEnum _myEnum = new MyEnum("Colors");
-    final MyEnum myEnum = _myEnum;
+    final MyEnum myEnum = Mockito.mock(MyEnum.class);
     String _anyString = Matchers.anyString();
     MyEnum _parse = this.enumParser.parse(_anyString);
     OngoingStubbing<MyEnum> _when = Mockito.<MyEnum>when(_parse);

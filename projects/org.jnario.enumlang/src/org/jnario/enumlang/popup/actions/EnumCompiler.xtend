@@ -16,7 +16,7 @@ class EnumParser {
 	
 } 
 
-class EnumCompiler {
+class EnumCompiler { 
 	
 	def compile(MyEnum input)'''
 		package enums;

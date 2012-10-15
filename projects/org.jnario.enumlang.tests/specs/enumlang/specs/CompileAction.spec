@@ -16,12 +16,10 @@ import static org.mockito.Mockito.*
 import static extension org.jnario.lib.Should.*
 import org.jnario.enumlang.popup.actions.MyEnum
 import static org.jnario.enumlang.popup.actions.MyEnum.*
-import org.eclipse.core.resources.IContainer
 import org.jnario.enumlang.utils.FileSystemAccess
-import org.eclipse.core.runtime.Path
 
 describe CompileAction {
-	
+
 	extension WorkspaceHelper = new WorkspaceHelper
 	
 	var enumParser = mock(EnumParser)
@@ -55,7 +53,7 @@ describe CompileAction {
 	}
 	
 	fact "writes generated java file to input folder"{
-		val myEnum = new MyEnum("Colors")
+		val myEnum = stub(MyEnum)
 		
 		when(enumParser.parse(anyString)).thenReturn(myEnum)
 		when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
