@@ -1,0 +1,17 @@
+import features.*
+
+#Tracking Expenses
+
+This is a simple example for **Jnario**.
+
+##Features
+
+	These are the supported features:
+	
+	- "Tracking Expenses"
+
+##Specs
+
+	These classes are required for the implementation:
+	 
+	- \.*specs.*\

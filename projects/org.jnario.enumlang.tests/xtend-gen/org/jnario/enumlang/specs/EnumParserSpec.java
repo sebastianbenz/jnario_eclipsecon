@@ -19,6 +19,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * This is our simple parser
+ */
 @SuppressWarnings("all")
 @RunWith(ExampleGroupRunner.class)
 @Named("EnumParser")
@@ -43,6 +46,9 @@ public class EnumParserSpec {
   
   protected ExampleTable<EnumParserSpecExamples> examples;
   
+  /**
+   * the format is really **simple**. [this is a random link](http://www.google.com).
+   */
   @Test
   @Named("parses enums with the following format \\\'Name:Literal1,Literal2\\\'")
   @Order(0)

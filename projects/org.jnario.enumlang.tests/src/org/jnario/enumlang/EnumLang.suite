@@ -4,11 +4,17 @@ import org.jnario.enumlang.features.*
 
 #Enum Compilation
 
+Tshisa asdfölkajs ökladfjs öajfasd
+alksdfdsöadfjs
+
 ##Feature
 
+afsdfsdadfs adfs adsf
 - "Compiling Enumerations"
 
 ##Implementation
+
+Use regular expressions:
 
 - \.*specs.*\
 
