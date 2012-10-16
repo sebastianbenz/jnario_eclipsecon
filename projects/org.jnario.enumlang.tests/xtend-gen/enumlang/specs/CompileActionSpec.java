@@ -45,37 +45,9 @@ public class CompileActionSpec {
     }
   }.apply();
   
-  EnumParser enumParser = new Function0<EnumParser>() {
-    public EnumParser apply() {
-      final Procedure1<EnumParser> _function = new Procedure1<EnumParser>() {
-          public void apply(final EnumParser it) {
-            String _anyString = Matchers.anyString();
-            MyEnum _parse = it.parse(_anyString);
-            OngoingStubbing<MyEnum> _when = Mockito.<MyEnum>when(_parse);
-            List<String> _emptyList = CollectionLiterals.<String>emptyList();
-            MyEnum _myEnum = new MyEnum("", _emptyList);
-            _when.thenReturn(_myEnum);
-          }
-        };
-      EnumParser _doubleArrow = ObjectExtensions.<EnumParser>operator_doubleArrow(Mockito.mock(EnumParser.class), _function);
-      return _doubleArrow;
-    }
-  }.apply();
+  EnumParser enumParser = Mockito.mock(EnumParser.class);
   
-  EnumCompiler enumCompiler = new Function0<EnumCompiler>() {
-    public EnumCompiler apply() {
-      final Procedure1<EnumCompiler> _function = new Procedure1<EnumCompiler>() {
-          public void apply(final EnumCompiler it) {
-            MyEnum _any = Matchers.<MyEnum>any(MyEnum.class);
-            CharSequence _compile = it.compile(_any);
-            OngoingStubbing<CharSequence> _when = Mockito.<CharSequence>when(_compile);
-            _when.thenReturn("");
-          }
-        };
-      EnumCompiler _doubleArrow = ObjectExtensions.<EnumCompiler>operator_doubleArrow(Mockito.mock(EnumCompiler.class), _function);
-      return _doubleArrow;
-    }
-  }.apply();
+  EnumCompiler enumCompiler = Mockito.mock(EnumCompiler.class);
   
   FileSystemAccess fileSystemAccess = Mockito.mock(FileSystemAccess.class);
   
@@ -166,7 +138,7 @@ public class CompileActionSpec {
     _when_1.thenReturn(this.fileContent);
     this.executeCompileAction(this.inputFile);
     FileSystemAccess _verify = Mockito.<FileSystemAccess>verify(this.fileSystemAccess);
-    _verify.createFile("/examples/Colors.java", this.fileContent);
+    _verify.createFile(this.inputFile, myEnum, this.fileContent);
   }
   
   public void executeCompileAction(final IFile inputFile) {

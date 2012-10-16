@@ -25,8 +25,8 @@ public class CompileAction implements IObjectActionDelegate {
 	}
 
 	public CompileAction(EnumCompiler compiler, EnumParser parser, FileSystemAccess fileSystemAccess) {
-		this.parser = parser;
 		this.compiler = compiler;
+		this.parser = parser;
 		this.fileSystemAccess = fileSystemAccess;
 	}
 
@@ -39,8 +39,7 @@ public class CompileAction implements IObjectActionDelegate {
 				String input = convertToString(inputFile.getContents());
 				MyEnum myEnum = parser.parse(input);
 				CharSequence content = compiler.compile(myEnum);
-				String path = inputFile.getParent().getFullPath().toString() + "/" + myEnum.getName() + ".java";
-				fileSystemAccess.createFile(path, content.toString());
+				fileSystemAccess.createFile(inputFile, myEnum, content);
 			} catch (CoreException e) {
 				throw new RuntimeException(e);
 			}

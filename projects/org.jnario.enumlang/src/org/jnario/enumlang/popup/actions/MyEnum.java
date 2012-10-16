@@ -20,3 +20,4 @@ public class MyEnum {
 		return name;
 	}
 }
+

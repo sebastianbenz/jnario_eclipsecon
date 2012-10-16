@@ -52,6 +52,7 @@ inputFile.executeCompileAction throws RuntimeException</pre>
 </li><li><p id="passes_parsed_enum_to_compiler"><strong>passes parsed enum to compiler</strong></p>
 <pre class="prettyprint lang-spec linenums">
 val parsedEnum = stub(MyEnum)
+
 when(enumParser.parse(anyString)).thenReturn(parsedEnum)
 inputFile.executeCompileAction
 
@@ -63,7 +64,7 @@ val myEnum = new MyEnum(&quot;Colors&quot;, emptyList)
 when(enumParser.parse(anyString)).thenReturn(myEnum)
 when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
 inputFile.executeCompileAction
-verify(fileSystemAccess).createFile(&quot;/examples/Colors.java&quot;,fileContent)</pre>
+verify(fileSystemAccess).createFile(inputFile, myEnum, fileContent)</pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -94,14 +95,8 @@ describe CompileAction {
 
   extension WorkspaceHelper = new WorkspaceHelper
   
-  var enumParser = mock(EnumParser) =&gt; [
-    when(parse(anyString)).thenReturn(new MyEnum(&quot;&quot;, emptyList))
-  ]
-  
-  var enumCompiler = mock(EnumCompiler) =&gt; [
-    when(compile(any(typeof(MyEnum)))).thenReturn(&quot;&quot;)
-  ]
-  
+  var enumParser = mock(EnumParser)
+  var enumCompiler = mock(EnumCompiler)
   var fileSystemAccess = mock(FileSystemAccess)
   
   val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
@@ -129,6 +124,7 @@ describe CompileAction {
     
   fact &quot;passes parsed enum to compiler&quot;{
     val parsedEnum = stub(MyEnum)
+    
     when(enumParser.parse(anyString)).thenReturn(parsedEnum)
     inputFile.executeCompileAction
     
@@ -141,7 +137,7 @@ describe CompileAction {
     when(enumParser.parse(anyString)).thenReturn(myEnum)
     when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
     inputFile.executeCompileAction
-    verify(fileSystemAccess).createFile(&quot;/examples/Colors.java&quot;,fileContent)    
+    verify(fileSystemAccess).createFile(inputFile, myEnum, fileContent)    
   }
   
   def executeCompileAction(IFile inputFile){

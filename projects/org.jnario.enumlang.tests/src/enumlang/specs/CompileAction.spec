@@ -22,14 +22,8 @@ describe CompileAction {
 
 	extension WorkspaceHelper = new WorkspaceHelper
 	
-	var enumParser = mock(EnumParser) => [
-		when(parse(anyString)).thenReturn(new MyEnum("", emptyList))
-	]
-	
-	var enumCompiler = mock(EnumCompiler) => [
-		when(compile(any(typeof(MyEnum)))).thenReturn("")
-	]
-	
+	var enumParser = mock(EnumParser)
+	var enumCompiler = mock(EnumCompiler)
 	var fileSystemAccess = mock(FileSystemAccess)
 	
 	val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
@@ -57,6 +51,7 @@ describe CompileAction {
 		
 	fact "passes parsed enum to compiler"{
 		val parsedEnum = stub(MyEnum)
+		
 		when(enumParser.parse(anyString)).thenReturn(parsedEnum)
 		inputFile.executeCompileAction
 		
@@ -69,7 +64,7 @@ describe CompileAction {
 		when(enumParser.parse(anyString)).thenReturn(myEnum)
 		when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
 		inputFile.executeCompileAction
-		verify(fileSystemAccess).createFile("/examples/Colors.java",fileContent)		
+		verify(fileSystemAccess).createFile(inputFile, myEnum, fileContent)		
 	}
 	
 	def executeCompileAction(IFile inputFile){
