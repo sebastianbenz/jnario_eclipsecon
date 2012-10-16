@@ -14,10 +14,10 @@ class WorkspaceHelper {
 	
 	val workspaceRoot = ResourcesPlugin::workspace.root
 	
-	@Before
-	def clearWorkspace(){
-		workspaceRoot.projects.forEach[delete(true, monitor)]
-	}	
+//	@Before
+//	def clearWorkspace(){
+//		workspaceRoot.projects.forEach[delete(true, monitor)]
+//	}	
 	
 	def createFile(String path, String content){
 		val segments = path.split("/")

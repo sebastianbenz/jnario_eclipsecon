@@ -16,10 +16,8 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.jnario.enumlang.utils.StringInputStream;
 import org.jnario.enumlang.utils.Strings;
-import org.junit.Before;
 
 @SuppressWarnings("all")
 public class WorkspaceHelper {
@@ -30,22 +28,6 @@ public class WorkspaceHelper {
       return _root;
     }
   }.apply();
-  
-  @Before
-  public void clearWorkspace() {
-    IProject[] _projects = this.workspaceRoot.getProjects();
-    final Procedure1<IProject> _function = new Procedure1<IProject>() {
-        public void apply(final IProject it) {
-          try {
-            NullProgressMonitor _monitor = WorkspaceHelper.this.monitor();
-            it.delete(true, _monitor);
-          } catch (Exception _e) {
-            throw Exceptions.sneakyThrow(_e);
-          }
-        }
-      };
-    IterableExtensions.<IProject>forEach(((Iterable<IProject>)Conversions.doWrapArray(_projects)), _function);
-  }
   
   public IFile createFile(final String path, final String content) {
     final String[] segments = path.split("/");
