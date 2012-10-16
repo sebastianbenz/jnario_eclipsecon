@@ -8,7 +8,7 @@ import static org.jnario.lib.JnarioCollectionLiterals.*
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 import static org.junit.Assert.*
-import enumlang.WorkspaceHelper
+import enumlang.util.WorkspaceHelper
 
 Feature: Compiling Enumerations
 

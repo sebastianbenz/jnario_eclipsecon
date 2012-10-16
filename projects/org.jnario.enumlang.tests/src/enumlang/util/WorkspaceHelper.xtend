@@ -1,4 +1,4 @@
-package enumlang
+package enumlang.util
 
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.ResourcesPlugin
@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.Path
 import org.junit.Before
 
 import static extension org.jnario.enumlang.utils.Strings.*
+import org.jnario.enumlang.utils.StringInputStream
 
 class WorkspaceHelper {
 	

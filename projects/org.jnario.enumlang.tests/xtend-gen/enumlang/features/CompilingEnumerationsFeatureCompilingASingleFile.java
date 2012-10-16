@@ -1,6 +1,6 @@
 package enumlang.features;
 
-import enumlang.WorkspaceHelper;
+import enumlang.util.WorkspaceHelper;
 import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.IAction;

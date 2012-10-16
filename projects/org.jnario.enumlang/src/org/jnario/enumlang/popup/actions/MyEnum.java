@@ -6,6 +6,7 @@ public class MyEnum {
 	
 	private final String name;
 	private final List<String> literals;
+	
 	public MyEnum(String name, List<String> literals) {
 		this.name = name;
 		this.literals = literals;

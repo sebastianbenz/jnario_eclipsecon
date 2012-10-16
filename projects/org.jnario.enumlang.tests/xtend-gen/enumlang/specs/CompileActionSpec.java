@@ -1,6 +1,6 @@
 package enumlang.specs;
 
-import enumlang.WorkspaceHelper;
+import enumlang.util.WorkspaceHelper;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;

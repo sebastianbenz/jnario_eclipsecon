@@ -1,9 +1,7 @@
 package org.jnario.enumlang.popup.actions;
 
 import static com.google.common.collect.Iterables.filter;
-import static com.google.common.collect.Lists.newArrayList;
-
-import java.util.List;
+import static org.jnario.enumlang.utils.Strings.convertToString;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -13,12 +11,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.jnario.enumlang.utils.FileSystemAccess;
-import org.jnario.enumlang.utils.Strings;
 import org.jnario.enumlang.utils.WorkspaceAccess;
 
 public class CompileAction implements IObjectActionDelegate {
 	
-	private List<IFile> selectedFiles;
+	private Iterable<IFile> selectedFiles;
 	private EnumCompiler compiler;
 	private EnumParser parser;
 	private FileSystemAccess fileSystemAccess;
@@ -39,7 +36,7 @@ public class CompileAction implements IObjectActionDelegate {
 	public void run(IAction action) {
 		for (IFile inputFile : selectedFiles) {
 			try {
-				String input = Strings.convertToString(inputFile.getContents());
+				String input = convertToString(inputFile.getContents());
 				MyEnum myEnum = parser.parse(input);
 				CharSequence content = compiler.compile(myEnum);
 				String path = inputFile.getParent().getFullPath().toString() + "/" + myEnum.getName() + ".java";
@@ -53,7 +50,7 @@ public class CompileAction implements IObjectActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-			selectedFiles = newArrayList(filter(structuredSelection.toList(), IFile.class));
+			selectedFiles = filter(structuredSelection.toList(), IFile.class);
 		}
 	}
 

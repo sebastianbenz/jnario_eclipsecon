@@ -1,6 +1,5 @@
 package enumlang.specs
 
-import enumlang.WorkspaceHelper
 import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.CoreException
@@ -17,6 +16,7 @@ import static extension org.jnario.lib.Should.*
 import org.jnario.enumlang.popup.actions.MyEnum
 import static org.jnario.enumlang.popup.actions.MyEnum.*
 import org.jnario.enumlang.utils.FileSystemAccess
+import enumlang.util.WorkspaceHelper
 
 describe CompileAction {
 

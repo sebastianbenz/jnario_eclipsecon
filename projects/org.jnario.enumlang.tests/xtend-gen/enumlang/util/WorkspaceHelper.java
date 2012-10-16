@@ -1,7 +1,6 @@
-package enumlang;
+package enumlang.util;
 
 import com.google.common.base.Objects;
-import enumlang.StringInputStream;
 import java.io.InputStream;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -17,6 +16,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.jnario.enumlang.utils.StringInputStream;
 import org.jnario.enumlang.utils.Strings;
 import org.junit.Before;
 
