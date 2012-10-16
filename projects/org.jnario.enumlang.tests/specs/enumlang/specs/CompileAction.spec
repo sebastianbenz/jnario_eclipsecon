@@ -83,29 +83,3 @@ describe CompileAction {
 }
 
 
-
-describe EnumCompiler{
-	fact "generates Java enum for empty enum"{
-		compile("Colors") => '''
-			package enums;
-			
-			public enum Colors{
-			}
-		'''
-	}
-	
-	fact "generates Java enum for multi literal enum"{
-		compile("Colors", "RED", "BLUE") => '''
-			package enums;
-			
-			public enum Colors{
-				RED, BLUE
-			}
-		'''
-	}
-
-	def compile(String name, String... inputs){
-		val input = new MyEnum("Colors", inputs)
-		subject.compile(input)
-	}
-}
