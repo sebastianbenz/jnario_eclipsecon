@@ -29,41 +29,39 @@ describe CompileAction {
 	val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
 
 	val fileContent = "file content"
-	var IFile inputFile 
-	
-	before inputFile = createFile("examples/MyEnum.enum", fileContent)
+	var IFile inputFile = mock(IFile)
 	
 	fact "passes selected file's contents to parser"{
+		when(inputFile.contents).thenReturn(fileContent.toInputStream)
+		
 		inputFile.executeCompileAction
+		
 		verify(enumParser).parse(fileContent)
 	}
 	
 	fact "wraps core exceptions in runtime exception"{
-		inputFile = stub(IFile) =>[
-			try{
-				when(contents).thenThrow(new CoreException(Status::OK_STATUS))
-			}catch(CoreException e){
-			}
-		]
-
+		when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
+			
 		inputFile.executeCompileAction throws RuntimeException
 	}
 		
 	fact "passes parsed enum to compiler"{
 		val parsedEnum = stub(MyEnum)
-		
 		when(enumParser.parse(anyString)).thenReturn(parsedEnum)
+
 		inputFile.executeCompileAction
 		
 		verify(enumCompiler).compile(parsedEnum)
 	}
 	
 	fact "writes generated java file to input folder"{
-		val myEnum = new MyEnum("Colors", emptyList)
+		val myEnum = stub(MyEnum)
 		
 		when(enumParser.parse(anyString)).thenReturn(myEnum)
 		when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
+		
 		inputFile.executeCompileAction
+		
 		verify(fileSystemAccess).createFile(inputFile, myEnum, fileContent)		
 	}
 	

@@ -3,17 +3,12 @@ package enumlang.specs;
 import enumlang.util.WorkspaceHelper;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
-import org.eclipse.xtext.xbase.lib.ObjectExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.hamcrest.StringDescription;
 import org.jnario.enumlang.popup.actions.CompileAction;
 import org.jnario.enumlang.popup.actions.EnumCompiler;
@@ -26,7 +21,6 @@ import org.jnario.runner.Extension;
 import org.jnario.runner.Named;
 import org.jnario.runner.Order;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -60,18 +54,16 @@ public class CompileActionSpec {
   
   final String fileContent = "file content";
   
-  IFile inputFile;
-  
-  @Before
-  public void before() throws Exception {
-    IFile _createFile = this._workspaceHelper.createFile("examples/MyEnum.enum", this.fileContent);
-    this.inputFile = _createFile;
-  }
+  IFile inputFile = Mockito.mock(IFile.class);
   
   @Test
   @Named("passes selected file\\\'s contents to parser")
   @Order(0)
   public void _passesSelectedFileSContentsToParser() throws Exception {
+    InputStream _contents = this.inputFile.getContents();
+    OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
+    ByteArrayInputStream _inputStream = this.toInputStream(this.fileContent);
+    _when.thenReturn(_inputStream);
     this.executeCompileAction(this.inputFile);
     EnumParser _verify = Mockito.<EnumParser>verify(this.enumParser);
     _verify.parse(this.fileContent);
@@ -81,24 +73,10 @@ public class CompileActionSpec {
   @Named("wraps core exceptions in runtime exception")
   @Order(1)
   public void _wrapsCoreExceptionsInRuntimeException() throws Exception {
-    final Procedure1<IFile> _function = new Procedure1<IFile>() {
-        public void apply(final IFile it) {
-          try {
-            InputStream _contents = it.getContents();
-            OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
-            CoreException _coreException = new CoreException(Status.OK_STATUS);
-            _when.thenThrow(_coreException);
-          } catch (final Throwable _t) {
-            if (_t instanceof CoreException) {
-              final CoreException e = (CoreException)_t;
-            } else {
-              throw Exceptions.sneakyThrow(_t);
-            }
-          }
-        }
-      };
-    IFile _doubleArrow = ObjectExtensions.<IFile>operator_doubleArrow(Mockito.mock(IFile.class), _function);
-    this.inputFile = _doubleArrow;
+    InputStream _contents = this.inputFile.getContents();
+    OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
+    CoreException _coreException = new CoreException(Status.OK_STATUS);
+    _when.thenThrow(_coreException);
     try{
       this.executeCompileAction(this.inputFile);
       Assert.fail("Expected " + RuntimeException.class.getName() + " in \n     inputFile.executeCompileAction\n with:"
@@ -126,9 +104,7 @@ public class CompileActionSpec {
   @Named("writes generated java file to input folder")
   @Order(3)
   public void _writesGeneratedJavaFileToInputFolder() throws Exception {
-    List<String> _emptyList = CollectionLiterals.<String>emptyList();
-    MyEnum _myEnum = new MyEnum("Colors", _emptyList);
-    final MyEnum myEnum = _myEnum;
+    final MyEnum myEnum = Mockito.mock(MyEnum.class);
     String _anyString = Matchers.anyString();
     MyEnum _parse = this.enumParser.parse(_anyString);
     OngoingStubbing<MyEnum> _when = Mockito.<MyEnum>when(_parse);

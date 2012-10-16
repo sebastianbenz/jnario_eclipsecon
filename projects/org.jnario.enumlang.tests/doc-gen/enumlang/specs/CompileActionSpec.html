@@ -37,33 +37,33 @@
 							  	<div class="tab-pane active" id="spec">
 <ul><li><p id="passes_selected_file_s_contents_to_parser"><strong>passes selected file's contents to parser</strong></p>
 <pre class="prettyprint lang-spec linenums">
+when(inputFile.contents).thenReturn(fileContent.toInputStream)
+
 inputFile.executeCompileAction
+
 verify(enumParser).parse(fileContent)</pre>
 </li><li><p id="wraps_core_exceptions_in_runtime_exception"><strong>wraps core exceptions in runtime exception</strong></p>
 <pre class="prettyprint lang-spec linenums">
-inputFile = stub(IFile) =&gt;[
-  try{
-    when(contents).thenThrow(new CoreException(Status::OK_STATUS))
-  }catch(CoreException e){
-  }
-]
-
+when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
+  
 inputFile.executeCompileAction throws RuntimeException</pre>
 </li><li><p id="passes_parsed_enum_to_compiler"><strong>passes parsed enum to compiler</strong></p>
 <pre class="prettyprint lang-spec linenums">
 val parsedEnum = stub(MyEnum)
-
 when(enumParser.parse(anyString)).thenReturn(parsedEnum)
+
 inputFile.executeCompileAction
 
 verify(enumCompiler).compile(parsedEnum)</pre>
 </li><li><p id="writes_generated_java_file_to_input_folder"><strong>writes generated java file to input folder</strong></p>
 <pre class="prettyprint lang-spec linenums">
-val myEnum = new MyEnum(&quot;Colors&quot;, emptyList)
+val myEnum = stub(MyEnum)
 
 when(enumParser.parse(anyString)).thenReturn(myEnum)
 when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
+
 inputFile.executeCompileAction
+
 verify(fileSystemAccess).createFile(inputFile, myEnum, fileContent)</pre>
 </li></ul>
 							</div>
@@ -102,41 +102,39 @@ describe CompileAction {
   val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
 
   val fileContent = &quot;file content&quot;
-  var IFile inputFile 
-  
-  before inputFile = createFile(&quot;examples/MyEnum.enum&quot;, fileContent)
+  var IFile inputFile = mock(IFile)
   
   fact &quot;passes selected file's contents to parser&quot;{
+    when(inputFile.contents).thenReturn(fileContent.toInputStream)
+    
     inputFile.executeCompileAction
+    
     verify(enumParser).parse(fileContent)
   }
   
   fact &quot;wraps core exceptions in runtime exception&quot;{
-    inputFile = stub(IFile) =&gt;[
-      try{
-        when(contents).thenThrow(new CoreException(Status::OK_STATUS))
-      }catch(CoreException e){
-      }
-    ]
-
+    when(inputFile.contents).thenThrow(new CoreException(Status::OK_STATUS))
+      
     inputFile.executeCompileAction throws RuntimeException
   }
     
   fact &quot;passes parsed enum to compiler&quot;{
     val parsedEnum = stub(MyEnum)
-    
     when(enumParser.parse(anyString)).thenReturn(parsedEnum)
+
     inputFile.executeCompileAction
     
     verify(enumCompiler).compile(parsedEnum)
   }
   
   fact &quot;writes generated java file to input folder&quot;{
-    val myEnum = new MyEnum(&quot;Colors&quot;, emptyList)
+    val myEnum = stub(MyEnum)
     
     when(enumParser.parse(anyString)).thenReturn(myEnum)
     when(enumCompiler.compile(myEnum)).thenReturn(fileContent)
+    
     inputFile.executeCompileAction
+    
     verify(fileSystemAccess).createFile(inputFile, myEnum, fileContent)    
   }
   
