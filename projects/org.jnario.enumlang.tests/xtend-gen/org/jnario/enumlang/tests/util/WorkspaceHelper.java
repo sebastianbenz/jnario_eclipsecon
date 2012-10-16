@@ -1,4 +1,4 @@
-package enumlang.util;
+package org.jnario.enumlang.tests.util;
 
 import com.google.common.base.Objects;
 import java.io.ByteArrayInputStream;

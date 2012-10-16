@@ -6,7 +6,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.jnario.enumlang.popup.actions.MyEnum;
 
 public class WorkspaceAccess implements FileSystemAccess {
 

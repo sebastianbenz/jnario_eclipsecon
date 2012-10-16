@@ -1,4 +1,4 @@
-package org.jnario.enumlang.popup.actions;
+package org.jnario.enumlang.utils;
 
 import java.util.List;
 

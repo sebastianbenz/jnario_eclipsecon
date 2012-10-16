@@ -1,4 +1,4 @@
-package enumlang.util
+package org.jnario.enumlang.tests.util
 
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.ResourcesPlugin
