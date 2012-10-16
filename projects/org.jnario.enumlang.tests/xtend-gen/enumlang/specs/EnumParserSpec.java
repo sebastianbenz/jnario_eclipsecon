@@ -45,7 +45,7 @@ public class EnumParserSpec {
   
   @Test
   @Named("parses enums with the following format \\\'Name:Literal1,Literal2\\\'")
-  @Order(4)
+  @Order(0)
   public void _parsesEnumsWithTheFollowingFormatNameLiteral1Literal2() throws Exception {
     final Procedure1<EnumParserSpecExamples> _function = new Procedure1<EnumParserSpecExamples>() {
         public void apply(final EnumParserSpecExamples it) {

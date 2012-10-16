@@ -29,6 +29,7 @@ describe CompileAction {
 	var enumCompiler = mock(EnumCompiler) => [
 		when(compile(any(typeof(MyEnum)))).thenReturn("")
 	]
+	
 	var fileSystemAccess = mock(FileSystemAccess)
 	
 	val compileAction = new CompileAction(enumCompiler, enumParser, fileSystemAccess)
@@ -81,23 +82,7 @@ describe CompileAction {
 	}
 }
 
-describe EnumParser{ 
-	def examples {
-		| input    				| name 		| literals  			|
-		| "Color"				| "Color"	| list()				|
-		| "Color:RED"			| "Color"	| list("RED")			|
-		| "Color:RED,GREEN" 	| "Color"	| list("RED", "GREEN")	|
-		| "Color : RED , GREEN" | "Color"	| list("RED", "GREEN")	|
-	}
 
-	fact "parses enums with the following format 'Name:Literal1,Literal2'"{ 
-		examples.forEach[
-			val enum = subject.parse(input)
-			enum.name => name
-			enum.literals => literals
-		]
-	}
-}
 
 describe EnumCompiler{
 	fact "generates Java enum for empty enum"{
@@ -118,7 +103,7 @@ describe EnumCompiler{
 			}
 		'''
 	}
-	
+
 	def compile(String name, String... inputs){
 		val input = new MyEnum("Colors", inputs)
 		subject.compile(input)

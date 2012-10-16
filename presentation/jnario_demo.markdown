@@ -2,6 +2,33 @@
 
 ##Specs Demo
 
+- Goal: Introduce specs language & jnario runtime
+- Explain: 
+	- Jnario is based on Xtend
+	- Specs compile to plain Java
+	- Notion of facts
+	- Special syntax
+- Do:
+	- create a new java project
+	- create a new spec:
+
+<pre class="prettyprint lang-feature">
+package demo
+
+describe "Hello World"{
+	
+}
+</pre>
+
+	- add jnario to classpath 
+	- mention that maven can be used as well
+	- introduce facts
+
+<pre class="prettyprint lang-feature">
+	fact "hello world".length should be 11
+</pre>
+	- run as junit test
+
 ##Feature Demo & Outside-in Example
 
 We want to implement a DSL to simplify the declaration of enumerations in Java. 
