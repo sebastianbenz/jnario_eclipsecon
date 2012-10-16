@@ -1,0 +1,14 @@
+package org.jnario.enumlang
+
+import org.jnario.enumlang.features.*
+
+#Enum Compilation
+
+##Feature
+
+- "Compiling Enumerations"
+
+##Implementation
+
+- \.*specs.*\
+
