@@ -8,6 +8,7 @@ import org.junit.Before
 
 import static extension org.jnario.enumlang.utils.Strings.*
 import org.jnario.enumlang.utils.StringInputStream
+import java.io.ByteArrayInputStream
 
 class WorkspaceHelper {
 	
@@ -71,5 +72,9 @@ class WorkspaceHelper {
 
 	def monitor() {
 		new NullProgressMonitor
+	}
+	
+	def toInputStream(String s){
+		new ByteArrayInputStream(s.getBytes())
 	}
 }

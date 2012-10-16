@@ -70,9 +70,6 @@ describe CompileAction {
 		compileAction.run(_)
 	}
 	
-	def toInputStream(String s){
-		new ByteArrayInputStream(s.getBytes())
-	}
 }
 
 

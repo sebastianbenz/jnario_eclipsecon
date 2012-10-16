@@ -62,7 +62,7 @@ public class CompileActionSpec {
   public void _passesSelectedFileSContentsToParser() throws Exception {
     InputStream _contents = this.inputFile.getContents();
     OngoingStubbing<InputStream> _when = Mockito.<InputStream>when(_contents);
-    ByteArrayInputStream _inputStream = this.toInputStream(this.fileContent);
+    ByteArrayInputStream _inputStream = this._workspaceHelper.toInputStream(this.fileContent);
     _when.thenReturn(_inputStream);
     this.executeCompileAction(this.inputFile);
     EnumParser _verify = Mockito.<EnumParser>verify(this.enumParser);
@@ -123,11 +123,5 @@ public class CompileActionSpec {
     this.compileAction.selectionChanged(__, _structuredSelection);
     IAction ___1 = Should.<IAction>_();
     this.compileAction.run(___1);
-  }
-  
-  public ByteArrayInputStream toInputStream(final String s) {
-    byte[] _bytes = s.getBytes();
-    ByteArrayInputStream _byteArrayInputStream = new ByteArrayInputStream(_bytes);
-    return _byteArrayInputStream;
   }
 }
