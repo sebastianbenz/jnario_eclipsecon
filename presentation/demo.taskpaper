@@ -1,0 +1,24 @@
+General:
+
+	- Compiles to Java
+	- Generates Documentation
+	- Using Spec Suites
+	- Self-explaining Assertions
+	- Compile with maven
+	- Exection result in generated documentation
+Suites:
+	- Reference specs
+	- Regular expressions
+	- text
+	- run with JUnit
+
+Features:
+	- Steps & their implementation
+	- Step arguments
+	- Referencing steps
+	- Run with JUnit
+
+Spec:
+	- Tables
+	- Contexts
+	- 
