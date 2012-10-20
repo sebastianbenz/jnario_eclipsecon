@@ -1,0 +1,17 @@
+import features.*
+
+#Tracking Expenses
+
+This is a simple demonstration of BDD with **Jnario**.
+
+##Progress
+
+	These are features we want to support:
+	
+	- "Tracking Coffee Consumption"
+
+##Regression
+
+	These classes are required for the implementation:
+	 
+	- \.*specs.*\
