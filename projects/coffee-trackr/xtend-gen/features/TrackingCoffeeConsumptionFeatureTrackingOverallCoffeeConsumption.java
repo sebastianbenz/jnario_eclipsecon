@@ -17,18 +17,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(FeatureRunner.class)
-@Named("Scenario: Tracking overall Coffee Consumption")
+@Named("Scenario: Tracking overall coffee consumption")
 @SuppressWarnings("all")
 public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption {
   @Test
   @Order(0)
   @Named("Given a coffee list")
   public void givenACoffeeList() {
-    StepArguments _stepArguments = new StepArguments("Sebastian\t|||\nBirgit \t\t||\n");
+    StepArguments _stepArguments = new StepArguments("Sebastian\t|||\nBirgit \t\t||\n\t\t\t\t\t");
     final StepArguments args = _stepArguments;
     CoffeeListParser _coffeeListParser = new CoffeeListParser();
+    final CoffeeListParser coffeListParser = _coffeeListParser;
     String _first = JnarioIterableExtensions.<String>first(args);
-    List<CoffeeDrinker> _parse = _coffeeListParser.parse(_first);
+    List<CoffeeDrinker> _parse = coffeListParser.parse(_first);
     this.coffeeDrinkers = _parse;
   }
   
@@ -37,7 +38,8 @@ public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption {
   @Named("When I calculate the overall coffee consumption")
   public void whenICalculateTheOverallCoffeeConsumption() {
     CoffeeTracker _coffeeTracker = new CoffeeTracker(this.coffeeDrinkers);
-    Integer _overallConsumption = _coffeeTracker.overallConsumption();
+    final CoffeeTracker coffeeTracker = _coffeeTracker;
+    Integer _overallConsumption = coffeeTracker.overallConsumption();
     this.result = (_overallConsumption).intValue();
   }
   
