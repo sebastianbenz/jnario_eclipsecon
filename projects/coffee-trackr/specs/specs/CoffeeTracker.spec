@@ -13,6 +13,12 @@ describe CoffeeTracker {
 		fact "one if a single person drinks one coffee"{
 			coffeeList("Sebastian" -> 1).overallConsumption => 1
 		}
+		fact "sum of all persons coffees"{
+			coffeeList(
+				"Sebastian" -> 1, 
+				"Birgit" -> 4
+			).overallConsumption => 5
+		}
 	}
 	
 	context "consumption per person"{

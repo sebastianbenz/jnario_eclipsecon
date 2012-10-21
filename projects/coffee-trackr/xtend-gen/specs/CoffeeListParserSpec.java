@@ -39,7 +39,7 @@ public class CoffeeListParserSpec {
   @Before
   public void _initCoffeeListParserSpecCoffeeDrinkers() {
     coffeeDrinkers = ExampleTable.create("coffeeDrinkers", 
-      java.util.Arrays.asList("input", "expectedName", "expectedCount"), 
+      java.util.Arrays.asList("coffeList", "expectedName", "expectedCoffeeCount"), 
       new CoffeeListParserSpecCoffeeDrinkers(  java.util.Arrays.asList("\"Sebastian\"", "\"Sebastian\"", "0"), "Sebastian", "Sebastian", 0),
       new CoffeeListParserSpecCoffeeDrinkers(  java.util.Arrays.asList("\"Sebastian \"", "\"Sebastian\"", "0"), "Sebastian ", "Sebastian", 0),
       new CoffeeListParserSpecCoffeeDrinkers(  java.util.Arrays.asList("\"Sebastian |\"", "\"Sebastian\"", "1"), "Sebastian |", "Sebastian", 1),
@@ -56,21 +56,21 @@ public class CoffeeListParserSpec {
   public void _coffeeConsumptionPerPersonHasTheFormatName() throws Exception {
     final Procedure1<CoffeeListParserSpecCoffeeDrinkers> _function = new Procedure1<CoffeeListParserSpecCoffeeDrinkers>() {
         public void apply(final CoffeeListParserSpecCoffeeDrinkers it) {
-          final List<CoffeeDrinker> coffeeDrinkers = CoffeeListParserSpec.this.subject.parse(it.input);
-          final CoffeeDrinker coffeDrinker = JnarioIterableExtensions.<CoffeeDrinker>first(coffeeDrinkers);
-          String _name = coffeDrinker.getName();
+          List<CoffeeDrinker> _parse = CoffeeListParserSpec.this.parse(it.coffeList);
+          final CoffeeDrinker coffeeDrinker = JnarioIterableExtensions.<CoffeeDrinker>first(_parse);
+          String _name = coffeeDrinker.getName();
           boolean _doubleArrow = Should.operator_doubleArrow(_name, it.expectedName);
-          Assert.assertTrue("\nExpected coffeDrinker.name \t\t=> expectedName but"
-           + "\n     coffeDrinker.name is " + new StringDescription().appendValue(_name).toString()
-           + "\n     coffeDrinker is " + new StringDescription().appendValue(coffeDrinker).toString()
+          Assert.assertTrue("\nExpected coffeeDrinker.name \t\t\t=> expectedName but"
+           + "\n     coffeeDrinker.name is " + new StringDescription().appendValue(_name).toString()
+           + "\n     coffeeDrinker is " + new StringDescription().appendValue(coffeeDrinker).toString()
            + "\n     expectedName is " + new StringDescription().appendValue(it.expectedName).toString() + "\n", _doubleArrow);
           
-          int _coffeeCount = coffeDrinker.getCoffeeCount();
-          boolean _doubleArrow_1 = Should.operator_doubleArrow(Integer.valueOf(_coffeeCount), Integer.valueOf(it.expectedCount));
-          Assert.assertTrue("\nExpected coffeDrinker.coffeeCount => expectedCount but"
-           + "\n     coffeDrinker.coffeeCount is " + new StringDescription().appendValue(Integer.valueOf(_coffeeCount)).toString()
-           + "\n     coffeDrinker is " + new StringDescription().appendValue(coffeDrinker).toString()
-           + "\n     expectedCount is " + new StringDescription().appendValue(Integer.valueOf(it.expectedCount)).toString() + "\n", _doubleArrow_1);
+          int _coffeeCount = coffeeDrinker.getCoffeeCount();
+          boolean _doubleArrow_1 = Should.operator_doubleArrow(Integer.valueOf(_coffeeCount), Integer.valueOf(it.expectedCoffeeCount));
+          Assert.assertTrue("\nExpected coffeeDrinker.coffeeCount \t=> expectedCoffeeCount but"
+           + "\n     coffeeDrinker.coffeeCount is " + new StringDescription().appendValue(Integer.valueOf(_coffeeCount)).toString()
+           + "\n     coffeeDrinker is " + new StringDescription().appendValue(coffeeDrinker).toString()
+           + "\n     expectedCoffeeCount is " + new StringDescription().appendValue(Integer.valueOf(it.expectedCoffeeCount)).toString() + "\n", _doubleArrow_1);
           
         }
       };
@@ -78,9 +78,9 @@ public class CoffeeListParserSpec {
   }
   
   @Test
-  @Named("coffee drinker are separated by newline")
+  @Named("coffee drinkers are separated by newline")
   @Order(1)
-  public void _coffeeDrinkerAreSeparatedByNewline() throws Exception {
+  public void _coffeeDrinkersAreSeparatedByNewline() throws Exception {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Sebastian ||");
     _builder.newLine();
@@ -91,9 +91,9 @@ public class CoffeeListParserSpec {
     CoffeeDrinker _coffeeDrinker_1 = new CoffeeDrinker("Birgit", 1);
     List<CoffeeDrinker> _list = JnarioCollectionLiterals.<CoffeeDrinker>list(_coffeeDrinker, _coffeeDrinker_1);
     boolean _doubleArrow = Should.operator_doubleArrow(_parse, _list);
-    Assert.assertTrue("\nExpected \'\'\'\n\t\tSebastian ||\n\t\tBirgit |\n\t\t\'\'\'.parse => list(\n\t\t\tnew CoffeeDrinker(\"Sebastian\", 2),\n\t\t\tnew CoffeeDrinker(\"Birgit\", 1)\n\t\t) but"
-     + "\n     \'\'\'\n\t\tSebastian ||\n\t\tBirgit |\n\t\t\'\'\'.parse is " + new StringDescription().appendValue(_parse).toString()
-     + "\n     \'\'\'\n\t\tSebastian ||\n\t\tBirgit |\n\t\t\'\'\' is " + new StringDescription().appendValue(_builder).toString()
+    Assert.assertTrue("\nExpected \'\'\'\n\t\t\tSebastian ||\n\t\t\tBirgit |\n\t\t\'\'\'.parse => list(\n\t\t\tnew CoffeeDrinker(\"Sebastian\", 2),\n\t\t\tnew CoffeeDrinker(\"Birgit\", 1)\n\t\t) but"
+     + "\n     \'\'\'\n\t\t\tSebastian ||\n\t\t\tBirgit |\n\t\t\'\'\'.parse is " + new StringDescription().appendValue(_parse).toString()
+     + "\n     \'\'\'\n\t\t\tSebastian ||\n\t\t\tBirgit |\n\t\t\'\'\' is " + new StringDescription().appendValue(_builder).toString()
      + "\n     list(\n\t\t\tnew CoffeeDrinker(\"Sebastian\", 2),\n\t\t\tnew CoffeeDrinker(\"Birgit\", 1)\n\t\t) is " + new StringDescription().appendValue(_list).toString()
      + "\n     new CoffeeDrinker(\"Sebastian\", 2) is " + new StringDescription().appendValue(_coffeeDrinker).toString()
      + "\n     new CoffeeDrinker(\"Birgit\", 1) is " + new StringDescription().appendValue(_coffeeDrinker_1).toString() + "\n", _doubleArrow);

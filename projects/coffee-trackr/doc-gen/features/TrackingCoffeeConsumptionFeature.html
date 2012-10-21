@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@4b6bf719 (name: Tracking Coffee Consumption, abstract: false) (description: 			
-				In order keep track of coffee consumption
-				as a developer
-				I want a simple coffee tracking tool.
-				
-				)</title>
+<title>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@1e3ffc69 (name: Tracking Coffee Consumption, abstract: false) (description: 
+	In order to keep track of coffee consumption
+	as a developer
+	I want a simple coffee tracking tool.
+	
+	)</title>
 <meta name="description" content="">
 <meta name="author" content="Jnario">
 
@@ -30,12 +30,12 @@
 		<div class="tabbable">
 			<div class="content">
 				<div class="page-header">
-					<h1>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@4b6bf719 (name: Tracking Coffee Consumption, abstract: false) (description: 			
-									In order keep track of coffee consumption
-									as a developer
-									I want a simple coffee tracking tool.
-									
-									)</h1>
+					<h1>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@1e3ffc69 (name: Tracking Coffee Consumption, abstract: false) (description: 
+						In order to keep track of coffee consumption
+						as a developer
+						I want a simple coffee tracking tool.
+						
+						)</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
 						<li><a href="#source" data-toggle="tab">Source</a></li>
@@ -45,7 +45,7 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<p><p>In order keep track of coffee consumption as a developer I want a simple coffee tracking tool.</p></p>
+<p><p>In order to keep track of coffee consumption as a developer I want a simple coffee tracking tool.</p></p>
 <h3  id="Scenario_Tracking_overall_coffee_consumption">Scenario: Tracking overall coffee consumption
 </h3>
 <ul>
@@ -95,31 +95,31 @@ import java.util.List
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 import static extension org.jnario.lib.StringConversions.*
+
+Feature: Tracking Coffee Consumption
+
+  In order to keep track of coffee consumption
+  as a developer
+  I want a simple coffee tracking tool.
   
-      Feature: Tracking Coffee Consumption
-      
-        In order keep track of coffee consumption
-        as a developer
-        I want a simple coffee tracking tool.
-        
-        Scenario: Tracking overall coffee consumption
-          List&lt;CoffeeDrinker&gt; coffeeDrinkers 
-          int result  
-      
-        Given a coffee list
-          '''
-            Sebastian  |||
-            Birgit     ||
-          '''
-          val coffeListParser = new CoffeeListParser()
-          coffeeDrinkers = coffeListParser.parse(args.first)
-          
-        When I calculate the overall coffee consumption  
-          val coffeeTracker = new CoffeeTracker(coffeeDrinkers)
-          result = coffeeTracker.overallConsumption
-          
-        Then the result is &quot;5&quot; 
-          result =&gt; args.first.toInt  
+  Scenario: Tracking overall coffee consumption
+    List&lt;CoffeeDrinker&gt; coffeeDrinkers 
+    int result  
+
+  Given a coffee list
+    '''
+      Sebastian  |||
+      Birgit     ||
+    '''
+    val coffeListParser = new CoffeeListParser()
+    coffeeDrinkers = coffeListParser.parse(args.first)
+    
+  When I calculate the overall coffee consumption  
+    val coffeeTracker = new CoffeeTracker(coffeeDrinkers)
+    result = coffeeTracker.overallConsumption
+    
+  Then the result is &quot;5&quot; 
+    result =&gt; args.first.toInt  
 
 
   Scenario: Tracking coffee consumption per person

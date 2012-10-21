@@ -43,4 +43,21 @@ public class CoffeeTrackerOverallConsumptionIsSpec extends CoffeeTrackerSpec {
      + "\n     \"Sebastian\" -> 1 is " + new StringDescription().appendValue(_mappedTo).toString() + "\n", _doubleArrow);
     
   }
+  
+  @Test
+  @Named("sum of all persons coffees")
+  @Order(2)
+  public void _sumOfAllPersonsCoffees() throws Exception {
+    Pair<String,Integer> _mappedTo = Pair.<String, Integer>of("Sebastian", Integer.valueOf(1));
+    Pair<String,Integer> _mappedTo_1 = Pair.<String, Integer>of("Birgit", Integer.valueOf(4));
+    CoffeeTracker _coffeeList = this.coffeeList(_mappedTo, _mappedTo_1);
+    Integer _overallConsumption = _coffeeList.overallConsumption();
+    boolean _doubleArrow = Should.operator_doubleArrow(_overallConsumption, Integer.valueOf(5));
+    Assert.assertTrue("\nExpected coffeeList(\n\t\t\t\t\"Sebastian\" -> 1, \n\t\t\t\t\"Birgit\" -> 4\n\t\t\t).overallConsumption => 5 but"
+     + "\n     coffeeList(\n\t\t\t\t\"Sebastian\" -> 1, \n\t\t\t\t\"Birgit\" -> 4\n\t\t\t).overallConsumption is " + new StringDescription().appendValue(_overallConsumption).toString()
+     + "\n     coffeeList(\n\t\t\t\t\"Sebastian\" -> 1, \n\t\t\t\t\"Birgit\" -> 4\n\t\t\t) is " + new StringDescription().appendValue(_coffeeList).toString()
+     + "\n     \"Sebastian\" -> 1 is " + new StringDescription().appendValue(_mappedTo).toString()
+     + "\n     \"Birgit\" -> 4 is " + new StringDescription().appendValue(_mappedTo_1).toString() + "\n", _doubleArrow);
+    
+  }
 }

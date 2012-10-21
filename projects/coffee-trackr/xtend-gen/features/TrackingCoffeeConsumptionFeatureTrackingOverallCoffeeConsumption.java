@@ -24,7 +24,7 @@ public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption {
   @Order(0)
   @Named("Given a coffee list")
   public void givenACoffeeList() {
-    StepArguments _stepArguments = new StepArguments("Sebastian\t|||\nBirgit \t\t||\n\t\t\t\t\t");
+    StepArguments _stepArguments = new StepArguments("Sebastian\t|||\nBirgit \t\t||\n\t\t");
     final StepArguments args = _stepArguments;
     CoffeeListParser _coffeeListParser = new CoffeeListParser();
     final CoffeeListParser coffeListParser = _coffeeListParser;

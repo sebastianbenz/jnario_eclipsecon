@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="tabbable">
 			<div class="content">
-				<div class="page-header passed">
+				<div class="page-header">
 					<h1>CoffeeTracker</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
@@ -42,6 +42,12 @@ coffeeList().overallConsumption =&gt; 0</pre>
 </li><li><p id="one_if_a_single_person_drinks_one_coffee"><strong>one if a single person drinks one coffee</strong></p>
 <pre class="prettyprint lang-spec linenums">
 coffeeList(&quot;Sebastian&quot; -&gt; 1).overallConsumption =&gt; 1</pre>
+</li><li><p id="sum_of_all_persons_coffees"><strong>sum of all persons coffees</strong></p>
+<pre class="prettyprint lang-spec linenums">
+coffeeList(
+  &quot;Sebastian&quot; -&gt; 1, 
+  &quot;Birgit&quot; -&gt; 4
+).overallConsumption =&gt; 5</pre>
 </li></ul>
 <h3 id="consumption_per_person">Consumption per person</h3>
 <ul><li><p id="zero_if_person_does_not_exist"><strong>zero if person does not exist</strong></p>
@@ -70,6 +76,12 @@ describe CoffeeTracker {
     }
     fact &quot;one if a single person drinks one coffee&quot;{
       coffeeList(&quot;Sebastian&quot; -&gt; 1).overallConsumption =&gt; 1
+    }
+    fact &quot;sum of all persons coffees&quot;{
+      coffeeList(
+        &quot;Sebastian&quot; -&gt; 1, 
+        &quot;Birgit&quot; -&gt; 4
+      ).overallConsumption =&gt; 5
     }
   }
   

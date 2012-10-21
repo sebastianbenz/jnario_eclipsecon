@@ -18,7 +18,7 @@ import specs.CoffeeTrackerSpec;
 public class CoffeeTrackerConsumptionPerPersonSpec extends CoffeeTrackerSpec {
   @Test
   @Named("zero if person does not exist")
-  @Order(2)
+  @Order(3)
   public void _zeroIfPersonDoesNotExist() throws Exception {
     CoffeeTracker _coffeeList = this.coffeeList();
     int _consumptionOf = _coffeeList.consumptionOf("unknown");
@@ -31,7 +31,7 @@ public class CoffeeTrackerConsumptionPerPersonSpec extends CoffeeTrackerSpec {
   
   @Test
   @Named("one if the person had one coffee")
-  @Order(3)
+  @Order(4)
   public void _oneIfThePersonHadOneCoffee() throws Exception {
     Pair<String,Integer> _mappedTo = Pair.<String, Integer>of("Sebastian", Integer.valueOf(1));
     CoffeeTracker _coffeeList = this.coffeeList(_mappedTo);
