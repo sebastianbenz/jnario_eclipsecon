@@ -11,38 +11,33 @@ import static extension org.jnario.lib.StringConversions.*
 
 Feature: Tracking Coffee Consumption
 
-	In order to keep track of coffee consumption
+	In order to do coffee billing
 	as a developer
-	I want a simple coffee tracking tool.
+	I want a coffee tracking tool.
+	
+	Background:
+		List<CoffeeDrinker> coffeeDrinkers 
+		CoffeeTracker coffeeTracker
+		Given a coffee list
+			'''
+				Sebastian	|||
+				Birgit 		||
+			'''
+			val coffeListParser = new CoffeeListParser()
+			coffeeDrinkers = coffeListParser.parse(args.first)
+		And a coffee tracker
+				coffeeTracker = new CoffeeTracker(coffeeDrinkers)
 	
 	Scenario: Tracking overall coffee consumption
-		List<CoffeeDrinker> coffeeDrinkers 
 		int result	
-
-	Given a coffee list
-		'''
-			Sebastian	|||
-			Birgit 		||
-		'''
-		val coffeListParser = new CoffeeListParser()
-		coffeeDrinkers = coffeListParser.parse(args.first)
-		
-	When I calculate the overall coffee consumption  
-		val coffeeTracker = new CoffeeTracker(coffeeDrinkers)
-		result = coffeeTracker.overallConsumption
-		
-	Then the result is "5" 
-		result => args.first.toInt	
+		When I calculate the overall coffee consumption  
+			result = coffeeTracker.overallConsumption
+		Then the result is "5" 
+			result => args.first.toInt	
 
 
 	Scenario: Tracking coffee consumption per person
 	
-		Given a coffee list
-			'''
-				Sebastian ||
-				Birgit |||
-			'''		
 		When I calculate the coffee consumption of "Sebastian"
-			val coffeeTracker = new CoffeeTracker(coffeeDrinkers)
 			result = coffeeTracker.consumptionOf(args.first)
-		Then the result is "2" 
+		Then the result is "3" 

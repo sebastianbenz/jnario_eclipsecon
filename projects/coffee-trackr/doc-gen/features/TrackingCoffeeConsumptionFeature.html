@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@1e3ffc69 (name: Tracking Coffee Consumption, abstract: false) (description: 
-	In order to keep track of coffee consumption
+<title>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@2b1dbebf (name: Tracking Coffee Consumption, abstract: false) (description: 
+	In order to do coffee billing
 	as a developer
-	I want a simple coffee tracking tool.
+	I want a coffee tracking tool.
 	
 	)</title>
 <meta name="description" content="">
@@ -30,10 +30,10 @@
 		<div class="tabbable">
 			<div class="content">
 				<div class="page-header">
-					<h1>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@1e3ffc69 (name: Tracking Coffee Consumption, abstract: false) (description: 
-						In order to keep track of coffee consumption
+					<h1>Tracking Coffee Consumptionorg.jnario.feature.feature.impl.FeatureImplCustom@2b1dbebf (name: Tracking Coffee Consumption, abstract: false) (description: 
+						In order to do coffee billing
 						as a developer
-						I want a simple coffee tracking tool.
+						I want a coffee tracking tool.
 						
 						)</h1>
 					  <ul class="nav nav-tabs pull-right">
@@ -45,15 +45,23 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<p><p>In order to keep track of coffee consumption as a developer I want a simple coffee tracking tool.</p></p>
-<h3  id="Scenario_Tracking_overall_coffee_consumption">Scenario: Tracking overall coffee consumption
+<p><p>In order to do coffee billing as a developer I want a coffee tracking tool.</p></p>
+<h3  id="Background">Background:
 </h3>
 <ul>
 <li><p><strong>Given</strong> a coffee list</p><pre>Sebastian  |||
 Birgit     ||</pre>
 <ul>
+<li><p><strong>And</strong> a coffee tracker</p>
+<ul>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<h3  id="Scenario_Tracking_overall_coffee_consumption">Scenario: Tracking overall coffee consumption
+</h3>
+<ul>
 <li><p><strong>When</strong> I calculate the overall coffee consumption</p>
 <ul>
 </ul>
@@ -66,16 +74,11 @@ Birgit     ||</pre>
 <h3  id="Scenario_Tracking_coffee_consumption_per_person">Scenario: Tracking coffee consumption per person
 </h3>
 <ul>
-<li><p><strong>Given</strong> a coffee list</p><pre>Sebastian ||
-Birgit |||</pre>
-<ul>
-</ul>
-</li>
 <li><p><strong>When</strong> I calculate the coffee consumption of <code>"Sebastian"</code></p>
 <ul>
 </ul>
 </li>
-<li><p><strong>Then</strong> the result is <code>"2"</code></p>
+<li><p><strong>Then</strong> the result is <code>"3"</code></p>
 <ul>
 </ul>
 </li>
@@ -98,41 +101,36 @@ import static extension org.jnario.lib.StringConversions.*
 
 Feature: Tracking Coffee Consumption
 
-  In order to keep track of coffee consumption
+  In order to do coffee billing
   as a developer
-  I want a simple coffee tracking tool.
+  I want a coffee tracking tool.
+  
+  Background:
+    List&lt;CoffeeDrinker&gt; coffeeDrinkers 
+    CoffeeTracker coffeeTracker
+    Given a coffee list
+      '''
+        Sebastian  |||
+        Birgit     ||
+      '''
+      val coffeListParser = new CoffeeListParser()
+      coffeeDrinkers = coffeListParser.parse(args.first)
+    And a coffee tracker
+        coffeeTracker = new CoffeeTracker(coffeeDrinkers)
   
   Scenario: Tracking overall coffee consumption
-    List&lt;CoffeeDrinker&gt; coffeeDrinkers 
     int result  
-
-  Given a coffee list
-    '''
-      Sebastian  |||
-      Birgit     ||
-    '''
-    val coffeListParser = new CoffeeListParser()
-    coffeeDrinkers = coffeListParser.parse(args.first)
-    
-  When I calculate the overall coffee consumption  
-    val coffeeTracker = new CoffeeTracker(coffeeDrinkers)
-    result = coffeeTracker.overallConsumption
-    
-  Then the result is &quot;5&quot; 
-    result =&gt; args.first.toInt  
+    When I calculate the overall coffee consumption  
+      result = coffeeTracker.overallConsumption
+    Then the result is &quot;5&quot; 
+      result =&gt; args.first.toInt  
 
 
   Scenario: Tracking coffee consumption per person
   
-    Given a coffee list
-      '''
-        Sebastian ||
-        Birgit |||
-      '''    
     When I calculate the coffee consumption of &quot;Sebastian&quot;
-      val coffeeTracker = new CoffeeTracker(coffeeDrinkers)
       result = coffeeTracker.consumptionOf(args.first)
-    Then the result is &quot;2&quot;
+    Then the result is &quot;3&quot;
 </pre>
 						    </p></div>
 						  </div>

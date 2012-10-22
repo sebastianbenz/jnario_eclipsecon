@@ -1,9 +1,6 @@
 package features;
 
-import coffee.CoffeeDrinker;
-import coffee.CoffeeListParser;
-import coffee.CoffeeTracker;
-import java.util.List;
+import features.TrackingCoffeeConsumptionFeatureBackground;
 import org.hamcrest.StringDescription;
 import org.jnario.lib.JnarioIterableExtensions;
 import org.jnario.lib.Should;
@@ -19,32 +16,31 @@ import org.junit.runner.RunWith;
 @RunWith(FeatureRunner.class)
 @Named("Scenario: Tracking overall coffee consumption")
 @SuppressWarnings("all")
-public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption {
+public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption extends TrackingCoffeeConsumptionFeatureBackground {
   @Test
   @Order(0)
   @Named("Given a coffee list")
   public void givenACoffeeList() {
-    StepArguments _stepArguments = new StepArguments("Sebastian\t|||\nBirgit \t\t||\n\t\t");
-    final StepArguments args = _stepArguments;
-    CoffeeListParser _coffeeListParser = new CoffeeListParser();
-    final CoffeeListParser coffeListParser = _coffeeListParser;
-    String _first = JnarioIterableExtensions.<String>first(args);
-    List<CoffeeDrinker> _parse = coffeListParser.parse(_first);
-    this.coffeeDrinkers = _parse;
+    super.givenACoffeeList();
   }
   
   @Test
   @Order(1)
-  @Named("When I calculate the overall coffee consumption")
-  public void whenICalculateTheOverallCoffeeConsumption() {
-    CoffeeTracker _coffeeTracker = new CoffeeTracker(this.coffeeDrinkers);
-    final CoffeeTracker coffeeTracker = _coffeeTracker;
-    Integer _overallConsumption = coffeeTracker.overallConsumption();
-    this.result = (_overallConsumption).intValue();
+  @Named("And a coffee tracker")
+  public void andACoffeeTracker() {
+    super.andACoffeeTracker();
   }
   
   @Test
   @Order(2)
+  @Named("When I calculate the overall coffee consumption")
+  public void whenICalculateTheOverallCoffeeConsumption() {
+    Integer _overallConsumption = this.coffeeTracker.overallConsumption();
+    this.result = (_overallConsumption).intValue();
+  }
+  
+  @Test
+  @Order(3)
   @Named("Then the result is \\\"5\\\"")
   public void thenTheResultIs5() {
     StepArguments _stepArguments = new StepArguments("5");
@@ -59,8 +55,6 @@ public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption {
      + "\n     args is " + new StringDescription().appendValue(args).toString() + "\n", _doubleArrow);
     
   }
-  
-  List<CoffeeDrinker> coffeeDrinkers;
   
   int result;
 }

@@ -1,9 +1,6 @@
 package features;
 
-import coffee.CoffeeDrinker;
-import coffee.CoffeeListParser;
-import coffee.CoffeeTracker;
-import java.util.List;
+import features.TrackingCoffeeConsumptionFeatureBackground;
 import org.hamcrest.StringDescription;
 import org.jnario.lib.JnarioIterableExtensions;
 import org.jnario.lib.Should;
@@ -19,38 +16,37 @@ import org.junit.runner.RunWith;
 @RunWith(FeatureRunner.class)
 @Named("Scenario: Tracking coffee consumption per person")
 @SuppressWarnings("all")
-public class TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson {
+public class TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson extends TrackingCoffeeConsumptionFeatureBackground {
   @Test
   @Order(0)
   @Named("Given a coffee list")
   public void givenACoffeeList() {
-    StepArguments _stepArguments = new StepArguments("Sebastian ||\nBirgit |||\n\t\t\t");
-    final StepArguments args = _stepArguments;
-    CoffeeListParser _coffeeListParser = new CoffeeListParser();
-    final CoffeeListParser coffeListParser = _coffeeListParser;
-    String _first = JnarioIterableExtensions.<String>first(args);
-    List<CoffeeDrinker> _parse = coffeListParser.parse(_first);
-    this.coffeeDrinkers = _parse;
+    super.givenACoffeeList();
   }
   
   @Test
   @Order(1)
-  @Named("When I calculate the coffee consumption of \\\"Sebastian\\\"")
-  public void whenICalculateTheCoffeeConsumptionOfSebastian() {
-    StepArguments _stepArguments = new StepArguments("Sebastian");
-    final StepArguments args = _stepArguments;
-    CoffeeTracker _coffeeTracker = new CoffeeTracker(this.coffeeDrinkers);
-    final CoffeeTracker coffeeTracker = _coffeeTracker;
-    String _first = JnarioIterableExtensions.<String>first(args);
-    int _consumptionOf = coffeeTracker.consumptionOf(_first);
-    this.result = _consumptionOf;
+  @Named("And a coffee tracker")
+  public void andACoffeeTracker() {
+    super.andACoffeeTracker();
   }
   
   @Test
   @Order(2)
-  @Named("Then the result is \\\"2\\\"")
-  public void thenTheResultIs2() {
-    StepArguments _stepArguments = new StepArguments("2");
+  @Named("When I calculate the coffee consumption of \\\"Sebastian\\\"")
+  public void whenICalculateTheCoffeeConsumptionOfSebastian() {
+    StepArguments _stepArguments = new StepArguments("Sebastian");
+    final StepArguments args = _stepArguments;
+    String _first = JnarioIterableExtensions.<String>first(args);
+    int _consumptionOf = this.coffeeTracker.consumptionOf(_first);
+    this.result = _consumptionOf;
+  }
+  
+  @Test
+  @Order(3)
+  @Named("Then the result is \\\"3\\\"")
+  public void thenTheResultIs3() {
+    StepArguments _stepArguments = new StepArguments("3");
     final StepArguments args = _stepArguments;
     String _first = JnarioIterableExtensions.<String>first(args);
     int _int = StringConversions.toInt(_first);
@@ -59,8 +55,6 @@ public class TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson 
      + "\n      is " + new StringDescription().appendValue(Integer.valueOf(_int)).toString() + "\n", _doubleArrow);
     
   }
-  
-  List<CoffeeDrinker> coffeeDrinkers;
   
   int result;
 }
