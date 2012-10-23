@@ -2,16 +2,16 @@ import features.*
 
 #Coffee Trackr
 
-This is a simple demonstration of BDD with **Jnario**.
+This is our simple coffee tracking tool.
 
 ##Progress
 
-	These are features we want to support:
-	
-	- "Tracking Coffee Consumption"
+We are done when these are green.
+
+- "Tracking Coffee Consumption"
 
 ##Regression
 
-	These classes are required for the implementation:
-	 
-	- \.*specs.*\
+When these fail we have a problem.
+
+- \specs.*\

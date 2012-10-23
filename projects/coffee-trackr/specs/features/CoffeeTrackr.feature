@@ -11,9 +11,9 @@ import static extension org.jnario.lib.StringConversions.*
 
 Feature: Tracking Coffee Consumption
 
-	In order to do coffee billing
-	as a developer
-	I want a coffee tracking tool.
+	In order to manage our coffee expenses
+	as developers with constant need of caffeine
+	we want a coffee tracking tool.
 	
 	Background:
 		List<CoffeeDrinker> coffeeDrinkers 

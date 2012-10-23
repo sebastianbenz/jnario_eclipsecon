@@ -6,31 +6,32 @@ import org.eclipse.xtext.xbase.lib.Pair
 
 describe CoffeeTracker {
 	
+	val emptyTracker = new CoffeeTracker(emptyList)
+
 	context "overall consumption is"{
-		fact "zero if nobody drinks coffee"{
-			coffeeList().overallConsumption => 0
+
+		fact "zero with zero coffee drinkers"{
+			emptyTracker.overallConsumption => 0
 		}
-		fact "one if a single person drinks one coffee"{
-			coffeeList("Sebastian" -> 1).overallConsumption => 1
-		}
-		fact "sum of all persons coffees"{
-			coffeeList(
-				"Sebastian" -> 1, 
-				"Birgit" -> 4
-			).overallConsumption => 5
+		
+		fact "two with single coffee drinker with two coffees"{
+			val coffeeDrinker = new CoffeeDrinker(_, 2)
+			val tracker = new CoffeeTracker(list(coffeeDrinker))
+			tracker.overallConsumption => 2
 		}
 	}
 	
-	context "consumption per person"{
-		fact "zero if person does not exist"{
-			coffeeList().consumptionOf("unknown") => 0
+	context "consumption per person is"{
+		fact "zero with zero coffee drinkers"{
+			emptyTracker.consumptionOf("somebody") => 0
 		}
-		fact "one if the person had one coffee"{
-			coffeeList("Sebastian" -> 1).consumptionOf("Sebastian") => 1
+		
+		fact "coffee count of person with given name"{
+			val coffeeDrinkerA = new CoffeeDrinker("a", 2)
+			val coffeeDrinkerB = new CoffeeDrinker("b", 4)
+			val tracker = new CoffeeTracker(list(coffeeDrinkerA, coffeeDrinkerB))
+			tracker.consumptionOf("a") => 2
 		}
 	}
-
-	def coffeeList(Pair<String, Integer>... coffeeDrinkers){
-		new CoffeeTracker(coffeeDrinkers.map[new CoffeeDrinker(key, value)])
-	}
+		
 }

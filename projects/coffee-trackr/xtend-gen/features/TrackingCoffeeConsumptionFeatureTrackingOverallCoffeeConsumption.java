@@ -35,8 +35,8 @@ public class TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption ex
   @Order(2)
   @Named("When I calculate the overall coffee consumption")
   public void whenICalculateTheOverallCoffeeConsumption() {
-    Integer _overallConsumption = this.coffeeTracker.overallConsumption();
-    this.result = (_overallConsumption).intValue();
+    int _overallConsumption = this.coffeeTracker.overallConsumption();
+    this.result = _overallConsumption;
   }
   
   @Test

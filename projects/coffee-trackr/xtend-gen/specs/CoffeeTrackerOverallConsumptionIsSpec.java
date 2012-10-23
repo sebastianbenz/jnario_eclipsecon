@@ -1,8 +1,10 @@
 package specs;
 
+import coffee.CoffeeDrinker;
 import coffee.CoffeeTracker;
-import org.eclipse.xtext.xbase.lib.Pair;
+import java.util.List;
 import org.hamcrest.StringDescription;
+import org.jnario.lib.JnarioCollectionLiterals;
 import org.jnario.lib.Should;
 import org.jnario.runner.ExampleGroupRunner;
 import org.jnario.runner.Named;
@@ -17,47 +19,32 @@ import specs.CoffeeTrackerSpec;
 @Named("overall consumption is")
 public class CoffeeTrackerOverallConsumptionIsSpec extends CoffeeTrackerSpec {
   @Test
-  @Named("zero if nobody drinks coffee")
+  @Named("zero with zero coffee drinkers")
   @Order(0)
-  public void _zeroIfNobodyDrinksCoffee() throws Exception {
-    CoffeeTracker _coffeeList = this.coffeeList();
-    Integer _overallConsumption = _coffeeList.overallConsumption();
-    boolean _doubleArrow = Should.operator_doubleArrow(_overallConsumption, Integer.valueOf(0));
-    Assert.assertTrue("\nExpected coffeeList().overallConsumption => 0 but"
-     + "\n     coffeeList().overallConsumption is " + new StringDescription().appendValue(_overallConsumption).toString()
-     + "\n     coffeeList() is " + new StringDescription().appendValue(_coffeeList).toString() + "\n", _doubleArrow);
+  public void _zeroWithZeroCoffeeDrinkers() throws Exception {
+    int _overallConsumption = this.emptyTracker.overallConsumption();
+    boolean _doubleArrow = Should.operator_doubleArrow(Integer.valueOf(_overallConsumption), Integer.valueOf(0));
+    Assert.assertTrue("\nExpected emptyTracker.overallConsumption => 0 but"
+     + "\n     emptyTracker.overallConsumption is " + new StringDescription().appendValue(Integer.valueOf(_overallConsumption)).toString()
+     + "\n     emptyTracker is " + new StringDescription().appendValue(this.emptyTracker).toString() + "\n", _doubleArrow);
     
   }
   
   @Test
-  @Named("one if a single person drinks one coffee")
+  @Named("two with single coffee drinker with two coffees")
   @Order(1)
-  public void _oneIfASinglePersonDrinksOneCoffee() throws Exception {
-    Pair<String,Integer> _mappedTo = Pair.<String, Integer>of("Sebastian", Integer.valueOf(1));
-    CoffeeTracker _coffeeList = this.coffeeList(_mappedTo);
-    Integer _overallConsumption = _coffeeList.overallConsumption();
-    boolean _doubleArrow = Should.operator_doubleArrow(_overallConsumption, Integer.valueOf(1));
-    Assert.assertTrue("\nExpected coffeeList(\"Sebastian\" -> 1).overallConsumption => 1 but"
-     + "\n     coffeeList(\"Sebastian\" -> 1).overallConsumption is " + new StringDescription().appendValue(_overallConsumption).toString()
-     + "\n     coffeeList(\"Sebastian\" -> 1) is " + new StringDescription().appendValue(_coffeeList).toString()
-     + "\n     \"Sebastian\" -> 1 is " + new StringDescription().appendValue(_mappedTo).toString() + "\n", _doubleArrow);
-    
-  }
-  
-  @Test
-  @Named("sum of all persons coffees")
-  @Order(2)
-  public void _sumOfAllPersonsCoffees() throws Exception {
-    Pair<String,Integer> _mappedTo = Pair.<String, Integer>of("Sebastian", Integer.valueOf(1));
-    Pair<String,Integer> _mappedTo_1 = Pair.<String, Integer>of("Birgit", Integer.valueOf(4));
-    CoffeeTracker _coffeeList = this.coffeeList(_mappedTo, _mappedTo_1);
-    Integer _overallConsumption = _coffeeList.overallConsumption();
-    boolean _doubleArrow = Should.operator_doubleArrow(_overallConsumption, Integer.valueOf(5));
-    Assert.assertTrue("\nExpected coffeeList(\n\t\t\t\t\"Sebastian\" -> 1, \n\t\t\t\t\"Birgit\" -> 4\n\t\t\t).overallConsumption => 5 but"
-     + "\n     coffeeList(\n\t\t\t\t\"Sebastian\" -> 1, \n\t\t\t\t\"Birgit\" -> 4\n\t\t\t).overallConsumption is " + new StringDescription().appendValue(_overallConsumption).toString()
-     + "\n     coffeeList(\n\t\t\t\t\"Sebastian\" -> 1, \n\t\t\t\t\"Birgit\" -> 4\n\t\t\t) is " + new StringDescription().appendValue(_coffeeList).toString()
-     + "\n     \"Sebastian\" -> 1 is " + new StringDescription().appendValue(_mappedTo).toString()
-     + "\n     \"Birgit\" -> 4 is " + new StringDescription().appendValue(_mappedTo_1).toString() + "\n", _doubleArrow);
+  public void _twoWithSingleCoffeeDrinkerWithTwoCoffees() throws Exception {
+    String __ = Should.<String>_();
+    CoffeeDrinker _coffeeDrinker = new CoffeeDrinker(__, 2);
+    final CoffeeDrinker coffeeDrinker = _coffeeDrinker;
+    List<CoffeeDrinker> _list = JnarioCollectionLiterals.<CoffeeDrinker>list(coffeeDrinker);
+    CoffeeTracker _coffeeTracker = new CoffeeTracker(_list);
+    final CoffeeTracker tracker = _coffeeTracker;
+    int _overallConsumption = tracker.overallConsumption();
+    boolean _doubleArrow = Should.operator_doubleArrow(Integer.valueOf(_overallConsumption), Integer.valueOf(2));
+    Assert.assertTrue("\nExpected tracker.overallConsumption => 2 but"
+     + "\n     tracker.overallConsumption is " + new StringDescription().appendValue(Integer.valueOf(_overallConsumption)).toString()
+     + "\n     tracker is " + new StringDescription().appendValue(tracker).toString() + "\n", _doubleArrow);
     
   }
 }

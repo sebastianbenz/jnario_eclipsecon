@@ -10,37 +10,38 @@ import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 
 describe CoffeeListParser {
+	
 	val parser = new CoffeeListParser
 	
-	def coffeeDrinkers{
-		| coffeList			| expectedName | expectedCoffeeCount 	|
-		| "Sebastian"		| "Sebastian"  | 0				|
-		| "Sebastian "		| "Sebastian"  | 0				|
-		| "Sebastian |"		| "Sebastian"  | 1				|
-		| "Sebastian ||"	| "Sebastian"  | 2				|
-		| "Sebastian |||"	| "Sebastian"  | 3				|
+	fact "empty list has not coffeedrinkers"{
+		val coffeeDrinkers = parser.parse("")
+		assert coffeeDrinkers.empty
 	}
 	
-	fact "coffee consumption per person has the format Name |||"{
-		coffeeDrinkers.forEach[
-			val coffeeDrinker = parse(coffeList).first
-			coffeeDrinker.name 			=> expectedName
-			coffeeDrinker.coffeeCount 	=> expectedCoffeeCount 
+	def examples {
+		| input 			| name			| count 	|
+		| "Sebastian"		| "Sebastian"	| 0			|
+		| "Sebastian|"		| "Sebastian"	| 1			|
+		| "Sebastian||"		| "Sebastian"	| 2			|
+		| "Sebastian ||"	| "Sebastian"	| 2			|
+									
+	}
+	
+	fact "coffee drinking count has the format NAME |*"{
+		examples.forEach[
+			val coffeeDrinkers = parser.parse(input)
+			val firstDrinker = coffeeDrinkers.first
+			firstDrinker.name 			=> name
+			firstDrinker.coffeeCount 	=> count
 		]
 	}
-
-	fact "coffee drinkers are separated by newline"{
-		'''
-			Sebastian ||
-			Birgit |
-		'''.parse => list(
-			new CoffeeDrinker("Sebastian", 2),
-			new CoffeeDrinker("Birgit", 1)
-		)
-		
+	
+	fact "multiple coffeedrinkers are separated by newline"{
+		val coffeeDrinkers = parser.parse('''
+			Sebastian 	|||
+			Birgit 		||
+		'''.toString)
+		coffeeDrinkers.size => 2
 	}
 
-	def parse(CharSequence string) {
-		subject.parse(string.toString)
-	}
 }

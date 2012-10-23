@@ -36,26 +36,25 @@
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
 <h3 id="overall_consumption_is">Overall consumption is</h3>
-<ul><li><p id="zero_if_nobody_drinks_coffee"><strong>zero if nobody drinks coffee</strong></p>
+<ul><li><p id="zero_with_zero_coffee_drinkers"><strong>zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
-coffeeList().overallConsumption =&gt; 0</pre>
-</li><li><p id="one_if_a_single_person_drinks_one_coffee"><strong>one if a single person drinks one coffee</strong></p>
+emptyTracker.overallConsumption =&gt; 0</pre>
+</li><li><p id="two_with_single_coffee_drinker_with_two_coffees"><strong>two with single coffee drinker with two coffees</strong></p>
 <pre class="prettyprint lang-spec linenums">
-coffeeList(&quot;Sebastian&quot; -&gt; 1).overallConsumption =&gt; 1</pre>
-</li><li><p id="sum_of_all_persons_coffees"><strong>sum of all persons coffees</strong></p>
-<pre class="prettyprint lang-spec linenums">
-coffeeList(
-  &quot;Sebastian&quot; -&gt; 1, 
-  &quot;Birgit&quot; -&gt; 4
-).overallConsumption =&gt; 5</pre>
+val coffeeDrinker = new CoffeeDrinker(_, 2)
+val tracker = new CoffeeTracker(list(coffeeDrinker))
+tracker.overallConsumption =&gt; 2</pre>
 </li></ul>
-<h3 id="consumption_per_person">Consumption per person</h3>
-<ul><li><p id="zero_if_person_does_not_exist"><strong>zero if person does not exist</strong></p>
+<h3 id="consumption_per_person_is">Consumption per person is</h3>
+<ul><li><p id="zero_with_zero_coffee_drinkers"><strong>zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
-coffeeList().consumptionOf(&quot;unknown&quot;) =&gt; 0</pre>
-</li><li><p id="one_if_the_person_had_one_coffee"><strong>one if the person had one coffee</strong></p>
+emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0</pre>
+</li><li><p id="coffee_count_of_person_with_given_name"><strong>coffee count of person with given name</strong></p>
 <pre class="prettyprint lang-spec linenums">
-coffeeList(&quot;Sebastian&quot; -&gt; 1).consumptionOf(&quot;Sebastian&quot;) =&gt; 1</pre>
+val coffeeDrinkerA = new CoffeeDrinker(&quot;a&quot;, 2)
+val coffeeDrinkerB = new CoffeeDrinker(&quot;b&quot;, 4)
+val tracker = new CoffeeTracker(list(coffeeDrinkerA, coffeeDrinkerB))
+tracker.consumptionOf(&quot;a&quot;) =&gt; 2</pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -70,33 +69,34 @@ import org.eclipse.xtext.xbase.lib.Pair
 
 describe CoffeeTracker {
   
+  val emptyTracker = new CoffeeTracker(emptyList)
+
   context &quot;overall consumption is&quot;{
-    fact &quot;zero if nobody drinks coffee&quot;{
-      coffeeList().overallConsumption =&gt; 0
+
+    fact &quot;zero with zero coffee drinkers&quot;{
+      emptyTracker.overallConsumption =&gt; 0
     }
-    fact &quot;one if a single person drinks one coffee&quot;{
-      coffeeList(&quot;Sebastian&quot; -&gt; 1).overallConsumption =&gt; 1
-    }
-    fact &quot;sum of all persons coffees&quot;{
-      coffeeList(
-        &quot;Sebastian&quot; -&gt; 1, 
-        &quot;Birgit&quot; -&gt; 4
-      ).overallConsumption =&gt; 5
+    
+    fact &quot;two with single coffee drinker with two coffees&quot;{
+      val coffeeDrinker = new CoffeeDrinker(_, 2)
+      val tracker = new CoffeeTracker(list(coffeeDrinker))
+      tracker.overallConsumption =&gt; 2
     }
   }
   
-  context &quot;consumption per person&quot;{
-    fact &quot;zero if person does not exist&quot;{
-      coffeeList().consumptionOf(&quot;unknown&quot;) =&gt; 0
+  context &quot;consumption per person is&quot;{
+    fact &quot;zero with zero coffee drinkers&quot;{
+      emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0
     }
-    fact &quot;one if the person had one coffee&quot;{
-      coffeeList(&quot;Sebastian&quot; -&gt; 1).consumptionOf(&quot;Sebastian&quot;) =&gt; 1
+    
+    fact &quot;coffee count of person with given name&quot;{
+      val coffeeDrinkerA = new CoffeeDrinker(&quot;a&quot;, 2)
+      val coffeeDrinkerB = new CoffeeDrinker(&quot;b&quot;, 4)
+      val tracker = new CoffeeTracker(list(coffeeDrinkerA, coffeeDrinkerB))
+      tracker.consumptionOf(&quot;a&quot;) =&gt; 2
     }
   }
-
-  def coffeeList(Pair&lt;String, Integer&gt;... coffeeDrinkers){
-    new CoffeeTracker(coffeeDrinkers.map[new CoffeeDrinker(key, value)])
-  }
+    
 }
 </pre>
 						    </p></div>

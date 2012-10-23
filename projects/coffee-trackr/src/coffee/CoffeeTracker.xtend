@@ -6,16 +6,17 @@ import java.util.List
 class CoffeeTracker {
 	List<CoffeeDrinker> coffeeDrinkers
 	
-	def overallConsumption(){
-		coffeeDrinkers.map[coffeeCount].fold(0)[a , b | a + b]
+	def int overallConsumption(){
+		if(coffeeDrinkers.empty){
+			return 0
+		}
+		coffeeDrinkers.map[coffeeCount].reduce(a, b | a + b)
 	}
 	
-	def consumptionOf(String name){
-		val coffeeDrinker = coffeeDrinkers.findFirst[it.name == name]
-		if(coffeeDrinker == null){
-			0
-		}else{
-			coffeeDrinker.coffeeCount
+	def int consumptionOf(String name){
+		if(coffeeDrinkers.empty){
+			return 0
 		}
+		coffeeDrinkers.findFirst[it.name == name].coffeeCount
 	}
 }

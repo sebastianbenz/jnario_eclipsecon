@@ -5,21 +5,20 @@ import java.util.List
 class CoffeeListParser {
 	
 	def List<CoffeeDrinker> parse(String input){
-		input.split("\n").map[createCoffeeDrinker]
+		if(input.empty) return emptyList
+		
+		val lines = input.split("\n")
+		lines.map[parseCoffeeDrinker]
 	}
 	
-	def createCoffeeDrinker(String input){
-		val index = input.indexOf("|")
-		
-		var name = ""
+	def parseCoffeeDrinker(String input){
+		val firstPipeIndex = input.indexOf("|")
+		var name = input
 		var count = 0
-		if(index == -1){
-			name = input
-		}else{
-			name = input.substring(0, index)
-			count = input.substring(index-1).replaceAll("^\\|", "").length-1
+		if(firstPipeIndex > -1){
+			name = input.substring(0, firstPipeIndex)
+			count = input.length - firstPipeIndex
 		}
-		
 		new CoffeeDrinker(name.trim, count)
 	}
 	

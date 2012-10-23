@@ -35,13 +35,17 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<ul><li><p id="coffeeDrinkers"><strong>CoffeeDrinkers</strong></p>
+<ul><li><p id="empty_list_has_not_coffeedrinkers"><strong>empty list has not coffeedrinkers</strong></p>
+<pre class="prettyprint lang-spec linenums">
+val coffeeDrinkers = parser.parse(&quot;&quot;)
+assert coffeeDrinkers.empty</pre>
+</li><li><p id="examples"><strong>Examples</strong></p>
 <table class="table table-striped table-bordered table-condensed">
 	<thead>
 		<tr>
-		<th>coffeList</th>
-		<th>expectedName</th>
-		<th>expectedCoffeeCount</th>
+		<th>input</th>
+		<th>name</th>
+		<th>count</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -51,43 +55,37 @@
 		<td>0</td>
 	</tr>
 	<tr>
-		<td>&quot;Sebastian &quot;</td>
-		<td>&quot;Sebastian&quot;</td>
-		<td>0</td>
-	</tr>
-	<tr>
-		<td>&quot;Sebastian |&quot;</td>
+		<td>&quot;Sebastian|&quot;</td>
 		<td>&quot;Sebastian&quot;</td>
 		<td>1</td>
+	</tr>
+	<tr>
+		<td>&quot;Sebastian||&quot;</td>
+		<td>&quot;Sebastian&quot;</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>&quot;Sebastian ||&quot;</td>
 		<td>&quot;Sebastian&quot;</td>
 		<td>2</td>
 	</tr>
-	<tr>
-		<td>&quot;Sebastian |||&quot;</td>
-		<td>&quot;Sebastian&quot;</td>
-		<td>3</td>
-	</tr>
 	</tbody>
 </table>
-</li><li><p id="coffee_consumption_per_person_has_the_format_Name"><strong>coffee consumption per person has the format Name |||</strong></p>
+</li><li><p id="coffee_drinking_count_has_the_format_NAME"><strong>coffee drinking count has the format NAME |*</strong></p>
 <pre class="prettyprint lang-spec linenums">
-coffeeDrinkers.forEach[
-  val coffeeDrinker = parse(coffeList).first
-  coffeeDrinker.name       =&gt; expectedName
-  coffeeDrinker.coffeeCount   =&gt; expectedCoffeeCount 
+examples.forEach[
+  val coffeeDrinkers = parser.parse(input)
+  val firstDrinker = coffeeDrinkers.first
+  firstDrinker.name       =&gt; name
+  firstDrinker.coffeeCount   =&gt; count
 ]</pre>
-</li><li><p id="coffee_drinkers_are_separated_by_newline"><strong>coffee drinkers are separated by newline</strong></p>
+</li><li><p id="multiple_coffeedrinkers_are_separated_by_newline"><strong>multiple coffeedrinkers are separated by newline</strong></p>
 <pre class="prettyprint lang-spec linenums">
-'''
-  Sebastian ||
-  Birgit |
-'''.parse =&gt; list(
-  new CoffeeDrinker(&quot;Sebastian&quot;, 2),
-  new CoffeeDrinker(&quot;Birgit&quot;, 1)
-)</pre>
+val coffeeDrinkers = parser.parse('''
+  Sebastian   |||
+  Birgit     ||
+'''.toString)
+coffeeDrinkers.size =&gt; 2</pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -106,39 +104,40 @@ import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 
 describe CoffeeListParser {
+  
   val parser = new CoffeeListParser
   
-  def coffeeDrinkers{
-    | coffeList      | expectedName | expectedCoffeeCount   |
-    | &quot;Sebastian&quot;    | &quot;Sebastian&quot;  | 0        |
-    | &quot;Sebastian &quot;    | &quot;Sebastian&quot;  | 0        |
-    | &quot;Sebastian |&quot;    | &quot;Sebastian&quot;  | 1        |
-    | &quot;Sebastian ||&quot;  | &quot;Sebastian&quot;  | 2        |
-    | &quot;Sebastian |||&quot;  | &quot;Sebastian&quot;  | 3        |
+  fact &quot;empty list has not coffeedrinkers&quot;{
+    val coffeeDrinkers = parser.parse(&quot;&quot;)
+    assert coffeeDrinkers.empty
   }
   
-  fact &quot;coffee consumption per person has the format Name |||&quot;{
-    coffeeDrinkers.forEach[
-      val coffeeDrinker = parse(coffeList).first
-      coffeeDrinker.name       =&gt; expectedName
-      coffeeDrinker.coffeeCount   =&gt; expectedCoffeeCount 
+  def examples {
+    | input       | name      | count   |
+    | &quot;Sebastian&quot;    | &quot;Sebastian&quot;  | 0      |
+    | &quot;Sebastian|&quot;    | &quot;Sebastian&quot;  | 1      |
+    | &quot;Sebastian||&quot;    | &quot;Sebastian&quot;  | 2      |
+    | &quot;Sebastian ||&quot;  | &quot;Sebastian&quot;  | 2      |
+                  
+  }
+  
+  fact &quot;coffee drinking count has the format NAME |*&quot;{
+    examples.forEach[
+      val coffeeDrinkers = parser.parse(input)
+      val firstDrinker = coffeeDrinkers.first
+      firstDrinker.name       =&gt; name
+      firstDrinker.coffeeCount   =&gt; count
     ]
   }
-
-  fact &quot;coffee drinkers are separated by newline&quot;{
-    '''
-      Sebastian ||
-      Birgit |
-    '''.parse =&gt; list(
-      new CoffeeDrinker(&quot;Sebastian&quot;, 2),
-      new CoffeeDrinker(&quot;Birgit&quot;, 1)
-    )
-    
+  
+  fact &quot;multiple coffeedrinkers are separated by newline&quot;{
+    val coffeeDrinkers = parser.parse('''
+      Sebastian   |||
+      Birgit     ||
+    '''.toString)
+    coffeeDrinkers.size =&gt; 2
   }
 
-  def parse(CharSequence string) {
-    subject.parse(string.toString)
-  }
 }
 </pre>
 						    </p></div>
