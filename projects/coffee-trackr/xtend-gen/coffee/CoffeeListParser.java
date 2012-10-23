@@ -16,38 +16,35 @@ public class CoffeeListParser {
       if (_isEmpty) {
         return CollectionLiterals.<CoffeeDrinker>emptyList();
       }
-      final String[] lines = input.split("\n");
+      String[] _split = input.split("\n");
       final Function1<String,CoffeeDrinker> _function = new Function1<String,CoffeeDrinker>() {
           public CoffeeDrinker apply(final String it) {
-            CoffeeDrinker _parseCoffeeDrinker = CoffeeListParser.this.parseCoffeeDrinker(it);
-            return _parseCoffeeDrinker;
+            CoffeeDrinker _createCoffeeDrinker = CoffeeListParser.this.createCoffeeDrinker(it);
+            return _createCoffeeDrinker;
           }
         };
-      List<CoffeeDrinker> _map = ListExtensions.<String, CoffeeDrinker>map(((List<String>)Conversions.doWrapArray(lines)), _function);
+      List<CoffeeDrinker> _map = ListExtensions.<String, CoffeeDrinker>map(((List<String>)Conversions.doWrapArray(_split)), _function);
       _xblockexpression = (_map);
     }
     return _xblockexpression;
   }
   
-  public CoffeeDrinker parseCoffeeDrinker(final String input) {
-    CoffeeDrinker _xblockexpression = null;
-    {
-      final int firstPipeIndex = input.indexOf("|");
-      String name = input;
-      int count = 0;
-      int _minus = (-1);
-      boolean _greaterThan = (firstPipeIndex > _minus);
-      if (_greaterThan) {
-        String _substring = input.substring(0, firstPipeIndex);
-        name = _substring;
-        int _length = input.length();
-        int _minus_1 = (_length - firstPipeIndex);
-        count = _minus_1;
-      }
-      String _trim = name.trim();
-      CoffeeDrinker _coffeeDrinker = new CoffeeDrinker(_trim, count);
-      _xblockexpression = (_coffeeDrinker);
+  public CoffeeDrinker createCoffeeDrinker(final String string) {
+    final int i = string.indexOf("|");
+    String name = string;
+    int coffeeCount = 0;
+    int _minus = (-1);
+    boolean _greaterThan = (i > _minus);
+    if (_greaterThan) {
+      String _substring = name.substring(0, i);
+      name = _substring;
+      int _length = string.length();
+      int _length_1 = name.length();
+      int _minus_1 = (_length - _length_1);
+      coffeeCount = _minus_1;
     }
-    return _xblockexpression;
+    String _trim = name.trim();
+    CoffeeDrinker _coffeeDrinker = new CoffeeDrinker(_trim, coffeeCount);
+    return _coffeeDrinker;
   }
 }

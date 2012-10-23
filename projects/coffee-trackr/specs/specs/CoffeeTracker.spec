@@ -2,7 +2,6 @@ package specs
 
 import coffee.CoffeeTracker
 import coffee.CoffeeDrinker
-import org.eclipse.xtext.xbase.lib.Pair
 
 describe CoffeeTracker {
 	
@@ -27,9 +26,10 @@ describe CoffeeTracker {
 		}
 		
 		fact "coffee count of person with given name"{
-			val coffeeDrinkerA = new CoffeeDrinker("a", 2)
-			val coffeeDrinkerB = new CoffeeDrinker("b", 4)
-			val tracker = new CoffeeTracker(list(coffeeDrinkerA, coffeeDrinkerB))
+			val tracker = new CoffeeTracker(list(
+				new CoffeeDrinker("a", 2),
+				new CoffeeDrinker("a", 2)
+			))
 			tracker.consumptionOf("a") => 2
 		}
 	}

@@ -10,13 +10,10 @@ class CoffeeTracker {
 		if(coffeeDrinkers.empty){
 			return 0
 		}
-		coffeeDrinkers.map[coffeeCount].reduce(a, b | a + b)
+		coffeeDrinkers.map[coffeeCount].reduce[a,b| a + b]
 	}
 	
 	def int consumptionOf(String name){
-		if(coffeeDrinkers.empty){
-			return 0
-		}
-		coffeeDrinkers.findFirst[it.name == name].coffeeCount
+		-1
 	}
 }

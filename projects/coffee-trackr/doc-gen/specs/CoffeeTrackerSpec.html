@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="tabbable">
 			<div class="content">
-				<div class="page-header">
+				<div class="page-header ">
 					<h1>CoffeeTracker</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
@@ -35,25 +35,26 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<h3 id="overall_consumption_is">Overall consumption is</h3>
-<ul><li><p id="zero_with_zero_coffee_drinkers"><strong>zero with zero coffee drinkers</strong></p>
+<h3 class="exampleGroup "  id="overall_consumption_is">Overall consumption is</h3> 
+<ul><li><p id="zero_with_zero_coffee_drinkers" class="example "><strong>zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
 emptyTracker.overallConsumption =&gt; 0</pre>
-</li><li><p id="two_with_single_coffee_drinker_with_two_coffees"><strong>two with single coffee drinker with two coffees</strong></p>
+</li><li><p id="two_with_single_coffee_drinker_with_two_coffees" class="example "><strong>two with single coffee drinker with two coffees</strong></p>
 <pre class="prettyprint lang-spec linenums">
 val coffeeDrinker = new CoffeeDrinker(_, 2)
 val tracker = new CoffeeTracker(list(coffeeDrinker))
 tracker.overallConsumption =&gt; 2</pre>
 </li></ul>
-<h3 id="consumption_per_person_is">Consumption per person is</h3>
-<ul><li><p id="zero_with_zero_coffee_drinkers"><strong>zero with zero coffee drinkers</strong></p>
+<h3 class="exampleGroup "  id="consumption_per_person_is">Consumption per person is</h3> 
+<ul><li><p id="zero_with_zero_coffee_drinkers" class="example "><strong>zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
 emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0</pre>
-</li><li><p id="coffee_count_of_person_with_given_name"><strong>coffee count of person with given name</strong></p>
+</li><li><p id="coffee_count_of_person_with_given_name" class="example "><strong>coffee count of person with given name</strong></p>
 <pre class="prettyprint lang-spec linenums">
-val coffeeDrinkerA = new CoffeeDrinker(&quot;a&quot;, 2)
-val coffeeDrinkerB = new CoffeeDrinker(&quot;b&quot;, 4)
-val tracker = new CoffeeTracker(list(coffeeDrinkerA, coffeeDrinkerB))
+val tracker = new CoffeeTracker(list(
+  new CoffeeDrinker(&quot;a&quot;, 2),
+  new CoffeeDrinker(&quot;a&quot;, 2)
+))
 tracker.consumptionOf(&quot;a&quot;) =&gt; 2</pre>
 </li></ul>
 							</div>
@@ -65,7 +66,6 @@ package specs
 
 import coffee.CoffeeTracker
 import coffee.CoffeeDrinker
-import org.eclipse.xtext.xbase.lib.Pair
 
 describe CoffeeTracker {
   
@@ -90,9 +90,10 @@ describe CoffeeTracker {
     }
     
     fact &quot;coffee count of person with given name&quot;{
-      val coffeeDrinkerA = new CoffeeDrinker(&quot;a&quot;, 2)
-      val coffeeDrinkerB = new CoffeeDrinker(&quot;b&quot;, 4)
-      val tracker = new CoffeeTracker(list(coffeeDrinkerA, coffeeDrinkerB))
+      val tracker = new CoffeeTracker(list(
+        new CoffeeDrinker(&quot;a&quot;, 2),
+        new CoffeeDrinker(&quot;a&quot;, 2)
+      ))
       tracker.consumptionOf(&quot;a&quot;) =&gt; 2
     }
   }

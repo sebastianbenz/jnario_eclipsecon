@@ -4,11 +4,11 @@ import java.util.List;
 import org.jnario.lib.ExampleTableRow;
 
 public class CoffeeListParserSpecExamples extends ExampleTableRow {
-  public CoffeeListParserSpecExamples(final List<String> cellNames, final String input, final String name, final int count) {
+  public CoffeeListParserSpecExamples(final List<String> cellNames, final String input, final String expectedName, final int expectedCoffeeCount) {
     super(cellNames);
     this.input = input;
-    this.name = name;
-    this.count = count;
+    this.expectedName = expectedName;
+    this.expectedCoffeeCount = expectedCoffeeCount;
   }
   
   public String input;
@@ -17,19 +17,19 @@ public class CoffeeListParserSpecExamples extends ExampleTableRow {
     return input;
   }
   
-  public String name;
+  public String expectedName;
   
-  public String getName() {
-    return name;
+  public String getExpectedName() {
+    return expectedName;
   }
   
-  public int count;
+  public int expectedCoffeeCount;
   
-  public int getCount() {
-    return count;
+  public int getExpectedCoffeeCount() {
+    return expectedCoffeeCount;
   }
   
   public List<String> getCells() {
-    return java.util.Arrays.asList(toString(input) ,toString(name) ,toString(count));
+    return java.util.Arrays.asList(toString(input) ,toString(expectedName) ,toString(expectedCoffeeCount));
   }
 }
