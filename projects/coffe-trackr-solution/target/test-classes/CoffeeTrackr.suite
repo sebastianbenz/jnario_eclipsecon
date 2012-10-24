@@ -1,0 +1,17 @@
+import features.*
+
+#Coffee Trackr
+
+This is our simple coffee tracking tool.
+
+##Progress
+
+We are done when these are green.
+
+- "Tracking Coffee Consumption"
+
+##Regression
+
+When these fail we have a problem.
+
+- \specs.*\
