@@ -1,6 +1,5 @@
 package specs
 
-import coffee.CoffeeDrinker
 import coffee.CoffeeListParser
 
 import static org.jnario.lib.JnarioCollectionLiterals.*
@@ -37,6 +36,7 @@ describe CoffeeListParser {
 			Birgit 		|||
 		'''.parse.size => 2
 	}
+	
 	
 	def parse(CharSequence s){
 		subject.parse(s.toString)

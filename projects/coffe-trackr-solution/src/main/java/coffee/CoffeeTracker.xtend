@@ -14,6 +14,9 @@ class CoffeeTracker {
 	}
 	
 	def int consumptionOf(String name){
-		-1
+		if(coffeeDrinkers.empty){
+			return 0
+		}
+		coffeeDrinkers.findFirst[it.name == name].coffeeCount
 	}
 }

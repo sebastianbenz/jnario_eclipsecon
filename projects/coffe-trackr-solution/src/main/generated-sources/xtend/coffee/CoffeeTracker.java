@@ -1,6 +1,7 @@
 package coffee;
 
 import coffee.CoffeeDrinker;
+import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend.lib.Data;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -47,8 +48,26 @@ public class CoffeeTracker {
   }
   
   public int consumptionOf(final String name) {
-    int _minus = (-1);
-    return _minus;
+    int _xblockexpression = (int) 0;
+    {
+      List<CoffeeDrinker> _coffeeDrinkers = this.getCoffeeDrinkers();
+      boolean _isEmpty = _coffeeDrinkers.isEmpty();
+      if (_isEmpty) {
+        return 0;
+      }
+      List<CoffeeDrinker> _coffeeDrinkers_1 = this.getCoffeeDrinkers();
+      final Function1<CoffeeDrinker,Boolean> _function = new Function1<CoffeeDrinker,Boolean>() {
+          public Boolean apply(final CoffeeDrinker it) {
+            String _name = it.getName();
+            boolean _equals = Objects.equal(_name, name);
+            return Boolean.valueOf(_equals);
+          }
+        };
+      CoffeeDrinker _findFirst = IterableExtensions.<CoffeeDrinker>findFirst(_coffeeDrinkers_1, _function);
+      int _coffeeCount = _findFirst.getCoffeeCount();
+      _xblockexpression = (_coffeeCount);
+    }
+    return _xblockexpression;
   }
   
   public CoffeeTracker(final List<CoffeeDrinker> coffeeDrinkers) {

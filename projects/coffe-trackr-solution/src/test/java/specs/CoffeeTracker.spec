@@ -21,6 +21,7 @@ describe CoffeeTracker {
 	}
 	
 	context "consumption per person is"{
+		
 		fact "zero with zero coffee drinkers"{
 			emptyTracker.consumptionOf("somebody") => 0
 		}

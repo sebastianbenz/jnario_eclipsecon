@@ -2,16 +2,19 @@ import features.*
 
 #Coffee Trackr
 
-This is our simple coffee tracking tool.
+![Coffee](../../src/test/resources/coffee.png)
+
+This is our simple coffee tracking tool made for developers. It works well 
+with git and is good for everyone who is not afraid of the commandline..
 
 ##Progress
 
-We are done when these are green.
+It is OK if these are red, because all green means we are **done**:
 
 - "Tracking Coffee Consumption"
 
 ##Regression
 
-When these fail we have a problem.
+These should always be green as otherwise we have a problem in our implementation:
 
 - \specs.*\

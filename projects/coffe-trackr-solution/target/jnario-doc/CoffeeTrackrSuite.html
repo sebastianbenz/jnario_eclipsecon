@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="tabbable">
 			<div class="content">
-				<div class="page-header failed">
+				<div class="page-header passed">
 					<h1>Coffee Trackr</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
@@ -35,17 +35,17 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<p>This is our simple coffee tracking tool.</p>
-<span id="Progress" class="suite failed"><h2>Progress</h2></span>
-<p>We are done when these are green.</p>
+<p><img src="../../src/test/resources/coffee.png"  alt="Coffee"/></p><p>This is our simple coffee tracking tool made for developers. It works well with git and is good for everyone who is not afraid of the commandline..</p>
+<span id="Progress" class="suite passed"><h2>Progress</h2></span>
+<p>It is OK if these are red, because all green means we are <strong>done</strong>:</p>
 <ul>
-	<li><a class="specref failed" href="features/TrackingCoffeeConsumptionFeature.html">Tracking Coffee Consumption</a> <strong class="icon failed">✘</strong></li>
+	<li><a class="specref passed" href="features/TrackingCoffeeConsumptionFeature.html">Tracking Coffee Consumption</a> <strong class="icon passed">✓</strong></li>
 </ul>
-<span id="Regression" class="suite failed"><h2>Regression</h2></span>
-<p>When these fail we have a problem.</p>
+<span id="Regression" class="suite passed"><h2>Regression</h2></span>
+<p>These should always be green as otherwise we have a problem in our implementation:</p>
 <ul>
 	<li><a class="specref passed" href="specs/CoffeeListParserSpec.html">CoffeeListParser</a> <strong class="icon passed">✓</strong></li>
-	<li><a class="specref failed" href="specs/CoffeeTrackerSpec.html">CoffeeTracker</a> <strong class="icon failed">✘</strong></li>
+	<li><a class="specref passed" href="specs/CoffeeTrackerSpec.html">CoffeeTracker</a> <strong class="icon passed">✓</strong></li>
 </ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -56,17 +56,20 @@ import features.*
 
 #Coffee Trackr
 
-This is our simple coffee tracking tool.
+![Coffee](../../src/test/resources/coffee.png)
+
+This is our simple coffee tracking tool made for developers. It works well 
+with git and is good for everyone who is not afraid of the commandline..
 
 ##Progress
 
-We are done when these are green.
+It is OK if these are red, because all green means we are **done**:
 
 - &quot;Tracking Coffee Consumption&quot;
 
 ##Regression
 
-When these fail we have a problem.
+These should always be green as otherwise we have a problem in our implementation:
 
 - \specs.*\
 </pre>

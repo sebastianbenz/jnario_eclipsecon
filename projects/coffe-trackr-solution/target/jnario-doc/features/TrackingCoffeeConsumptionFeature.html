@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="tabbable">
 			<div class="content">
-				<div class="page-header failed">
+				<div class="page-header passed">
 					<h1>Tracking Coffee Consumption</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
@@ -39,10 +39,10 @@
 <div><h3 class="scenario passed"  id="Background">Background:
 </h3>
 <ul>
-<li><span class="step passed"><p><strong>Given</strong> a coffee list</p><pre>Sebastian  |||
+<li><span class="step passed"><p>Given a coffee list</p><pre>Sebastian  |||
 Birgit     ||</pre></span>
 </li>
-<li><span class="step passed"><p><strong>Given</strong> a coffee list</p><pre>Sebastian  |||
+<li><span class="step passed"><p>Given a coffee list</p><pre>Sebastian  |||
 Birgit     ||</pre></span>
 </li>
 </ul>
@@ -50,22 +50,18 @@ Birgit     ||</pre></span>
 <div><h3 class="scenario passed"  id="Scenario_Tracking_overall_coffee_consumption">Scenario: Tracking overall coffee consumption
 </h3>
 <ul>
-<li><span class="step passed"><p><strong>When</strong> I calculate the overall coffee consumption</p></span>
+<li><span class="step passed"><p>When I calculate the overall coffee consumption</p></span>
 </li>
-<li><span class="step passed"><p><strong>Then</strong> the result is <code>"5"</code></p></span>
+<li><span class="step passed"><p>Then the result is <code>"5"</code></p></span>
 </li>
 </ul>
 </div>
-<div><h3 class="scenario failed"  id="Scenario_Tracking_coffee_consumption_per_person">Scenario: Tracking coffee consumption per person
+<div><h3 class="scenario passed"  id="Scenario_Tracking_coffee_consumption_per_person">Scenario: Tracking coffee consumption per person
 </h3>
 <ul>
-<li><span class="step passed"><p><strong>When</strong> I calculate the coffee consumption of <code>"Sebastian"</code></p></span>
+<li><span class="step passed"><p>When I calculate the coffee consumption of <code>"Sebastian"</code></p></span>
 </li>
-<li><span class="step failed"><p><strong>Then</strong> the result is <code>"3"</code></p></span>
-<pre class="errormessage">
-java.lang.AssertionError: 
-Expected  but
-      is <3></pre>
+<li><span class="step passed"><p>Then the result is <code>"3"</code></p></span>
 </li>
 </ul>
 </div>

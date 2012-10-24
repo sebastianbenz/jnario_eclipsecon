@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="tabbable">
 			<div class="content">
-				<div class="page-header failed">
+				<div class="page-header passed">
 					<h1>CoffeeTracker</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
@@ -45,40 +45,17 @@ val coffeeDrinker = new CoffeeDrinker(null, 2)
 val tracker = new CoffeeTracker(list(coffeeDrinker))
 tracker.overallConsumption =&gt; 2</pre>
 </li></ul>
-<h3 class="exampleGroup failed"  id="consumption_per_person_is">Consumption per person is</h3>
-<ul><li><p id="zero_with_zero_coffee_drinkers" class="example failed"><strong>zero with zero coffee drinkers</strong></p>
+<h3 class="exampleGroup passed"  id="consumption_per_person_is">Consumption per person is</h3>
+<ul><li><p id="zero_with_zero_coffee_drinkers" class="example passed"><strong>zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
 emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0</pre>
-<pre class="errormessage">
-java.lang.AssertionError: 
-Expected emptyTracker.consumptionOf("somebody") => 0 but
-     emptyTracker.consumptionOf("somebody") is <-1>
-     emptyTracker is <CoffeeTracker [
-  _coffeeDrinkers = EmptyList ()
-]></pre>
-</li><li><p id="coffee_count_of_person_with_given_name" class="example failed"><strong>coffee count of person with given name</strong></p>
+</li><li><p id="coffee_count_of_person_with_given_name" class="example passed"><strong>coffee count of person with given name</strong></p>
 <pre class="prettyprint lang-spec linenums">
 val tracker = new CoffeeTracker(list(
   new CoffeeDrinker(&quot;a&quot;, 2),
   new CoffeeDrinker(&quot;a&quot;, 2)
 ))
 tracker.consumptionOf(&quot;a&quot;) =&gt; 2</pre>
-<pre class="errormessage">
-java.lang.AssertionError: 
-Expected tracker.consumptionOf("a") => 2 but
-     tracker.consumptionOf("a") is <-1>
-     tracker is <CoffeeTracker [
-  _coffeeDrinkers = ArrayList (
-    CoffeeDrinker [
-      _name = "a"
-      _coffeeCount = 2
-    ],
-    CoffeeDrinker [
-      _name = "a"
-      _coffeeCount = 2
-    ]
-  )
-]></pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -108,6 +85,7 @@ describe CoffeeTracker {
   }
   
   context &quot;consumption per person is&quot;{
+    
     fact &quot;zero with zero coffee drinkers&quot;{
       emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0
     }
