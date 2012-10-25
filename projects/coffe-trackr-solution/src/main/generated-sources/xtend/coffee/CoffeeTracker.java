@@ -5,9 +5,7 @@ import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtend.lib.Data;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.util.ToStringHelper;
 
 @Data
@@ -20,31 +18,8 @@ public class CoffeeTracker {
   }
   
   public int overallConsumption() {
-    Integer _xblockexpression = null;
-    {
-      List<CoffeeDrinker> _coffeeDrinkers = this.getCoffeeDrinkers();
-      boolean _isEmpty = _coffeeDrinkers.isEmpty();
-      if (_isEmpty) {
-        return 0;
-      }
-      List<CoffeeDrinker> _coffeeDrinkers_1 = this.getCoffeeDrinkers();
-      final Function1<CoffeeDrinker,Integer> _function = new Function1<CoffeeDrinker,Integer>() {
-          public Integer apply(final CoffeeDrinker it) {
-            int _coffeeCount = it.getCoffeeCount();
-            return Integer.valueOf(_coffeeCount);
-          }
-        };
-      List<Integer> _map = ListExtensions.<CoffeeDrinker, Integer>map(_coffeeDrinkers_1, _function);
-      final Function2<Integer,Integer,Integer> _function_1 = new Function2<Integer,Integer,Integer>() {
-          public Integer apply(final Integer a, final Integer b) {
-            int _plus = ((a).intValue() + (b).intValue());
-            return Integer.valueOf(_plus);
-          }
-        };
-      Integer _reduce = IterableExtensions.<Integer>reduce(_map, _function_1);
-      _xblockexpression = (_reduce);
-    }
-    return (_xblockexpression).intValue();
+    int _minus = (-1);
+    return _minus;
   }
   
   public int consumptionOf(final String name) {

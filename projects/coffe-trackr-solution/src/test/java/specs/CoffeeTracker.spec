@@ -8,7 +8,7 @@ import org.eclipse.xtext.xbase.lib.Pair
  * This is our coffee calculation engine.
  */
 describe CoffeeTracker {
-
+	
 	context "Overall consumption is"{
 
 		fact "Zero with zero coffee drinkers"{
