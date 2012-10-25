@@ -21,6 +21,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import specs.CoffeeListParserSpecExamples;
 
+/**
+ * This is a simple parser for coffee lists.
+ */
 @SuppressWarnings("all")
 @RunWith(ExampleGroupRunner.class)
 @Named("CoffeeListParser")
@@ -29,9 +32,9 @@ public class CoffeeListParserSpec {
   public CoffeeListParser subject;
   
   @Test
-  @Named("empty list has no coffee drinkers")
+  @Named("Empty string has no coffee drinkers")
   @Order(0)
-  public void _emptyListHasNoCoffeeDrinkers() throws Exception {
+  public void _emptyStringHasNoCoffeeDrinkers() throws Exception {
     List<CoffeeDrinker> _parse = this.parse("");
     List<?> _emptyList = CollectionLiterals.emptyList();
     boolean _doubleArrow = Should.operator_doubleArrow(_parse, _emptyList);
@@ -55,7 +58,7 @@ public class CoffeeListParserSpec {
   protected ExampleTable<CoffeeListParserSpecExamples> examples;
   
   @Test
-  @Named("coffee per drinker has the format NAME |*")
+  @Named("Coffee per drinker has the format NAME |*")
   @Order(1)
   public void _coffeePerDrinkerHasTheFormatNAME() throws Exception {
     final Procedure1<CoffeeListParserSpecExamples> _function = new Procedure1<CoffeeListParserSpecExamples>() {
@@ -82,9 +85,9 @@ public class CoffeeListParserSpec {
   }
   
   @Test
-  @Named("multiple coffee drinkers are separated by newlines")
+  @Named("Multiple coffee drinkers are separated by newline characters")
   @Order(2)
-  public void _multipleCoffeeDrinkersAreSeparatedByNewlines() throws Exception {
+  public void _multipleCoffeeDrinkersAreSeparatedByNewlineCharacters() throws Exception {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Sebastian \t||");
     _builder.newLine();

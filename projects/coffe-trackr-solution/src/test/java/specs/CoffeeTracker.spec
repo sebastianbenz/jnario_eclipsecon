@@ -2,37 +2,41 @@ package specs
 
 import coffee.CoffeeTracker
 import coffee.CoffeeDrinker
+import org.eclipse.xtext.xbase.lib.Pair
 
+/*
+ * This is our coffee calculation engine.
+ */
 describe CoffeeTracker {
-	
-	val emptyTracker = new CoffeeTracker(emptyList)
 
-	context "overall consumption is"{
+	context "Overall consumption is"{
 
-		fact "zero with zero coffee drinkers"{
-			emptyTracker.overallConsumption => 0
+		fact "Zero with zero coffee drinkers"{
+			coffeeDrinkers().overallConsumption => 0
 		}
 		
-		fact "two with single coffee drinker with two coffees"{
-			val coffeeDrinker = new CoffeeDrinker(null, 2)
-			val tracker = new CoffeeTracker(list(coffeeDrinker))
-			tracker.overallConsumption => 2
+		fact "Two with single coffee drinker with two coffees"{
+			coffeeDrinkers("Sebastian" -> 2).overallConsumption => 2
 		}
 	}
 	
-	context "consumption per person is"{
+	context "Consumption per person is"{
 		
-		fact "zero with zero coffee drinkers"{
-			emptyTracker.consumptionOf("somebody") => 0
+		fact "Zero with zero coffee drinkers"{
+			coffeeDrinkers().consumptionOf("somebody") => 0
 		}
 		
-		fact "coffee count of person with given name"{
-			val tracker = new CoffeeTracker(list(
-				new CoffeeDrinker("a", 2),
-				new CoffeeDrinker("a", 2)
-			))
-			tracker.consumptionOf("a") => 2
+		fact "Coffee count of person with given name"{
+			coffeeDrinkers(
+				"Sebastian" -> 3,
+				"Birgit" -> 2
+			).consumptionOf("Birgit") => 2
 		}
+	}
+	
+	def coffeeDrinkers(Pair<String, Integer>... params){
+		val coffeeDrinkers = params.map[new CoffeeDrinker(key, value)]
+		new CoffeeTracker(coffeeDrinkers)
 	}
 		
 }

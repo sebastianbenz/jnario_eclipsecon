@@ -1,10 +1,8 @@
 package specs;
 
-import coffee.CoffeeDrinker;
 import coffee.CoffeeTracker;
-import java.util.List;
+import org.eclipse.xtext.xbase.lib.Pair;
 import org.hamcrest.StringDescription;
-import org.jnario.lib.JnarioCollectionLiterals;
 import org.jnario.lib.Should;
 import org.jnario.runner.ExampleGroupRunner;
 import org.jnario.runner.Named;
@@ -16,34 +14,33 @@ import specs.CoffeeTrackerSpec;
 
 @SuppressWarnings("all")
 @RunWith(ExampleGroupRunner.class)
-@Named("overall consumption is")
+@Named("Overall consumption is")
 public class CoffeeTrackerOverallConsumptionIsSpec extends CoffeeTrackerSpec {
   @Test
-  @Named("zero with zero coffee drinkers")
+  @Named("Zero with zero coffee drinkers")
   @Order(0)
   public void _zeroWithZeroCoffeeDrinkers() throws Exception {
-    int _overallConsumption = this.emptyTracker.overallConsumption();
+    CoffeeTracker _coffeeDrinkers = this.coffeeDrinkers();
+    int _overallConsumption = _coffeeDrinkers.overallConsumption();
     boolean _doubleArrow = Should.operator_doubleArrow(Integer.valueOf(_overallConsumption), Integer.valueOf(0));
-    Assert.assertTrue("\nExpected emptyTracker.overallConsumption => 0 but"
-     + "\n     emptyTracker.overallConsumption is " + new StringDescription().appendValue(Integer.valueOf(_overallConsumption)).toString()
-     + "\n     emptyTracker is " + new StringDescription().appendValue(this.emptyTracker).toString() + "\n", _doubleArrow);
+    Assert.assertTrue("\nExpected coffeeDrinkers().overallConsumption => 0 but"
+     + "\n     coffeeDrinkers().overallConsumption is " + new StringDescription().appendValue(Integer.valueOf(_overallConsumption)).toString()
+     + "\n     coffeeDrinkers() is " + new StringDescription().appendValue(_coffeeDrinkers).toString() + "\n", _doubleArrow);
     
   }
   
   @Test
-  @Named("two with single coffee drinker with two coffees")
+  @Named("Two with single coffee drinker with two coffees")
   @Order(1)
   public void _twoWithSingleCoffeeDrinkerWithTwoCoffees() throws Exception {
-    CoffeeDrinker _coffeeDrinker = new CoffeeDrinker(null, 2);
-    final CoffeeDrinker coffeeDrinker = _coffeeDrinker;
-    List<CoffeeDrinker> _list = JnarioCollectionLiterals.<CoffeeDrinker>list(coffeeDrinker);
-    CoffeeTracker _coffeeTracker = new CoffeeTracker(_list);
-    final CoffeeTracker tracker = _coffeeTracker;
-    int _overallConsumption = tracker.overallConsumption();
+    Pair<String,Integer> _mappedTo = Pair.<String, Integer>of("Sebastian", Integer.valueOf(2));
+    CoffeeTracker _coffeeDrinkers = this.coffeeDrinkers(_mappedTo);
+    int _overallConsumption = _coffeeDrinkers.overallConsumption();
     boolean _doubleArrow = Should.operator_doubleArrow(Integer.valueOf(_overallConsumption), Integer.valueOf(2));
-    Assert.assertTrue("\nExpected tracker.overallConsumption => 2 but"
-     + "\n     tracker.overallConsumption is " + new StringDescription().appendValue(Integer.valueOf(_overallConsumption)).toString()
-     + "\n     tracker is " + new StringDescription().appendValue(tracker).toString() + "\n", _doubleArrow);
+    Assert.assertTrue("\nExpected coffeeDrinkers(\"Sebastian\" -> 2).overallConsumption => 2 but"
+     + "\n     coffeeDrinkers(\"Sebastian\" -> 2).overallConsumption is " + new StringDescription().appendValue(Integer.valueOf(_overallConsumption)).toString()
+     + "\n     coffeeDrinkers(\"Sebastian\" -> 2) is " + new StringDescription().appendValue(_coffeeDrinkers).toString()
+     + "\n     \"Sebastian\" -> 2 is " + new StringDescription().appendValue(_mappedTo).toString() + "\n", _doubleArrow);
     
   }
 }

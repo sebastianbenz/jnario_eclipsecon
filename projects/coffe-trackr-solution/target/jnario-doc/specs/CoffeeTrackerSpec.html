@@ -35,27 +35,25 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<h3 class="exampleGroup passed"  id="overall_consumption_is">Overall consumption is</h3>
-<ul><li><p id="zero_with_zero_coffee_drinkers" class="example passed"><strong>zero with zero coffee drinkers</strong></p>
+<p>This is our coffee calculation engine.</p>
+<h3 class="exampleGroup passed"  id="Overall_consumption_is">Overall consumption is</h3>
+<ul><li><p id="Zero_with_zero_coffee_drinkers" class="example passed"><strong>Zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
-emptyTracker.overallConsumption =&gt; 0</pre>
-</li><li><p id="two_with_single_coffee_drinker_with_two_coffees" class="example passed"><strong>two with single coffee drinker with two coffees</strong></p>
+coffeeDrinkers().overallConsumption =&gt; 0</pre>
+</li><li><p id="Two_with_single_coffee_drinker_with_two_coffees" class="example passed"><strong>Two with single coffee drinker with two coffees</strong></p>
 <pre class="prettyprint lang-spec linenums">
-val coffeeDrinker = new CoffeeDrinker(null, 2)
-val tracker = new CoffeeTracker(list(coffeeDrinker))
-tracker.overallConsumption =&gt; 2</pre>
+coffeeDrinkers(&quot;Sebastian&quot; -&gt; 2).overallConsumption =&gt; 2</pre>
 </li></ul>
-<h3 class="exampleGroup passed"  id="consumption_per_person_is">Consumption per person is</h3>
-<ul><li><p id="zero_with_zero_coffee_drinkers" class="example passed"><strong>zero with zero coffee drinkers</strong></p>
+<h3 class="exampleGroup passed"  id="Consumption_per_person_is">Consumption per person is</h3>
+<ul><li><p id="Zero_with_zero_coffee_drinkers" class="example passed"><strong>Zero with zero coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
-emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0</pre>
-</li><li><p id="coffee_count_of_person_with_given_name" class="example passed"><strong>coffee count of person with given name</strong></p>
+coffeeDrinkers().consumptionOf(&quot;somebody&quot;) =&gt; 0</pre>
+</li><li><p id="Coffee_count_of_person_with_given_name" class="example passed"><strong>Coffee count of person with given name</strong></p>
 <pre class="prettyprint lang-spec linenums">
-val tracker = new CoffeeTracker(list(
-  new CoffeeDrinker(&quot;a&quot;, 2),
-  new CoffeeDrinker(&quot;a&quot;, 2)
-))
-tracker.consumptionOf(&quot;a&quot;) =&gt; 2</pre>
+coffeeDrinkers(
+  &quot;Sebastian&quot; -&gt; 3,
+  &quot;Birgit&quot; -&gt; 2
+).consumptionOf(&quot;Birgit&quot;) =&gt; 2</pre>
 </li></ul>
 							</div>
 						    <div class="tab-pane" id="source">
@@ -66,37 +64,41 @@ package specs
 
 import coffee.CoffeeTracker
 import coffee.CoffeeDrinker
+import org.eclipse.xtext.xbase.lib.Pair
 
+/*
+ * This is our coffee calculation engine.
+ */
 describe CoffeeTracker {
-  
-  val emptyTracker = new CoffeeTracker(emptyList)
 
-  context &quot;overall consumption is&quot;{
+  context &quot;Overall consumption is&quot;{
 
-    fact &quot;zero with zero coffee drinkers&quot;{
-      emptyTracker.overallConsumption =&gt; 0
+    fact &quot;Zero with zero coffee drinkers&quot;{
+      coffeeDrinkers().overallConsumption =&gt; 0
     }
     
-    fact &quot;two with single coffee drinker with two coffees&quot;{
-      val coffeeDrinker = new CoffeeDrinker(null, 2)
-      val tracker = new CoffeeTracker(list(coffeeDrinker))
-      tracker.overallConsumption =&gt; 2
+    fact &quot;Two with single coffee drinker with two coffees&quot;{
+      coffeeDrinkers(&quot;Sebastian&quot; -&gt; 2).overallConsumption =&gt; 2
     }
   }
   
-  context &quot;consumption per person is&quot;{
+  context &quot;Consumption per person is&quot;{
     
-    fact &quot;zero with zero coffee drinkers&quot;{
-      emptyTracker.consumptionOf(&quot;somebody&quot;) =&gt; 0
+    fact &quot;Zero with zero coffee drinkers&quot;{
+      coffeeDrinkers().consumptionOf(&quot;somebody&quot;) =&gt; 0
     }
     
-    fact &quot;coffee count of person with given name&quot;{
-      val tracker = new CoffeeTracker(list(
-        new CoffeeDrinker(&quot;a&quot;, 2),
-        new CoffeeDrinker(&quot;a&quot;, 2)
-      ))
-      tracker.consumptionOf(&quot;a&quot;) =&gt; 2
+    fact &quot;Coffee count of person with given name&quot;{
+      coffeeDrinkers(
+        &quot;Sebastian&quot; -&gt; 3,
+        &quot;Birgit&quot; -&gt; 2
+      ).consumptionOf(&quot;Birgit&quot;) =&gt; 2
     }
+  }
+  
+  def coffeeDrinkers(Pair&lt;String, Integer&gt;... params){
+    val coffeeDrinkers = params.map[new CoffeeDrinker(key, value)]
+    new CoffeeTracker(coffeeDrinkers)
   }
     
 }

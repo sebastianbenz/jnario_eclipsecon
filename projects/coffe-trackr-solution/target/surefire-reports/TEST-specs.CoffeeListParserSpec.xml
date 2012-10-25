@@ -27,7 +27,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/sebastian/Projects/workspace/.metadata/.plugins/org.eclipse.m2e.core/launches/m2conf2855266019465910899.tmp"/>
+    <property name="classworlds.conf" value="/Users/sebastian/Projects/workspace/.metadata/.plugins/org.eclipse.m2e.core/launches/m2conf2458905021801400248.tmp"/>
     <property name="sun.jnu.encoding" value="MacRoman"/>
     <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -65,7 +65,7 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.001" classname="specs.CoffeeListParserSpec" name="empty list has no coffee drinkers"/>
-  <testcase time="0.007" classname="specs.CoffeeListParserSpec" name="coffee per drinker has the format NAME |*"/>
-  <testcase time="0.002" classname="specs.CoffeeListParserSpec" name="multiple coffee drinkers are separated by newlines"/>
+  <testcase time="0.001" classname="specs.CoffeeListParserSpec" name="Empty string has no coffee drinkers"/>
+  <testcase time="0.007" classname="specs.CoffeeListParserSpec" name="Coffee per drinker has the format NAME |*"/>
+  <testcase time="0.002" classname="specs.CoffeeListParserSpec" name="Multiple coffee drinkers are separated by newline characters"/>
 </testsuite>

@@ -8,9 +8,12 @@ import static extension org.jnario.lib.ExampleTableIterators.*
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 
+/*
+ * This is a simple parser for coffee lists.
+ */
 describe CoffeeListParser {
 	
-	fact "empty list has no coffee drinkers"{
+	fact "Empty string has no coffee drinkers"{
 		"".parse => emptyList
 	}
 
@@ -22,7 +25,7 @@ describe CoffeeListParser {
 		| "Sebastian |||"		| "Sebastian"	| 3						|
 	}
 
-	fact "coffee per drinker has the format NAME |*"{
+	fact "Coffee per drinker has the format NAME |*"{
 		examples.forEach[
 			val coffeeDrinker = input.parse.first
 			coffeeDrinker.name 			=> expectedName
@@ -30,7 +33,7 @@ describe CoffeeListParser {
 		]
 	}
 	
-	fact "multiple coffee drinkers are separated by newlines"{
+	fact "Multiple coffee drinkers are separated by newline characters"{
 		'''
 			Sebastian 	||
 			Birgit 		|||

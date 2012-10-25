@@ -35,7 +35,8 @@
 					<div class="span12">
 						  <div class="tab-content">
 							  	<div class="tab-pane active" id="spec">
-<ul><li><p id="empty_list_has_no_coffee_drinkers" class="example passed"><strong>empty list has no coffee drinkers</strong></p>
+<p>This is a simple parser for coffee lists.</p>
+<ul><li><p id="Empty_string_has_no_coffee_drinkers" class="example passed"><strong>Empty string has no coffee drinkers</strong></p>
 <pre class="prettyprint lang-spec linenums">
 &quot;&quot;.parse =&gt; emptyList</pre>
 </li><li><p id="examples"><strong>Examples</strong></p>
@@ -70,14 +71,14 @@
 	</tr>
 	</tbody>
 </table>
-</li><li><p id="coffee_per_drinker_has_the_format_NAME" class="example passed"><strong>coffee per drinker has the format NAME |*</strong></p>
+</li><li><p id="Coffee_per_drinker_has_the_format_NAME" class="example passed"><strong>Coffee per drinker has the format NAME |*</strong></p>
 <pre class="prettyprint lang-spec linenums">
 examples.forEach[
   val coffeeDrinker = input.parse.first
   coffeeDrinker.name       =&gt; expectedName
   coffeeDrinker.coffeeCount   =&gt; expectedCoffeeCount
 ]</pre>
-</li><li><p id="multiple_coffee_drinkers_are_separated_by_newlines" class="example passed"><strong>multiple coffee drinkers are separated by newlines</strong></p>
+</li><li><p id="Multiple_coffee_drinkers_are_separated_by_newline_characters" class="example passed"><strong>Multiple coffee drinkers are separated by newline characters</strong></p>
 <pre class="prettyprint lang-spec linenums">
 '''
   Sebastian   ||
@@ -99,9 +100,12 @@ import static extension org.jnario.lib.ExampleTableIterators.*
 import static extension org.jnario.lib.JnarioIterableExtensions.*
 import static extension org.jnario.lib.Should.*
 
+/*
+ * This is a simple parser for coffee lists.
+ */
 describe CoffeeListParser {
   
-  fact &quot;empty list has no coffee drinkers&quot;{
+  fact &quot;Empty string has no coffee drinkers&quot;{
     &quot;&quot;.parse =&gt; emptyList
   }
 
@@ -113,7 +117,7 @@ describe CoffeeListParser {
     | &quot;Sebastian |||&quot;    | &quot;Sebastian&quot;  | 3            |
   }
 
-  fact &quot;coffee per drinker has the format NAME |*&quot;{
+  fact &quot;Coffee per drinker has the format NAME |*&quot;{
     examples.forEach[
       val coffeeDrinker = input.parse.first
       coffeeDrinker.name       =&gt; expectedName
@@ -121,7 +125,7 @@ describe CoffeeListParser {
     ]
   }
   
-  fact &quot;multiple coffee drinkers are separated by newlines&quot;{
+  fact &quot;Multiple coffee drinkers are separated by newline characters&quot;{
     '''
       Sebastian   ||
       Birgit     |||

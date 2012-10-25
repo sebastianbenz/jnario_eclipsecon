@@ -27,7 +27,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/sebastian/Projects/workspace/.metadata/.plugins/org.eclipse.m2e.core/launches/m2conf2855266019465910899.tmp"/>
+    <property name="classworlds.conf" value="/Users/sebastian/Projects/workspace/.metadata/.plugins/org.eclipse.m2e.core/launches/m2conf2458905021801400248.tmp"/>
     <property name="sun.jnu.encoding" value="MacRoman"/>
     <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -68,9 +68,9 @@
   <testcase time="0.004" classname="features.TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption" name="Given a coffee list"/>
   <testcase time="0" classname="features.TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption" name="And a coffee tracker"/>
   <testcase time="0.001" classname="features.TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption" name="When I calculate the overall coffee consumption"/>
-  <testcase time="0.002" classname="features.TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption" name="Then the result is \&quot;5\&quot;"/>
+  <testcase time="0.003" classname="features.TrackingCoffeeConsumptionFeatureTrackingOverallCoffeeConsumption" name="Then the result is \&quot;5\&quot;"/>
   <testcase time="0" classname="features.TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson" name="Given a coffee list"/>
   <testcase time="0" classname="features.TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson" name="And a coffee tracker"/>
   <testcase time="0.001" classname="features.TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson" name="When I calculate the coffee consumption of \&quot;Sebastian\&quot;"/>
-  <testcase time="0.001" classname="features.TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson" name="Then the result is \&quot;3\&quot;"/>
+  <testcase time="0" classname="features.TrackingCoffeeConsumptionFeatureTrackingCoffeeConsumptionPerPerson" name="Then the result is \&quot;3\&quot;"/>
 </testsuite>
