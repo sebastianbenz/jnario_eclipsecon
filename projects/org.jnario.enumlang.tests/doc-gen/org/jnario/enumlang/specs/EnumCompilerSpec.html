@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="tabbable">
 			<div class="content">
-				<div class="page-header">
+				<div class="page-header ">
 					<h1>EnumCompiler</h1>
 					  <ul class="nav nav-tabs pull-right">
 					    <li class="active"><a href="#spec" data-toggle="tab">Spec</a></li>
@@ -50,8 +50,8 @@
 	</tr>
 	</tbody>
 </table>
-</li><li><p id="examples_forEach_try_input_toBool_catch_Exception_e_e_expect"><strong>examples.forEach[ try{ input.toBool }catch[Exception e]{ e => expect } ]</strong></p>
-</li><li><p id="generates_Java_enum_for_empty_enum"><strong>generates Java enum for empty enum</strong></p>
+</li><li><p id="examples_forEach_try_input_toBool_catch_Exception_e_e_expect" class="example "><strong>examples.forEach[ try{ input.toBool }catch[Exception e]{ e => expect } ]</strong></p>
+</li><li><p id="generates_Java_enum_for_empty_enum" class="example "><strong>generates Java enum for empty enum</strong></p>
 <pre class="prettyprint lang-spec linenums">
 compile(&quot;Colors&quot;).toString =&gt; '''
   package enums;
@@ -59,7 +59,7 @@ compile(&quot;Colors&quot;).toString =&gt; '''
   public enum Colors{
   }
 '''.toString</pre>
-</li><li><p id="generates_Java_enum_for_multi_literal_enum"><strong>generates Java enum for multi literal enum</strong></p>
+</li><li><p id="generates_Java_enum_for_multi_literal_enum" class="example "><strong>generates Java enum for multi literal enum</strong></p>
 <pre class="prettyprint lang-spec linenums">
 compile(&quot;Colors&quot;, &quot;RED&quot;, &quot;BLUE&quot;).toString =&gt; '''
   package enums;
